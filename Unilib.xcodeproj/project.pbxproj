@@ -17,6 +17,7 @@
 		E7D9548A1DA2ACC900F86827 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D954841DA2ACC900F86827 /* Strings.swift */; };
 		E7D9548B1DA2ACC900F86827 /* Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D954851DA2ACC900F86827 /* Tasks.swift */; };
 		E7D9548C1DA2ACC900F86827 /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D954861DA2ACC900F86827 /* Validators.swift */; };
+		E7D954901DA2BEFA00F86827 /* Arrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D9548F1DA2BEFA00F86827 /* Arrays.swift */; };
 		FEC6BA7AE688D9B91833D00B /* Pods_UnilibTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA78EBD7783FF0D6843BE72 /* Pods_UnilibTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		E7D954841DA2ACC900F86827 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		E7D954851DA2ACC900F86827 /* Tasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tasks.swift; sourceTree = "<group>"; };
 		E7D954861DA2ACC900F86827 /* Validators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validators.swift; sourceTree = "<group>"; };
+		E7D9548F1DA2BEFA00F86827 /* Arrays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arrays.swift; sourceTree = "<group>"; };
 		EFBB21F86E72FFE52A04E405 /* Pods-UnilibTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnilibTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnilibTests/Pods-UnilibTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				E7D954841DA2ACC900F86827 /* Strings.swift */,
+				E7D9548F1DA2BEFA00F86827 /* Arrays.swift */,
 				E7D9548E1DA2AF9700F86827 /* Tasks */,
 				E7D9548D1DA2AF7A00F86827 /* Validation */,
 			);
@@ -358,6 +361,7 @@
 			files = (
 				E7D954891DA2ACC900F86827 /* Filters.swift in Sources */,
 				E7D954881DA2ACC900F86827 /* DefaultValidators.swift in Sources */,
+				E7D954901DA2BEFA00F86827 /* Arrays.swift in Sources */,
 				E7D9548C1DA2ACC900F86827 /* Validators.swift in Sources */,
 				E7D9548A1DA2ACC900F86827 /* Strings.swift in Sources */,
 				E7D9548B1DA2ACC900F86827 /* Tasks.swift in Sources */,
