@@ -37,9 +37,8 @@ public extension Array  {
         }
     }
     
-    // Private helpers
-    
-    private func hasPrevious(_ index:Int) -> Bool {
+    /// Is there a previous index relative to the provided index.
+    func hasPrevious(_ index:Int) -> Bool {
         if count == 0 || index == 0 {
             return false
         } else {
@@ -47,8 +46,18 @@ public extension Array  {
         }
     }
     
-    private func hasNext(_ index:Int) -> Bool {
+    /// Is there a next index relative to the provided index.
+    func hasNext(_ index:Int) -> Bool {
         if count == 0 || index == count - 1 {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    /// Does the array contain the provided index.
+    func hasIndex(_ index:Int) -> Bool {
+        if count == 0 || index < 0 || index >= count {
             return false
         } else {
             return true
