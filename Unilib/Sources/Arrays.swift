@@ -19,8 +19,8 @@ public extension Array  {
     
     /// The previous index if it exists
     /// (e.g. it would not exist if the provided index is 0)
-    func previous(from index:Int) -> Int? {
-        if hasPrevious(index) {
+    func previousIndex(from index:Int) -> Int? {
+        if hasPreviousIndex(from: index) {
             return index - 1
         } else {
             return nil
@@ -29,8 +29,8 @@ public extension Array  {
     
     /// The last index if it exists
     /// (e.g. it would not exist if the provided index is the "last index")
-    func next(from index:Int) -> Int? {
-        if hasNext(index) {
+    func nextIndex(from index:Int) -> Int? {
+        if hasNextIndex(from: index) {
             return index + 1
         } else {
             return nil
@@ -38,7 +38,7 @@ public extension Array  {
     }
     
     /// Is there a previous index relative to the provided index.
-    func hasPrevious(_ index:Int) -> Bool {
+    func hasPreviousIndex(from index:Int) -> Bool {
         if count == 0 || index == 0 {
             return false
         } else {
@@ -47,7 +47,7 @@ public extension Array  {
     }
     
     /// Is there a next index relative to the provided index.
-    func hasNext(_ index:Int) -> Bool {
+    func hasNextIndex(from index:Int) -> Bool {
         if count == 0 || index == count - 1 {
             return false
         } else {
@@ -70,16 +70,17 @@ public extension Array where Element : Equatable {
     
     /// Find the first element that satisfies predicate.
     /// Returns a tuple with element, index and previous/next if they exist.
-    /// Example: let foo = myArray.find{ $0.name = "foo"}.element
+    ///
+    /// - Example: let foo = myArray.find{ $0.name = "foo"}.element
+    /// - SeeAlso: Sequence.first(:where) which just returns the element.
     func find(_ includeElement: (Iterator.Element) -> Bool) -> (element:Iterator.Element, index:Int, prevIndex:Int?, nextIndex:Int?)? {
-        if let element = filter(includeElement).first {
-            if let index = index(of: element) {
-                return (element, index, previous(from: index), next(from: index))
+        if let element = self.filter(includeElement).first {
+            if let index = self.index(of: element) {
+                return (element, index, previousIndex(from: index), nextIndex(from: index))
             }
         }
         return nil
     }
-    
 }
 
 /// Set-like functionality on Array
@@ -88,25 +89,25 @@ public extension Array where Element : Equatable {
     /// Append an element if it does not already exist in the array
     /// and return a new array.
     /// Example: [a,b,c].union(a) --> [a,b,c]
-    func union(_ element:Element) -> Array<Element> {
+    func formUnion(_ element:Element) -> Array<Element> {
         var newArray = self
-        newArray.unionInPlace(element)
+        newArray.union(element)
         return newArray
     }
     
     /// Append an array of elements if they do not already exist in the array
     /// and return a new array.
     /// Example: [a,b,c].union([a,d]) --> [a,b,c,d]
-    func union(_ elements:[Element]) -> Array<Element> {
+    func formUnion(_ elements:[Element]) -> Array<Element> {
         var newArray = self
-        newArray.unionInPlace(elements)
+        newArray.union(elements)
         return newArray
     }
     
     
     /// Append an element if it does not already exist in the array
     /// Example: [a,b,c].unionInPlace(a) --> [a,b,c]
-    mutating func unionInPlace(_ element:Element) {
+    mutating func union(_ element:Element) {
         if !contains(element) {
             append(element)
         }
@@ -114,24 +115,24 @@ public extension Array where Element : Equatable {
     
     /// Append an array of elements if they do not already exist in the array
     /// Example: [a,b,c].unionInPlace([a,d]) --> [a,b,c,d]
-    mutating func unionInPlace(_ elements:[Element]) {
+    mutating func union(_ elements:[Element]) {
         for element in elements {
-            unionInPlace(element)
+            union(element)
         }
     }
     
     /// Intersect array to only include elements shared in self and provided array.
     /// and return a new array.
     /// Example: [a,b,c].intersect([b,c,d]) --> [b,c]
-    func intersect(_ elements:[Element]) -> Array<Element> {
+    func formIntersection(_ elements:[Element]) -> Array<Element> {
         var newArray = self
-        newArray.intersectInPlace(elements)
+        newArray.intersect(elements)
         return newArray
     }
     
     /// Mutate array to only include elements shared in self and provided array. (intersection)
     /// Example: [a,b,c].intersectInPlace([b,c,d]) --> [b,c]
-    mutating func intersectInPlace(_ elements:[Element]) {
+    mutating func intersect(_ elements:[Element]) {
         var result = Array<Element>()
         for element in self {
             if elements.contains(element) && !result.contains(element) {
@@ -145,16 +146,16 @@ public extension Array where Element : Equatable {
     /// Mutate array to only include elements that are not shared
     /// in self and provided array and return new array. (exclusiveOr)
     /// Example: [a,b,c,a].exclusive([b,b,c,d]) --> [a,d]
-    func exclusive(_ elements:[Element]) -> Array<Element> {
+    func formDifference(_ elements:[Element]) -> Array<Element> {
         var newArray = self
-        newArray.exclusiveInPlace(elements)
+        newArray.difference(elements)
         return newArray
     }
     
     /// Mutate array to only include elements that are not shared
     /// in self and provided array. (exclusiveOr)
     /// Example: [a,b,c,a].exclusiveInPlace([b,b,c,d]) --> [a,d]
-    mutating func exclusiveInPlace(_ elements:[Element]) {
+    mutating func difference(_ elements:[Element]) {
         var result = Array<Element>()
         for element in self {
             if !elements.contains(element) && !result.contains(element) {
