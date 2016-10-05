@@ -9,6 +9,7 @@
 import Foundation
 
 public extension String {
+    /// Does the string have length (!empty)
     var hasText:Bool {
         get {
             return !isEmpty
