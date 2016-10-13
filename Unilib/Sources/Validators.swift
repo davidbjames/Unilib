@@ -26,15 +26,56 @@ import Foundation
 
 
 /// Validation Error
-public enum ValidationError : LocalizedError {
+public enum ValidationError : LocalizedError, Equatable {
     case isEmptyError
     case invalidFormat(String)
 }
 
+/// Equatable overload
+/// Note: for every case added above you must add to this vvv
+public func == (lhs:ValidationError, rhs:ValidationError) -> Bool {
+    switch (lhs, rhs) {
+    case (.isEmptyError, .isEmptyError) :
+        return true
+    case (let .invalidFormat(message1), let .invalidFormat(message2)) :
+        return message1 == message2
+    default :
+        return false
+    }
+}
+
 /// Validation Result: success or error
-public enum ValidationResult {
+public enum ValidationResult : Equatable {
     case success
+    case validating
     case error(ValidationError)
+}
+
+/// Equatable overload
+public func == (lhs:ValidationResult, rhs:ValidationResult) -> Bool {
+    switch (lhs, rhs) {
+    case (.success, .success) :
+        return true
+    case (.validating, .validating) :
+        return true
+    case (let .error(message1), let .error(message2)) :
+        return message1 == message2
+    default :
+        return false
+    }
+}
+
+/// Convenience helpers for ValidationResult
+public extension ValidationResult {
+    /// Is the validation considered valid?
+    var isValid:Bool {
+        switch self {
+        case .success :
+            return true
+        default :
+            return false
+        }
+    }
 }
 
 /// Validator function
