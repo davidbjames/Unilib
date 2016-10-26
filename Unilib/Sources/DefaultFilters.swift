@@ -30,6 +30,17 @@ public struct LowercaseFilter : FilterFactory {
     }
 }
 
+/// Turn first letter of each word into a capital letter, respecting locale
+public struct CapitalizedFilter : FilterFactory {
+    public typealias T = String
+    public static func make() -> CompositeFilter<String> {
+        return CompositeFilter<T>()
+            .add({ input in
+                return input.capitalized(with: Locale.current)
+            })
+    }
+}
+
 /// This filter trims all whitespace from both ends of a string
 /// and reduces any internal whitespace to one space
 /// e.g. "   Test    foo \t\n  " becomes "Test foo"

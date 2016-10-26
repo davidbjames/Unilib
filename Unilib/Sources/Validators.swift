@@ -13,8 +13,8 @@ import Foundation
  
  There are several approaches to defining a validator:
  1. Implement a ValidatorFactory, and in the make() method:
-    a. Use add(Validator) to provide validation callbacks.
-    b. Use add(Factory) to add any ready-made factory or custom factory.
+    a. Use add(Validator) to add custom validation callbacks.
+    b. Use add(Factory) to add a ready-made factory or custom factory.
     c. Any combination of the above.
  2. Create a CompositeValidator (of a generic type, like String)
     and add as many validator callbacks as you need.
@@ -47,6 +47,7 @@ public func == (lhs:ValidationError, rhs:ValidationError) -> Bool {
 /// Validation Result: success or error
 public enum ValidationResult : Equatable {
     case success
+    // .validating should only be used in case of asynchronous validation
     case validating
     case error(ValidationError)
 }
@@ -88,6 +89,11 @@ public class CompositeValidator<Input> {
     private var validators:[Validator<Input>] = []
     
     public init() { }
+    
+    // TODO: support server side (asynchronous) validation ".validating"
+    // In which case, this may need Rx'ifying.
+    // See also ActivityTracker, but note that has RxCocoa dependency.
+    // See also ValidationPresenter in Uniview if applicable.
     
     public func validate(_ input:Input) -> ValidationResult {
         for validator in validators {
