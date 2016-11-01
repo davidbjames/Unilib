@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		45E390337C779F1D85AAF3D9 /* Pods_Unilib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C2D5F4E8223CD7E5A55F9D /* Pods_Unilib.framework */; };
+		E750BD2D1DC9190E0079687B /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = E750BD2C1DC9190E0079687B /* Time.swift */; };
 		E7C048801DA56C16001CBC52 /* Ranges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C0487F1DA56C16001CBC52 /* Ranges.swift */; };
 		E7CAA1F01DABBF3200CDF6A7 /* RxOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CAA1EF1DABBF3200CDF6A7 /* RxOperators.swift */; };
 		E7D954701DA2A59400F86827 /* Unilib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D954661DA2A59400F86827 /* Unilib.framework */; };
@@ -39,6 +40,7 @@
 		BAA78EBD7783FF0D6843BE72 /* Pods_UnilibTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnilibTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C2D5F4E8223CD7E5A55F9D /* Pods_Unilib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unilib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98B10AAD88122617017C839 /* Pods-UnilibTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnilibTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnilibTests/Pods-UnilibTests.release.xcconfig"; sourceTree = "<group>"; };
+		E750BD2C1DC9190E0079687B /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		E7C0487F1DA56C16001CBC52 /* Ranges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ranges.swift; sourceTree = "<group>"; };
 		E7CAA1EF1DABBF3200CDF6A7 /* RxOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxOperators.swift; sourceTree = "<group>"; };
 		E7D954661DA2A59400F86827 /* Unilib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Unilib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +89,14 @@
 				D98B10AAD88122617017C839 /* Pods-UnilibTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		E750BD2B1DC918E40079687B /* Functions */ = {
+			isa = PBXGroup;
+			children = (
+				E750BD2C1DC9190E0079687B /* Time.swift */,
+			);
+			name = Functions;
 			sourceTree = "<group>";
 		};
 		E7C0487E1DA56BF8001CBC52 /* Foundation */ = {
@@ -153,6 +163,7 @@
 				E7D9548E1DA2AF9700F86827 /* Tasks */,
 				E7D9548D1DA2AF7A00F86827 /* Validation */,
 				E7CAA1EE1DABBF0C00CDF6A7 /* Rx */,
+				E750BD2B1DC918E40079687B /* Functions */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -383,6 +394,7 @@
 			files = (
 				E7CAA1F01DABBF3200CDF6A7 /* RxOperators.swift in Sources */,
 				E7D954891DA2ACC900F86827 /* Filters.swift in Sources */,
+				E750BD2D1DC9190E0079687B /* Time.swift in Sources */,
 				E7D954881DA2ACC900F86827 /* DefaultValidators.swift in Sources */,
 				E7D954901DA2BEFA00F86827 /* Arrays.swift in Sources */,
 				E7D9548C1DA2ACC900F86827 /* Validators.swift in Sources */,
