@@ -50,6 +50,25 @@ public enum ValidationResult : Equatable {
     // .validating should only be used in case of asynchronous validation
     case validating
     case error(ValidationError)
+    
+    /// The minimum validation result for a collection of
+    /// validation results. Based on the idea of "fail early"
+    /// If 1 of the results is an "error", return that error.
+    /// If 1 of the results is "validating", return that state.
+    /// Else return "success".
+    public static func reduce(_ results:[ValidationResult]) -> ValidationResult {
+        if let error = results.find({ (result:ValidationResult) -> Bool in
+            if case .error(_) = result { return true }
+            else { return false }
+        }) {
+            return error.element
+        }
+        
+        if let validating = results.find({ $0 == .validating }) {
+            return validating.element
+        }
+        return .success
+    }
 }
 
 /// Equatable overload
@@ -78,6 +97,7 @@ public extension ValidationResult {
         }
     }
 }
+
 
 /// Validator function
 public typealias Validator<Input> = (Input) -> ValidationResult
