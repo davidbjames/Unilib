@@ -12,12 +12,17 @@ import RxSwift
 /// Abstract unit of work that takes options (and anything else
 /// required for it's performance viz. "command pattern") and
 /// ultimately returns an Observable for the action it performs.
-public protocol Task {
-    associatedtype Element
+public protocol ObservableTask : ObservableConvertibleType {
+    associatedtype E
     var options:TaskOptions? { get set }
-    func create() -> Observable<Element>
+    func create() -> Observable<E>
 }
 
+public extension ObservableTask {
+    func asObservable() -> Observable<Self.E>  {
+        return create()
+    }
+}
 
 
 /// Options specific to handling a Task
