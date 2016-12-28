@@ -8,7 +8,7 @@
 
 import Foundation
 
-func delay(_ delay:Double = 0.1, closure:@escaping ()->()) {
+public func delay(_ delay:Double = 0.1, _ closure:@escaping ()->()) {
     let when = DispatchTime.now() + delay
     DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
 }
