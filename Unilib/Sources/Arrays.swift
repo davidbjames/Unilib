@@ -83,6 +83,21 @@ public extension Array where Element : Equatable {
     }
 }
 
+public extension Collection where Indices.Iterator.Element == Index {
+    
+    /// Returns the element at the specified index if it is within bounds, otherwise nil.
+    subscript (safe index: Index) -> Generator.Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
+//public extension Array {
+//    
+//    var xor:Bool {
+//        return self.filter({ $0 != nil }).count == 1
+//    }
+//}
+
 /// Set-like functionality on Array
 public extension Array where Element : Equatable {
     
