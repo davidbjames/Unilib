@@ -8,38 +8,254 @@
 
 import Foundation
 
+/// Simple struct representing an angle between 0º and 360º +/-
 public struct Angle {
     
-    private var degrees:Double
+    public private(set) var degrees:Double
 
+    /// Angle in radians
+    /// Useful for core graphics/animations rotations
     public var radians:Double {
         return degrees * Double.pi / 180
     }
     
+    /// Half the current rotation angle
     public var half:Angle {
-        return self.by(factor: 0.5)
+        return self * 0.5
     }
     
+    /// Double the current rotation angle
     public var double:Angle {
-        return self.by(factor: 2)
+        return self * 2
     }
     
+    /// Quadruple the current rotation angle
     public var quadruple:Angle {
-        return self.by(factor: 4)
+        return self * 4
     }
 
     public init(_ degrees:Double) {
-        if degrees >= -360 && degrees <= 360 {
-            self.degrees = degrees
-        } else {
-            self.degrees = 0
-            print("🔥 WARNING: Angle initialized with degree outside of 0-360º(+/-). Defaulting to 0º. Use factoring methods/getters to increase degrees.")
-        }
+        self.degrees = degrees
     }
     
-    public func by(factor:Double) -> Angle {
-        var newAngle = self
-        newAngle.degrees = self.degrees * factor
-        return newAngle
+    // Creating new angles from simple arithmetic operators
+    
+    public static func + (lhs:Angle, rhs:Double) -> Angle {
+        return Angle(lhs.degrees + rhs)
+    }
+    
+    public static func - (lhs:Angle, rhs:Double) -> Angle {
+        return Angle(lhs.degrees - rhs)
+    }
+
+    public static func / (lhs:Angle, rhs:Double) -> Angle {
+        return Angle(lhs.degrees / rhs)
+    }
+
+    public static func * (lhs:Angle, rhs:Double) -> Angle {
+        return Angle(lhs.degrees * rhs)
+    }
+
+}
+
+/// Container for functions that can be reused between
+/// extensions of floating point types like Double or CGFloat.
+/// Since iOS/Swift forces us to go back and forth between
+/// Double and CGFloat, this prevents some code duplication,
+/// though you still need to implement the method name
+/// in each extension.
+fileprivate struct FloatingPointHelper {
+    
+    /// Obtain a random positive/negative factor number between a fraction and
+    /// a whole number (e.g. 0.5 and 1.5) by providing a positive/negative
+    /// "deviation" value. The deviation determines the range difference from 1.0
+    /// so that a deviation of 0 equals a range of 1.0...1.0, which will only
+    /// return 1.0. A deviation of 0.1 means a range of possible values in
+    /// 0.9...1.1, etc. Deviations greater than 1.0 pin their bottom bound to
+    /// 0.0, for example a deviation of 1.1 results in a random value in
+    /// 0.0...2.1 (and not -0.1...2.1). Negative values act as expected and
+    /// return random negative numbers, e.g. deviation of -2.0 returns a
+    /// random value in -3.0...-0.0
+    static func randomFactor(from deviation:Double = 0.0) -> Double {
+        
+        // Deviation outside of -1...+1 is pinned to 0 (start or end)
+        
+        // Deviation    Factors
+        //   0.0 =    1.0  to  1.0 // factor of 1x only
+        //   0.1 =    0.9  to  1.1 // near 1x factor +/-
+        //   0.5 =    0.5  to  1.5 // half to 1.5 times
+        //   1.0 =    0.0  to  2.0 // up to 2x
+        //   1.1 =    0.0  to  2.1 // etc (from 0 to n+1x)
+        //  10.0 =    0.0  to 11.0 // etc
+        //  -0.1 =   -1.1  to -0.9 // near 1x negative factor
+        //  -0.5 =   -1.5  to -0.5 // half to 1.5x negative factor
+        //  -1.0 =   -2.0  to  0.0 // up to 2x negative factor
+        //  -1.1 =   -2.1  to  0.0 // etc
+        // -10.0 =  -11.0  to  0.0 // etc
+        
+        var start:Double = 1.0
+        var end:Double = 1.0
+        
+        if deviation != 0.0 {
+            if deviation > 0.0 {
+                start = max(1.0 - deviation, 0.0)
+                end = 1.0 + deviation
+            } else {
+                start = -(1.0 + abs(deviation))
+                end = min(-(1.0 - abs(deviation)), -0.0)
+            }
+        }
+        let range = Int(start * 100)...Int(end * 100)
+        let factor = Double(range.random) / 100
+        
+        return factor
+    }
+    
+    /// Obtain a random positive/negative deviation number from a median
+    /// number with the range being 0.0...(median*2).
+    static func randomMedianDeviation(from median:Double = 0.0) -> Double {
+        
+        //  Median      Deviation
+        //   0.0 =    0.0  to  0.0 // no deviation
+        //   0.1 =    0.0  to  0.2 // small deviation
+        //   0.5 =    0.0  to  1.0 // deviation up to 1 (factor of 1?)
+        //   1.0 =    0.0  to  2.0 // deviation up to 2 (2x factor?)
+        //   1.1 =    0.0  to  2.2 // etc
+        //  10.0 =    0.0  to 20.0 //
+        //  -0.1 =   -0.2  to -0.0 // negative deviation
+        //  -0.5 =   -1.0  to -0.0 // small negative deviation
+        //  -1.0 =   -2.0  to -0.0 // etc
+        //  -1.1 =   -2.2  to -0.0 //
+        // -10.0 =  -20.0  to -0.0 //
+        
+        var start:Double = 0.0
+        var end:Double = 0.0
+        
+        if median != 0.0 {
+            if median > 0.0 {
+                end = median * 2
+            } else {
+                start = -(abs(median) * 2)
+                end = -0.0
+            }
+        }
+        
+        let range = Int(start * 100)...Int(end * 100)
+        let deviation = Double(range.random) / 100
+        
+        return deviation
+    }
+    
+    /// Obtain a random positive/negative deviation number from an upper
+    /// bound number using 0 as the median. e.g. 0.1 would return a random
+    /// number between -0.1 and 0.1, 10 would return between -10 and 10.
+    static func randomZeroDeviation(from upper:Double = 0.0) -> Double {
+        
+        let unsigned = abs(upper)
+        //  Median      Deviation
+        //   0.0 =    0.0  to  0.0 // no deviation
+        //   0.1 =   -0.1  to  0.1 // small deviation
+        //   0.5 =   -0.5  to  0.5 // deviation up to 0.5 (half factor)
+        //   1.0 =   -1.0  to  1.0 // deviation up to 1 (1x factor)
+        //   1.1 =   -1.1  to  1.1 // etc
+        
+        let start:Double = -(unsigned)
+        let end:Double = unsigned
+        
+        let range = Int(start * 100)...Int(end * 100)
+        let deviation = Double(range.random) / 100
+        
+//        print("---------------------------")
+//        print("upper    :", upper)
+//        print("start    :", start)
+//        print("end      :", end)
+//        print("range    :", range)
+//        print("deviation:", deviation)
+        
+        return deviation
+    }
+
+    /// Obtain a random positive/negative floating point number with an 
+    /// outer bound number (upper bound for positive numbers, negative bound
+    /// for negative numbers). Negative numbers will return a random value
+    /// between upper and 0, e.g. -10 returns a number between -10 and -0.
+    static func randomDecimal(withBounds bounds:Double = 0.0) -> Double {
+        
+        //  Median      Deviation
+        //   0.0 =    0.0  to  0.0 // no deviation
+        //   0.1 =    0.0  to  0.1 // small deviation
+        //   0.5 =    0.0  to  0.5 // deviation up to 0.5 (half factor)
+        //   1.0 =    0.0  to  1.0 // deviation up to 1 (1x factor)
+        //   1.1 =    0.0  to  1.1 // etc
+        //  10.0 =    0.0  to 10.0 //
+        //  -0.1 =   -0.1  to -0.0 // negative deviation
+        //  -0.5 =   -0.5  to -0.0 // small negative deviation
+        //  -1.0 =   -1.0  to -0.0 // etc
+        //  -1.1 =   -1.1  to -0.0 //
+        // -10.0 =  -10.0  to -0.0 //
+        
+        var start:Double = 0.0
+        var end:Double = 0.0
+        
+        if bounds != 0.0 {
+            if bounds > 0.0 {
+                end = abs(bounds)
+            } else {
+                start = bounds
+            }
+        }
+        
+        let range = Int(start * 100)...Int(end * 100)
+        let deviation = Double(range.random) / 100
+        
+        return deviation
     }
 }
+
+public extension Double {
+    
+    /// Equivalent in radians
+    var radians:Double {
+        return Angle(self).radians
+    }
+    
+    var randomFactor:Double {
+        return FloatingPointHelper.randomFactor(from:self)
+    }
+    
+    var randomMedianDeviation:Double {
+        return FloatingPointHelper.randomMedianDeviation(from: self)
+    }
+    
+    var randomZeroDeviation:Double {
+        return FloatingPointHelper.randomZeroDeviation(from: self)
+    }
+    
+    var randomDecimal:Double {
+        return FloatingPointHelper.randomDecimal(withBounds: self)
+    }
+}
+
+public extension CGFloat {
+
+    var radians:CGFloat {
+        return CGFloat(Angle(Double(self)).radians)
+    }
+
+    var randomFactor:CGFloat {
+        return CGFloat(FloatingPointHelper.randomFactor(from:Double(self)))
+    }
+    
+    var randomMedianDeviation:CGFloat {
+        return CGFloat(FloatingPointHelper.randomMedianDeviation(from: Double(self)))
+    }
+    
+    var randomZeroDeviation:CGFloat {
+        return CGFloat(FloatingPointHelper.randomZeroDeviation(from: Double(self)))
+    }
+    
+    var randomDecimal:CGFloat {
+        return CGFloat(FloatingPointHelper.randomDecimal(withBounds: Double(self)))
+    }
+}
+
