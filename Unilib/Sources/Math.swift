@@ -9,7 +9,11 @@
 import Foundation
 
 /// Simple struct representing an angle between 0º and 360º +/-
-public struct Angle {
+/// As this is ExpressibleByFloatLiteral, anywhere that takes
+/// an Angle may also take a Double in it's place.
+public struct Angle : ExpressibleByFloatLiteral {
+    
+    public typealias FloatLiteralType = Double
     
     public private(set) var degrees:Double
 
@@ -32,6 +36,10 @@ public struct Angle {
     /// Quadruple the current rotation angle
     public var quadruple:Angle {
         return self * 4
+    }
+    
+    public init(floatLiteral value: Angle.FloatLiteralType) {
+        self.degrees = value
     }
 
     public init(_ degrees:Double) {
@@ -58,6 +66,7 @@ public struct Angle {
 
 }
 
+
 /// Container for functions that can be reused between
 /// extensions of floating point types like Double or CGFloat.
 /// Since iOS/Swift forces us to go back and forth between
@@ -66,6 +75,42 @@ public struct Angle {
 /// in each extension.
 fileprivate struct FloatingPointHelper {
     
+    /// Obtain a random positive/negative floating point number with an
+    /// outer bound number (upper bound for positive numbers, negative bound
+    /// for negative numbers). Negative numbers will return a random value
+    /// between upper and 0, e.g. -10 returns a number between -10 and -0.
+    static func randomDecimal(withBounds bounds:Double = 0.0) -> Double {
+        
+        //  Median      Deviation
+        //   0.0 =    0.0  to  0.0 // no deviation
+        //   0.1 =    0.0  to  0.1 // small deviation
+        //   0.5 =    0.0  to  0.5 // deviation up to 0.5 (half factor)
+        //   1.0 =    0.0  to  1.0 // deviation up to 1 (1x factor)
+        //   1.1 =    0.0  to  1.1 // etc
+        //  10.0 =    0.0  to 10.0 //
+        //  -0.1 =   -0.1  to -0.0 // negative deviation
+        //  -0.5 =   -0.5  to -0.0 // small negative deviation
+        //  -1.0 =   -1.0  to -0.0 // etc
+        //  -1.1 =   -1.1  to -0.0 //
+        // -10.0 =  -10.0  to -0.0 //
+        
+        var start:Double = 0.0
+        var end:Double = 0.0
+        
+        if bounds != 0.0 {
+            if bounds > 0.0 {
+                end = abs(bounds)
+            } else {
+                start = bounds
+            }
+        }
+        
+        let range = Int(start * 100)...Int(end * 100)
+        let deviation = Double(range.random) / 100
+        
+        return deviation
+    }
+
     /// Obtain a random positive/negative factor number between a fraction and
     /// a whole number (e.g. 0.5 and 1.5) by providing a positive/negative
     /// "deviation" value. The deviation determines the range difference from 1.0
@@ -175,41 +220,6 @@ fileprivate struct FloatingPointHelper {
         return deviation
     }
 
-    /// Obtain a random positive/negative floating point number with an 
-    /// outer bound number (upper bound for positive numbers, negative bound
-    /// for negative numbers). Negative numbers will return a random value
-    /// between upper and 0, e.g. -10 returns a number between -10 and -0.
-    static func randomDecimal(withBounds bounds:Double = 0.0) -> Double {
-        
-        //  Median      Deviation
-        //   0.0 =    0.0  to  0.0 // no deviation
-        //   0.1 =    0.0  to  0.1 // small deviation
-        //   0.5 =    0.0  to  0.5 // deviation up to 0.5 (half factor)
-        //   1.0 =    0.0  to  1.0 // deviation up to 1 (1x factor)
-        //   1.1 =    0.0  to  1.1 // etc
-        //  10.0 =    0.0  to 10.0 //
-        //  -0.1 =   -0.1  to -0.0 // negative deviation
-        //  -0.5 =   -0.5  to -0.0 // small negative deviation
-        //  -1.0 =   -1.0  to -0.0 // etc
-        //  -1.1 =   -1.1  to -0.0 //
-        // -10.0 =  -10.0  to -0.0 //
-        
-        var start:Double = 0.0
-        var end:Double = 0.0
-        
-        if bounds != 0.0 {
-            if bounds > 0.0 {
-                end = abs(bounds)
-            } else {
-                start = bounds
-            }
-        }
-        
-        let range = Int(start * 100)...Int(end * 100)
-        let deviation = Double(range.random) / 100
-        
-        return deviation
-    }
 }
 
 public extension Double {
@@ -219,27 +229,69 @@ public extension Double {
         return Angle(self).radians
     }
     
+    /// Based on a floating point number, get a random value up
+    /// to that number. The number provided represents the outer
+    /// bounds, positive or negative.
+    /// Example:
+    /// -1.0.randomDecimal provides a random number betwen -1.0 and 0.0
+    /// See private static method for more info.
+    var randomDecimal:Double {
+        return FloatingPointHelper.randomDecimal(withBounds: self)
+    }
+    
+    /// Based on a floating point number, get a random factor between 
+    /// (1 - number) and (1 + number), with the resulting value being useful
+    /// to decrease/increase some other value "by a factor of".
+    /// Supports negative numbers.
+    /// Example:
+    /// 0.1.randomFactor provides a random number between 0.9 and 1.1
+    ///   let size = 100.0
+    ///   let scaled = size * 0.1.randomFactor
+    ///   scaled // between 90 and 110
+    /// See private static method for more info.
     var randomFactor:Double {
         return FloatingPointHelper.randomFactor(from:self)
     }
     
+    /// Based on a floating point number, get a random value between
+    /// 0.0 and (number x 2). The number provided represents the
+    /// "median deviation", with the lower bounds being 0.0 and
+    /// the upper bounds being the number doubled (thus making the
+    /// number the middle value). e.g. for 1: 0 lower -- 1 median -- 2 upper. 
+    /// Supports negative numbers.
+    /// Example:
+    /// 1.0.randomMedianDeviation provides a random number between 0.0 and 2.0
+    ///   let increment = 2.0
+    ///   let randomIncrement = increment + 1.0.randomMedianDeviation
+    ///   randomIncrement // between 2.0 and 4.0
+    /// See private static method for more info.
     var randomMedianDeviation:Double {
         return FloatingPointHelper.randomMedianDeviation(from: self)
     }
     
+    /// Based on a floating point number, get a random value between
+    /// -number and +number. The number provided represents the
+    /// lower (negative) and upper (positive) bounds of the range.
+    /// Example:
+    /// 0.1.randomZeroDeviation provides a random number between -0.1 and 0.1
+    ///   let position = 150.0
+    ///   let randomPosition = position + 10.randomZeroDeviation
+    ///   randomPosition // between 140 and 160
+    /// See private static method for more info.
     var randomZeroDeviation:Double {
         return FloatingPointHelper.randomZeroDeviation(from: self)
     }
     
-    var randomDecimal:Double {
-        return FloatingPointHelper.randomDecimal(withBounds: self)
-    }
 }
 
 public extension CGFloat {
 
     var radians:CGFloat {
         return CGFloat(Angle(Double(self)).radians)
+    }
+    
+    var randomDecimal:CGFloat {
+        return CGFloat(FloatingPointHelper.randomDecimal(withBounds: Double(self)))
     }
 
     var randomFactor:CGFloat {
@@ -254,8 +306,5 @@ public extension CGFloat {
         return CGFloat(FloatingPointHelper.randomZeroDeviation(from: Double(self)))
     }
     
-    var randomDecimal:CGFloat {
-        return CGFloat(FloatingPointHelper.randomDecimal(withBounds: Double(self)))
-    }
 }
 

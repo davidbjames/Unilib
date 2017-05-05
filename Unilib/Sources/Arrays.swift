@@ -81,6 +81,19 @@ public extension Array where Element : Equatable {
         }
         return nil
     }
+    
+    func has(_ test:(Iterator.Element)->Bool) -> Bool {
+        return self.filter(test).count > 0
+    }
+    
+    func hasAll(_ test:(Iterator.Element)->Bool) -> Bool {
+        return self.filter(test).count == self.count
+    }
+
+    func hasNot(_ test:(Iterator.Element)->Bool) -> Bool {
+        return self.filter(test).count == 0
+    }
+
 }
 
 public extension Collection where Indices.Iterator.Element == Index {
