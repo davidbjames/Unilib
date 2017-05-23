@@ -15,4 +15,12 @@ public extension String {
             return !isEmpty
         }
     }
+    
+    func trim(from:String) -> String {
+        if let lowerBound = range(of: from)?.lowerBound {
+            return substring(to: lowerBound)
+        } else {
+            return self
+        }
+    }
 }
