@@ -104,12 +104,16 @@ public extension Collection where Indices.Iterator.Element == Index {
     }
 }
 
-//public extension Array {
-//    
-//    var xor:Bool {
-//        return self.filter({ $0 != nil }).count == 1
-//    }
-//}
+// MARK:- Arrays of Optionals
+
+public extension Array where Element == Optional<Any> {
+    
+    /// One (and only one) item is non-optional
+    var hasOneAndOnlyOne:Bool {
+        return self.filter({ $0 != nil }).count == 1
+    }
+    
+}
 
 /// Set-like functionality on Array
 public extension Array where Element : Equatable {
