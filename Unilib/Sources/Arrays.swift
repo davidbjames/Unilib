@@ -153,6 +153,16 @@ public extension Array where Element : Equatable {
         }
     }
     
+    /// Remove duplicates from an array of elements. Similar to union
+    /// but performed after the fact.
+    func removeDuplicates() -> Array<Element> {
+        var newArray = [Element]()
+        for element in self {
+            newArray.union(element)
+        }
+        return newArray
+    }
+    
     /// Intersect array to only include elements shared in self and provided array.
     /// and return a new array.
     /// Example: [a,b,c].intersect([b,c,d]) --> [b,c]
@@ -202,8 +212,6 @@ public extension Array where Element : Equatable {
         self.removeAll()
         self.append(contentsOf: result)
     }
-    
-    
 }
 
 // Randomize array elements
