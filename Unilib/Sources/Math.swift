@@ -66,6 +66,7 @@ public struct Angle : ExpressibleByFloatLiteral {
 
 }
 
+// TODO: ✅ Genericize this, e.g. <T:BinaryFloatingPoint>
 
 /// Container for functions that can be reused between
 /// extensions of floating point types like Double or CGFloat.
