@@ -106,13 +106,48 @@ public extension Collection where Indices.Iterator.Element == Index {
 
 // MARK:- Arrays of Optionals
 
-public extension Array where Element == Optional<Any> {
+public extension Sequence where Iterator.Element: OptionalType {
+    var droppingNils:[Iterator.Element.Wrapped] {
+        return flatMap({ $0.optional })
+    }
+}
+
+public extension Array where Iterator.Element : OptionalType {
     
-    /// One (and only one) item is non-optional
-    var hasOneAndOnlyOne:Bool {
-        return self.filter({ $0 != nil }).count == 1
+    var firstNonNil:Element.Wrapped? {
+        return first { $0.optional != nil } as? Element.Wrapped
     }
     
+    var countOfNonNil:Int {
+        return self.filter({ $0.optional != nil }).count
+    }
+    
+    /// One (and only one) item is non-nil
+    /// This is roughly an 'xor boolean' function:
+    /// if [x,y,z].containsOnlyOneNonNil
+    var hasOnlyOneNonNil:Bool {
+        return countOfNonNil == 1
+    }
+    
+    var hasNonNil:Bool {
+        return countOfNonNil > 0
+    }
+    
+    var allNil:Bool {
+        return countOfNonNil == 0
+    }
+    
+    var allNonNil:Bool {
+        return countOfNonNil == count
+    }
+}
+
+/// Nil-coalesce array
+/// Take the first non-nil value, or if none, the default.
+public func ?? <T>(array:Array<T?>, defaultValue:T) -> T {
+    return array.droppingNils.first ?? defaultValue
+}
+
 }
 
 /// Set-like functionality on Array
