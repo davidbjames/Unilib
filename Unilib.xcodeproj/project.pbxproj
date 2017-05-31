@@ -26,6 +26,8 @@
 		E7D9548C1DA2ACC900F86827 /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D954861DA2ACC900F86827 /* Validators.swift */; };
 		E7D954901DA2BEFA00F86827 /* Arrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D9548F1DA2BEFA00F86827 /* Arrays.swift */; };
 		E7F9FB941EDEBCB8007E0EFD /* Optionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F9FB931EDEBCB8007E0EFD /* Optionals.swift */; };
+		E7F9FB971EDEF67F007E0EFD /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F9FB961EDEF67F007E0EFD /* Debug.swift */; };
+		E7F9FB991EDEF728007E0EFD /* DebugMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F9FB981EDEF728007E0EFD /* DebugMeta.swift */; };
 		FEC6BA7AE688D9B91833D00B /* Pods_UnilibTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA78EBD7783FF0D6843BE72 /* Pods_UnilibTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +69,8 @@
 		E7D9548F1DA2BEFA00F86827 /* Arrays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arrays.swift; sourceTree = "<group>"; };
 		E7F3E65B1ED70316000E941B /* Unilib.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Unilib.playground; sourceTree = "<group>"; };
 		E7F9FB931EDEBCB8007E0EFD /* Optionals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optionals.swift; sourceTree = "<group>"; };
+		E7F9FB961EDEF67F007E0EFD /* Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
+		E7F9FB981EDEF728007E0EFD /* DebugMeta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugMeta.swift; sourceTree = "<group>"; };
 		EFBB21F86E72FFE52A04E405 /* Pods-UnilibTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnilibTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnilibTests/Pods-UnilibTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -196,6 +200,7 @@
 				E7D9548D1DA2AF7A00F86827 /* Validation */,
 				E7CAA1EE1DABBF0C00CDF6A7 /* Rx */,
 				E750BD2B1DC918E40079687B /* Functions */,
+				E7F9FB951EDEF669007E0EFD /* Debugging */,
 				E71DC7FA1E0320D500D99427 /* Misc */,
 			);
 			path = Sources;
@@ -218,6 +223,15 @@
 				E7D954851DA2ACC900F86827 /* Tasks.swift */,
 			);
 			name = Tasks;
+			sourceTree = "<group>";
+		};
+		E7F9FB951EDEF669007E0EFD /* Debugging */ = {
+			isa = PBXGroup;
+			children = (
+				E7F9FB961EDEF67F007E0EFD /* Debug.swift */,
+				E7F9FB981EDEF728007E0EFD /* DebugMeta.swift */,
+			);
+			name = Debugging;
 			sourceTree = "<group>";
 		};
 		F3B28CE0187537655EB7302A /* Frameworks */ = {
@@ -426,12 +440,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7CAA1F01DABBF3200CDF6A7 /* RxOperators.swift in Sources */,
+				E7F9FB971EDEF67F007E0EFD /* Debug.swift in Sources */,
 				E7D954891DA2ACC900F86827 /* Filters.swift in Sources */,
 				E71DC7FC1E03210300D99427 /* Math.swift in Sources */,
 				E726E75A1EC6E0A600C33A4F /* MathOperators.swift in Sources */,
 				E750BD2D1DC9190E0079687B /* Time.swift in Sources */,
 				E7F9FB941EDEBCB8007E0EFD /* Optionals.swift in Sources */,
 				E7D954881DA2ACC900F86827 /* DefaultValidators.swift in Sources */,
+				E7F9FB991EDEF728007E0EFD /* DebugMeta.swift in Sources */,
 				E7CD306F1ED440CC002AE776 /* OptionSet.swift in Sources */,
 				E7D954901DA2BEFA00F86827 /* Arrays.swift in Sources */,
 				E7D9548C1DA2ACC900F86827 /* Validators.swift in Sources */,
