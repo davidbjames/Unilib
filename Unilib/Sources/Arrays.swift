@@ -148,10 +148,62 @@ public func ?? <T>(array:Array<T?>, defaultValue:T) -> T {
     return array.droppingNils.first ?? defaultValue
 }
 
+
+// Set-like functionality on arrays. Overall, if possible, use Set
+// (a Sequence) for set functionality because the performance characteristics 
+// are signficantly better than doing similar things with arrays, and this is 
+// primarily because Sets use Hashable elements. Exception to this rule would be 
+// if you create wrapper functions on arrays that use Sets, such as
+// removingDuplicates below. Generally, the key to overall performance is
+// making sure that objects are Hashable and use a hashing algorithm that is free 
+// from collisions (as collisions cause performance degradation). Also,
+// Equatable == implementation should guard on this hash for further optimization.
+// (though this needs more empirical evidence)
+
+/*
+struct MyHashable : Hashable {
+    let i:Int
+    let j:Int
+    var hashValue: Int {
+        return i.hashValue ^ (j.hashValue &* 987654433)
+        // The following hash function is 1800% slower due to collisions 
+        // based on worst case scenario: e.g. MyHashable(i:i, j:i+1)
+        // return i.hashValue ^ j.hashValue
+    }
+    public static func == (lhs:MyHashable, rhs:MyHashable) -> Bool {
+        // Verify this guard is always a performant choice.
+        // Perhaps where equality checks are expensive it's a good idea.
+        guard lhs.hashValue == rhs.hashValue else { return false }
+        return lhs.i == rhs.i && lhs.j == rhs.j
+    }
+}
+*/
+
+/// Set-like functionality on Array with Hashable elements
+/// These have the advantage of using Set logic which performs
+/// an order of magnitude better than Array/contains logic 
+/// because of working with hashable elements.
+/// Peformance on these is O(1)
+public extension Array where Iterator.Element: Hashable {
+    
+    func removingDuplicates() -> [Iterator.Element] {
+        var seen: Set<Iterator.Element> = []
+        return filter { seen.insert($0).inserted }
+    }
 }
 
-/// Set-like functionality on Array
+
+/// Set-like functionality on Arrays Equatable elements.
+/// Performance on these is O(n)
 public extension Array where Element : Equatable {
+
+    func removingDuplicates() -> Array<Iterator.Element> {
+        var newArray = [Element]()
+        for element in self {
+            newArray.union(element)
+        }
+        return newArray
+    }
     
     /// Append an element if it does not already exist in the array
     /// and return a new array.
@@ -188,15 +240,7 @@ public extension Array where Element : Equatable {
         }
     }
     
-    /// Remove duplicates from an array of elements. Similar to union
-    /// but performed after the fact.
-    func removeDuplicates() -> Array<Element> {
-        var newArray = [Element]()
-        for element in self {
-            newArray.union(element)
-        }
-        return newArray
-    }
+    
     
     /// Intersect array to only include elements shared in self and provided array.
     /// and return a new array.
