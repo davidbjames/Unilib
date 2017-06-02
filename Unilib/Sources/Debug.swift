@@ -113,6 +113,10 @@ public struct ApiDebug {
     public func method(_ wrapper:Any, _ method:String, _ params:[String]? = nil, _ vals:[Any?]? = nil, delegates:Bool = false) -> ApiDebug.Method {
         return Method(options:self.options, wrapper:wrapper, method:method, params:params, vals:vals, delegates:delegates)
     }
+    
+    public func constructor(_ wrapper:Any, _ params:[String]? = nil, _ vals:[Any?]? = nil) -> ApiDebug.Method {
+        return Method(options:self.options, wrapper:wrapper, method:"init", params:params, vals:vals, delegates: false)
+    }
 
     // Printable debug wrappers
     
@@ -242,12 +246,20 @@ public struct ApiDebug {
         
         public var description:String {
             
-            var output = options.contains(.short) ? "" : "🚜 "
+            let isInit = method == "init"
+            
+            var output = options.contains(.short) ? "" : (isInit ? "🚛 " : "🚜 ")
             
             output += String(describing:type(of:wrapper))
-            // remove from first open parens onward
-            // this allows passing #function to this.
-            output += "." + method.trim(from: "(")
+            if isInit {
+                // Don't add the method name because inits don't count.
+                // Example: ViewMutator(..)
+            } else {
+                // remove from first open parens onward
+                // this allows passing #function to this.
+                output += "." + method.trim(from: "(")
+                // Example: ViewMutator.center(..)
+            }
             output += "("
             
             if let params = self.params, let values = self.vals {
