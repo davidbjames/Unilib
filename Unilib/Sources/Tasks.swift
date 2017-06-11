@@ -5,7 +5,9 @@
 //  Created by David James on 9/28/16.
 //  Copyright © 2016 David B James. All rights reserved.
 //
-
+/*
+ Commented out until Rx* dependencies have updated to Swift 4
+ 
 import Foundation
 import RxSwift
 
@@ -42,3 +44,6 @@ public protocol Dependency {
     associatedtype Result
     func fulfill() -> Observable<Result>
 }
+ 
+ */
+ 
