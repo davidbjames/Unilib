@@ -96,10 +96,10 @@ public extension Array where Element : Equatable {
 
 }
 
-public extension Collection where Indices.Iterator.Element == Index {
+public extension Collection {
     
     /// Returns the element at the specified index if it is within bounds, otherwise nil.
-    subscript (safe index: Index) -> Generator.Element? {
+    subscript (safe index: Index) -> Iterator.Element? {
         return indices.contains(index) ? self[index] : nil
     }
 }
@@ -296,7 +296,7 @@ public extension Array where Element : Equatable {
 // Randomize array elements
 // From Nate Cook: http://stackoverflow.com/questions/24026510/how-do-i-shuffle-an-array-in-swift#24029847
 
-public extension MutableCollection where Indices.Iterator.Element == Index {
+public extension MutableCollection {
     /// Shuffles the contents of this collection.
     mutating func shuffle() {
         let c = count
@@ -306,7 +306,7 @@ public extension MutableCollection where Indices.Iterator.Element == Index {
             let d: IndexDistance = numericCast(arc4random_uniform(numericCast(unshuffledCount)))
             guard d != 0 else { continue }
             let i = index(firstUnshuffled, offsetBy: d)
-            swap(&self[firstUnshuffled], &self[i])
+            self.swapAt(firstUnshuffled, i)
         }
     }
 }

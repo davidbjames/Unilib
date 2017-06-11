@@ -9,7 +9,7 @@
 import Foundation
 
 
-public extension OptionSet where RawValue : Integer {
+public extension OptionSet where RawValue : FixedWidthInteger {
     
     // Care of Martin R on Stack Overflow
     // https://stackoverflow.com/questions/32102936/how-do-you-enumerate-optionsettype-in-swift#32103136
