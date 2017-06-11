@@ -1,11 +1,12 @@
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 target 'Unilib' do
   use_frameworks!
 
-  pod 'RxSwift'
-  pod 'RxCocoa'
-  pod 'RxSwiftExt'
+# Commented until Swift 4 transition complete
+#  pod 'RxSwift'
+#  pod 'RxCocoa'
+#  pod 'RxSwiftExt'
 
   target 'UnilibTests' do
     inherit! :search_paths
