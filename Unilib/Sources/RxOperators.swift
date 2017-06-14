@@ -6,9 +6,6 @@
 //  Copyright © 2016 David B James. All rights reserved.
 //
 
-/*
- Commented out until Rx* dependencies have updated to Swift 4
- 
 import Foundation
 import RxSwift
 
@@ -40,6 +37,3 @@ extension ObservableType {
         return self.retry(maxAttempts)
     }
 }
- 
- */
- 
