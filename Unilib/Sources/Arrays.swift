@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK:- Indexes
+
 public extension Array  {
     
     /// The last index of the array if it exists
@@ -65,6 +67,8 @@ public extension Array  {
     }
 }
 
+// MARK:- Find
+
 /// Search/replace
 public extension Array where Element : Equatable {
     
@@ -81,6 +85,18 @@ public extension Array where Element : Equatable {
         }
         return nil
     }
+}
+
+// MARK:- Boolean logic
+
+public extension Sequence where Element : Equatable {
+    
+    func doesNotContain(_ element:Element) -> Bool {
+        return !self.contains(element)
+    }
+}
+
+public extension Collection {
     
     func has(_ test:(Iterator.Element)->Bool) -> Bool {
         return self.filter(test).count > 0
@@ -93,26 +109,26 @@ public extension Array where Element : Equatable {
     func hasNot(_ test:(Iterator.Element)->Bool) -> Bool {
         return self.filter(test).count == 0
     }
-
 }
 
-public extension Collection where Indices.Iterator.Element == Index {
+// MARK:- Optionals
+
+public extension Collection {
     
     /// Returns the element at the specified index if it is within bounds, otherwise nil.
-    subscript (safe index: Index) -> Generator.Element? {
+    subscript (safe index: Index) -> Iterator.Element? {
         return indices.contains(index) ? self[index] : nil
     }
 }
 
-// MARK:- Arrays of Optionals
-
-public extension Sequence where Iterator.Element: OptionalType {
+public extension Sequence where Element : OptionalType {
+    
     var droppingNils:[Iterator.Element.Wrapped] {
         return flatMap({ $0.optional })
     }
 }
 
-public extension Array where Iterator.Element : OptionalType {
+public extension Collection where Element : OptionalType {
     
     var firstNonNil:Element.Wrapped? {
         return first { $0.optional != nil } as? Element.Wrapped
@@ -148,6 +164,7 @@ public func ?? <T>(array:Array<T?>, defaultValue:T) -> T {
     return array.droppingNils.first ?? defaultValue
 }
 
+// MARK:- Set-like
 
 // Set-like functionality on arrays. Overall, if possible, use Set
 // (a Sequence) for set functionality because the performance characteristics 
@@ -192,100 +209,135 @@ public extension Array where Iterator.Element: Hashable {
     }
 }
 
+// TODO: ✅ Create Hashable versions of these using Sets
 
 /// Set-like functionality on Arrays Equatable elements.
 /// Performance on these is O(n)
 public extension Array where Element : Equatable {
-
+    
     func removingDuplicates() -> Array<Iterator.Element> {
         var newArray = [Element]()
         for element in self {
-            newArray.union(element)
+            newArray.formUnion(element)
         }
         return newArray
     }
     
-    /// Append an element if it does not already exist in the array
+    /// Insert an element if it does not already exist in the array
     /// and return a new array.
     /// Example: [a,b,c].union(a) --> [a,b,c]
-    func formUnion(_ element:Element) -> Array<Element> {
+    func insert(_ element:Element) -> Array<Element> {
         var newArray = self
-        newArray.union(element)
+        newArray.formUnion(element)
+        return newArray
+    }
+    
+    /// Insert or replace an element regardless.
+    func update(with element:Element) -> Array<Element> {
+        var newArray = self
+        if let index = newArray.index(of: element) {
+            newArray[index] = element
+        } else {
+            newArray.append(element)
+        }
         return newArray
     }
     
     /// Append an array of elements if they do not already exist in the array
     /// and return a new array.
     /// Example: [a,b,c].union([a,d]) --> [a,b,c,d]
-    func formUnion(_ elements:[Element]) -> Array<Element> {
+    func union(_ elements:[Element]) -> Array<Element> {
         var newArray = self
-        newArray.union(elements)
+        newArray.formUnion(elements)
         return newArray
     }
     
-    
     /// Append an element if it does not already exist in the array
     /// Example: [a,b,c].unionInPlace(a) --> [a,b,c]
-    mutating func union(_ element:Element) {
-        if !contains(element) {
+    mutating func formUnion(_ element:Element) {
+        if doesNotContain(element) {
             append(element)
         }
     }
     
     /// Append an array of elements if they do not already exist in the array
     /// Example: [a,b,c].unionInPlace([a,d]) --> [a,b,c,d]
-    mutating func union(_ elements:[Element]) {
+    mutating func formUnion(_ elements:[Element]) {
         for element in elements {
-            union(element)
+            formUnion(element)
         }
     }
     
-    
-    
-    /// Intersect array to only include elements shared in self and provided array.
-    /// and return a new array.
+    /// Return array including elements shared in self and provided array.
     /// Example: [a,b,c].intersect([b,c,d]) --> [b,c]
-    func formIntersection(_ elements:[Element]) -> Array<Element> {
+    func intersection(_ elements:[Element]) -> Array<Element> {
         var newArray = self
-        newArray.intersect(elements)
+        newArray.formIntersection(elements)
         return newArray
     }
     
-    /// Mutate array to only include elements shared in self and provided array. (intersection)
-    /// Example: [a,b,c].intersectInPlace([b,c,d]) --> [b,c]
-    mutating func intersect(_ elements:[Element]) {
+    /// Mutate array to only include elements shared in self and provided array.
+    /// Example: [a,b,b,c].intersectInPlace([b,c,d]) --> [b,b,c]
+    mutating func formIntersection(_ rElements:[Element]) {
         var result = Array<Element>()
-        for element in self {
-            if elements.contains(element) && !result.contains(element) {
-                result.append(element)
+        for lElement in self {
+            if rElements.contains(lElement) { // && result.doesNotContain(lElement)
+                result.append(lElement)
             }
         }
         self.removeAll()
         self.append(contentsOf: result)
     }
     
-    /// Mutate array to only include elements that are not shared
-    /// in self and provided array and return new array. (exclusiveOr)
+    /// Return array including elements that are not shared
+    /// in self and provided array.
+    /// a.k.a. exclusiveOr / symmetricDifference
     /// Example: [a,b,c,a].exclusive([b,b,c,d]) --> [a,d]
-    func formDifference(_ elements:[Element]) -> Array<Element> {
+    func difference(_ elements:[Element]) -> Array<Element> {
         var newArray = self
-        newArray.difference(elements)
+        newArray.formDifference(elements)
         return newArray
     }
     
     /// Mutate array to only include elements that are not shared
-    /// in self and provided array. (exclusiveOr)
-    /// Example: [a,b,c,a].exclusiveInPlace([b,b,c,d]) --> [a,d]
-    mutating func difference(_ elements:[Element]) {
+    /// in self and provided array.
+    /// a.k.a. exclusiveOr / symmetricDifference
+    /// As far as ordering is concerned, elements on the left side
+    /// come out first and elements on the right side come out last.
+    /// Example: [a,b,c,a].exclusiveOr([b,b,c,d]) --> [a,a,d]
+    mutating func formDifference(_ rElements:[Element]) {
         var result = Array<Element>()
-        for element in self {
-            if !elements.contains(element) && !result.contains(element) {
-                result.append(element)
+        
+        for lElement in self {
+            if rElements.doesNotContain(lElement) { // && result.doesNotContain(lElement)
+                result.append(lElement)
             }
         }
-        for element in elements {
-            if !self.contains(element) && !result.contains(element) {
-                result.append(element)
+        for rElement in rElements {
+            if self.doesNotContain(rElement) { // && result.doesNotContain(rElement)
+                result.append(rElement)
+            }
+        }
+        self.removeAll()
+        self.append(contentsOf: result)
+    }
+    
+    /// Return array with elements in provided array "subtracted"
+    /// from original array.
+    func subtract(_ elements:[Element]) -> Array<Element> {
+        var newArray = self
+        newArray.formSubtraction(elements)
+        return newArray
+    }
+    
+    /// Mutate array subtracting provided array from the original array.
+    /// [a,a,b,c].formDifference([b,c,d]) --> [a,a]
+    /// also: [a,a,b,c].formDifference([a,b,c,d]) --> []
+    mutating func formSubtraction(_ rElements:[Element]) {
+        var result = [Element]()
+        for lElement in self {
+            if rElements.doesNotContain(lElement) {
+                result.append(lElement)
             }
         }
         self.removeAll()
@@ -293,10 +345,11 @@ public extension Array where Element : Equatable {
     }
 }
 
+
 // Randomize array elements
 // From Nate Cook: http://stackoverflow.com/questions/24026510/how-do-i-shuffle-an-array-in-swift#24029847
 
-public extension MutableCollection where Indices.Iterator.Element == Index {
+public extension MutableCollection {
     /// Shuffles the contents of this collection.
     mutating func shuffle() {
         let c = count
@@ -306,7 +359,7 @@ public extension MutableCollection where Indices.Iterator.Element == Index {
             let d: IndexDistance = numericCast(arc4random_uniform(numericCast(unshuffledCount)))
             guard d != 0 else { continue }
             let i = index(firstUnshuffled, offsetBy: d)
-            swap(&self[firstUnshuffled], &self[i])
+            self.swapAt(firstUnshuffled, i)
         }
     }
 }

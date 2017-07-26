@@ -5,7 +5,9 @@
 //  Created by David James on 9/28/16.
 //  Copyright © 2016 David B James. All rights reserved.
 //
-
+/*
+ Commented out until Rx* dependencies have updated to Swift 4
+ 
 import Foundation
 import RxSwift
 
@@ -13,13 +15,13 @@ import RxSwift
 /// required for it's performance viz. "command pattern") and
 /// ultimately returns an Observable for the action it performs.
 public protocol ObservableTask : ObservableConvertibleType {
-    associatedtype E
+    associatedtype T
     var options:TaskOptions? { get set }
-    func create() -> Observable<E>
+    func create() -> Observable<T>
 }
 
 public extension ObservableTask {
-    func asObservable() -> Observable<Self.E>  {
+    func asObservable() -> Observable<Self.T>  {
         return create()
     }
 }
@@ -42,3 +44,6 @@ public protocol Dependency {
     associatedtype Result
     func fulfill() -> Observable<Result>
 }
+ 
+ */
+ 
