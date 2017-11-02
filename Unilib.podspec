@@ -24,8 +24,9 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
 
-  s.dependency "RxSwift"
-  s.dependency "RxCocoa"
-  s.dependency "RxSwiftExt"
+  # Removed Rx. Move to Unilib+Rx. Or add as necessary.
+  #s.dependency "RxSwift"
+  #s.dependency "RxCocoa"
+  #s.dependency "RxSwiftExt"
 
 end

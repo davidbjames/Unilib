@@ -13,7 +13,6 @@
 		E750BD2D1DC9190E0079687B /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = E750BD2C1DC9190E0079687B /* Time.swift */; };
 		E789AB3A1EDAF82900CF5A90 /* Arrays_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E789AB391EDAF82900CF5A90 /* Arrays_Tests.swift */; };
 		E7C048801DA56C16001CBC52 /* Ranges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C0487F1DA56C16001CBC52 /* Ranges.swift */; };
-		E7CAA1F01DABBF3200CDF6A7 /* RxOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CAA1EF1DABBF3200CDF6A7 /* RxOperators.swift */; };
 		E7CD306F1ED440CC002AE776 /* OptionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CD306E1ED440CC002AE776 /* OptionSet.swift */; };
 		E7D954701DA2A59400F86827 /* Unilib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D954661DA2A59400F86827 /* Unilib.framework */; };
 		E7D954751DA2A59400F86827 /* UnilibTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D954741DA2A59400F86827 /* UnilibTests.swift */; };
@@ -52,7 +51,6 @@
 		E750BD2C1DC9190E0079687B /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		E789AB391EDAF82900CF5A90 /* Arrays_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arrays_Tests.swift; sourceTree = "<group>"; };
 		E7C0487F1DA56C16001CBC52 /* Ranges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ranges.swift; sourceTree = "<group>"; };
-		E7CAA1EF1DABBF3200CDF6A7 /* RxOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxOperators.swift; sourceTree = "<group>"; };
 		E7CD306E1ED440CC002AE776 /* OptionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionSet.swift; sourceTree = "<group>"; };
 		E7D954661DA2A59400F86827 /* Unilib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Unilib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7D954691DA2A59400F86827 /* Unilib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Unilib.h; sourceTree = "<group>"; };
@@ -144,14 +142,6 @@
 			name = Foundation;
 			sourceTree = "<group>";
 		};
-		E7CAA1EE1DABBF0C00CDF6A7 /* Rx */ = {
-			isa = PBXGroup;
-			children = (
-				E7CAA1EF1DABBF3200CDF6A7 /* RxOperators.swift */,
-			);
-			name = Rx;
-			sourceTree = "<group>";
-		};
 		E7D9545C1DA2A59400F86827 = {
 			isa = PBXGroup;
 			children = (
@@ -198,7 +188,6 @@
 				E7C0487E1DA56BF8001CBC52 /* Foundation */,
 				E7D9548E1DA2AF9700F86827 /* Tasks */,
 				E7D9548D1DA2AF7A00F86827 /* Validation */,
-				E7CAA1EE1DABBF0C00CDF6A7 /* Rx */,
 				E750BD2B1DC918E40079687B /* Functions */,
 				E7F9FB951EDEF669007E0EFD /* Debugging */,
 				E71DC7FA1E0320D500D99427 /* Misc */,
@@ -364,13 +353,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Unilib-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		618ABC9320B76E14D7950491 /* [CP] Copy Pods Resources */ = {
@@ -424,13 +416,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-UnilibTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -440,7 +435,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7CAA1F01DABBF3200CDF6A7 /* RxOperators.swift in Sources */,
 				E7F9FB971EDEF67F007E0EFD /* Debug.swift in Sources */,
 				E7D954891DA2ACC900F86827 /* Filters.swift in Sources */,
 				E71DC7FC1E03210300D99427 /* Math.swift in Sources */,
