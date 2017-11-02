@@ -99,6 +99,10 @@ public extension Sequence where Element : Equatable {
 
 public extension Collection {
     
+    var nonEmpty:Self? {
+        return count > 0 ? self : nil
+    }
+
     func has(_ test:(Iterator.Element)->Bool) -> Bool {
         return self.filter(test).count > 0
     }
@@ -110,6 +114,7 @@ public extension Collection {
     func hasNot(_ test:(Iterator.Element)->Bool) -> Bool {
         return self.filter(test).count == 0
     }
+    
 }
 
 // MARK:- Optionals
@@ -157,13 +162,6 @@ public extension Collection where Element : OptionalType {
     var allNonNil:Bool {
         return countOfNonNil == count
     }
-}
-
-/// Nil-coalesce array
-/// Take the first non-nil value, or if none, the default.
-/// e.g. let foo = arrayOfFoo ?? Foo()
-public func ?? <T>(array:Array<T?>, defaultValue:T) -> T {
-    return array.droppingNils.first ?? defaultValue
 }
 
 // MARK:- Set-like
