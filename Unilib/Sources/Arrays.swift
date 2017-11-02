@@ -78,6 +78,7 @@ public extension Array where Element : Equatable {
     /// - Example: let foo = myArray.find{ $0.name = "foo"}.element
     /// - SeeAlso: Sequence.first(:where) which just returns the element.
     func find(_ includeElement: (Iterator.Element) -> Bool) -> (element:Iterator.Element, index:Int, prevIndex:Int?, nextIndex:Int?)? {
+        
         if let element = self.filter(includeElement).first {
             if let index = self.index(of: element) {
                 return (element, index, previousIndex(from: index), nextIndex(from: index))
@@ -160,6 +161,7 @@ public extension Collection where Element : OptionalType {
 
 /// Nil-coalesce array
 /// Take the first non-nil value, or if none, the default.
+/// e.g. let foo = arrayOfFoo ?? Foo()
 public func ?? <T>(array:Array<T?>, defaultValue:T) -> T {
     return array.droppingNils.first ?? defaultValue
 }
@@ -174,8 +176,8 @@ public func ?? <T>(array:Array<T?>, defaultValue:T) -> T {
 // removingDuplicates below. Generally, the key to overall performance is
 // making sure that objects are Hashable and use a hashing algorithm that is free 
 // from collisions (as collisions cause performance degradation). Also,
-// Equatable == implementation should guard on this hash for further optimization.
-// (though this needs more empirical evidence)
+// Per some bloke on the internet, the "Equatable ==" implementation should
+// guard on this hash for further optimization. (see example below)
 
 /*
 struct MyHashable : Hashable {
@@ -183,7 +185,7 @@ struct MyHashable : Hashable {
     let j:Int
     var hashValue: Int {
         return i.hashValue ^ (j.hashValue &* 987654433)
-        // The following hash function is 1800% slower due to collisions 
+        // The following vv hash function is 1800% slower than ^^ due to collisions
         // based on worst case scenario: e.g. MyHashable(i:i, j:i+1)
         // return i.hashValue ^ j.hashValue
     }
@@ -207,9 +209,86 @@ public extension Array where Iterator.Element: Hashable {
         var seen: Set<Iterator.Element> = []
         return filter { seen.insert($0).inserted }
     }
+    
+    /// Insert an element if it does not already exist in the array
+    /// and return a new array.
+    /// Example: [a,b,c].union(a) --> [a,b,c]
+    func insert(_ element:Element) -> Array<Element> {
+        var set = Set(self)
+        set.insert(element)
+        return Array(set)
+    }
+
+    /// Insert or replace an element regardless.
+    func update(with element:Element) -> Array<Element> {
+        var set = Set(self)
+        set.update(with: element)
+        return Array(set)
+    }
+
+    /// Append an array of elements if they do not already exist in the array
+    /// and return a new array.
+    /// Example: [a,b,c].union([a,d]) --> [a,b,c,d]
+    func union(_ elements:[Element]) -> Array<Element> {
+        return Array(Set(self).union(elements))
+    }
+    
+    /// Append an element if it does not already exist in the array
+    /// Example: [a,b,c].formUnion(a) --> [a,b,c]
+    mutating func formUnion(_ element:Element) {
+        self = union([element])
+    }
+    
+    /// Append an array of elements if they do not already exist in the array
+    /// Example: [a,b,c].formUnion([a,d]) --> [a,b,c,d]
+    mutating func formUnion(_ elements:[Element]) {
+        self = union(elements)
+    }
+    
+    /// Return array including elements shared in self and provided array.
+    /// Example: [a,b,c].intersect([b,c,d]) --> [b,c]
+    func intersection(_ elements:[Element]) -> Array<Element> {
+        return Array(Set(self).intersection(elements))
+    }
+    
+    /// Mutate array to only include elements shared in self and provided array.
+    /// Example: [a,b,b,c].formIntersection([b,c,d]) --> [b,c]
+    mutating func formIntersection(_ elements:[Element]) {
+        self = intersection(elements)
+    }
+    
+    /// Return array including elements that are not shared
+    /// in self and provided array.
+    /// a.k.a. exclusiveOr / symmetricDifference
+    /// Example: [a,b,c,a].difference([b,b,c,d]) --> [a,d]
+    func difference(_ elements:[Element]) -> Array<Element> {
+        return Array(Set(self).symmetricDifference(elements))
+    }
+    
+    /// Mutate array to only include elements that are not shared
+    /// in self and provided array.
+    /// a.k.a. exclusiveOr / symmetricDifference
+    /// Example: [a,b,c,a].formDifference([b,b,c,d]) --> [a,d]
+    mutating func formDifference(_ elements:[Element]) {
+        self = difference(elements)
+    }
+    
+    /// Return array with elements in provided array "subtracted"
+    /// from original array.
+    /// [a,a,b,c].subtract([b,c,d]) --> [a]
+    /// also: [a,a,b,c].subtract([a,b,c,d]) --> []
+    func subtract(_ elements:[Element]) -> Array<Element> {
+        return Array(Set(self).subtracting(elements))
+    }
+    
+    /// Mutate array subtracting provided array from the original array.
+    /// [a,a,b,c].formSubtraction([b,c,d]) --> [a]
+    /// also: [a,a,b,c].formSubtraction([a,b,c,d]) --> []
+    mutating func formSubtraction(_ elements:[Element]) {
+        self = subtract(elements)
+    }
 }
 
-// TODO: ✅ Create Hashable versions of these using Sets
 
 /// Set-like functionality on Arrays Equatable elements.
 /// Performance on these is O(n)
@@ -253,7 +332,7 @@ public extension Array where Element : Equatable {
     }
     
     /// Append an element if it does not already exist in the array
-    /// Example: [a,b,c].unionInPlace(a) --> [a,b,c]
+    /// Example: [a,b,c].formUnion(a) --> [a,b,c]
     mutating func formUnion(_ element:Element) {
         if doesNotContain(element) {
             append(element)
@@ -261,7 +340,7 @@ public extension Array where Element : Equatable {
     }
     
     /// Append an array of elements if they do not already exist in the array
-    /// Example: [a,b,c].unionInPlace([a,d]) --> [a,b,c,d]
+    /// Example: [a,b,c].formUnion([a,d]) --> [a,b,c,d]
     mutating func formUnion(_ elements:[Element]) {
         for element in elements {
             formUnion(element)
@@ -277,7 +356,7 @@ public extension Array where Element : Equatable {
     }
     
     /// Mutate array to only include elements shared in self and provided array.
-    /// Example: [a,b,b,c].intersectInPlace([b,c,d]) --> [b,b,c]
+    /// Example: [a,b,b,c].formIntersection([b,c,d]) --> [b,b,c]
     mutating func formIntersection(_ rElements:[Element]) {
         var result = Array<Element>()
         for lElement in self {
@@ -292,7 +371,7 @@ public extension Array where Element : Equatable {
     /// Return array including elements that are not shared
     /// in self and provided array.
     /// a.k.a. exclusiveOr / symmetricDifference
-    /// Example: [a,b,c,a].exclusive([b,b,c,d]) --> [a,d]
+    /// Example: [a,b,c,a].difference([b,b,c,d]) --> [a,d]
     func difference(_ elements:[Element]) -> Array<Element> {
         var newArray = self
         newArray.formDifference(elements)
@@ -304,7 +383,7 @@ public extension Array where Element : Equatable {
     /// a.k.a. exclusiveOr / symmetricDifference
     /// As far as ordering is concerned, elements on the left side
     /// come out first and elements on the right side come out last.
-    /// Example: [a,b,c,a].exclusiveOr([b,b,c,d]) --> [a,a,d]
+    /// Example: [a,b,c,a].formDifference([b,b,c,d]) --> [a,a,d]
     mutating func formDifference(_ rElements:[Element]) {
         var result = Array<Element>()
         
