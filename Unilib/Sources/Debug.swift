@@ -120,8 +120,8 @@ public struct ApiDebug {
         return Log(options:self.options, message: message, type:.error)
     }
     
-    public func message(_ message:String) -> ApiDebug.Basic {
-        return Basic(options:self.options, message: message)
+    public func message(_ message:String, icon:String? = nil) -> ApiDebug.Basic {
+        return Basic(options:self.options, message: message, icon:icon)
     }
     
     /// Output a result. This is the same as message() but adds a bit of
@@ -198,7 +198,13 @@ public struct ApiDebug {
         public let options:ApiDebugOptions
         
         fileprivate var message:String
+        fileprivate let icon:String
         
+        init(options:ApiDebugOptions, message:String, icon:String? = nil) {
+            self.options = options
+            self.message = message
+            self.icon = icon ?? "⚙️"
+        }
         public var description: String {
             return message
         }
@@ -209,7 +215,7 @@ public struct ApiDebug {
         
         public func pretty(indent:Int?) -> String {
             var output = repeatElement(" " , count: (indent ?? 0) * 4).joined()
-            output += "⚙️ "
+            output += "\(icon) "
             output += description
             if options.contains(.expanded) {
                 output += "\n"
@@ -270,7 +276,7 @@ public struct ApiDebug {
             
             let isInit = method == "init"
             
-            var output = options.contains(.short) ? "" : (isInit ? "🚛 " : "🚜 ")
+            var output = options.contains(.compact) ? "" : (isInit ? "🚛 " : "🚜 ")
             
             output += String(describing:type(of:wrapper))
             if isInit {
@@ -327,7 +333,7 @@ public struct ApiDebug {
             
             output += ")"
             
-            if delegates && !options.contains(.short) {
+            if delegates && !options.contains(.compact) {
                 // The method called for this debug delegates to another method with debug information.
                 output += " ..."
             }
