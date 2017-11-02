@@ -48,7 +48,23 @@ public enum ApiDebugConfig {
         case .off :
             return false
         case .on, .onWithOptions :
+        #if DEBUG
             return true
+        #else
+            return false
+        #endif
+        }
+    }
+    
+    public var isAutoLayoutDebug:Bool {
+        if case .onWithOptions(let options) = self {
+            #if DEBUG
+                return options.contains(.autolayout)
+            #else
+                return false
+            #endif
+        } else {
+            return false
         }
     }
     
@@ -84,8 +100,12 @@ public struct ApiDebug {
     
     public let options:ApiDebugOptions
     
-    public init(_ options:ApiDebugOptions? = nil) {
-        self.options = options ?? []
+    public init?(_ options:ApiDebugOptions? = nil) {
+        #if DEBUG
+            self.options = options ?? []
+        #else
+            return nil
+        #endif
     }
     
     public func notice(_ message:String) -> ApiDebug.Log {
