@@ -8,6 +8,9 @@
 
 import Foundation
 
+// REVIEW 🔬 Make Angle and random stuff generic T:FloatingPoint
+// .. if it makes sense and doesn't cause complexity in client code.
+
 /// Simple struct representing an angle between 0º and 360º +/-
 /// As this is ExpressibleByFloatLiteral, anywhere that takes
 /// an Angle may also take a Double in it's place.
@@ -83,7 +86,7 @@ fileprivate struct FloatingPointHelper {
     static func randomDecimal(withBounds bounds:Double = 0.0) -> Double {
         
         //  Median      Deviation
-        //   0.0 =    0.0  to  0.0 // no deviation
+        //   0.0 =    0.0  to  0.0 // no deviation (bounds 0.0)
         //   0.1 =    0.0  to  0.1 // small deviation
         //   0.5 =    0.0  to  0.5 // deviation up to 0.5 (half factor)
         //   1.0 =    0.0  to  1.0 // deviation up to 1 (1x factor)
@@ -107,9 +110,8 @@ fileprivate struct FloatingPointHelper {
         }
         
         let range = Int(start * 100)...Int(end * 100)
-        let deviation = Double(range.random) / 100
         
-        return deviation
+        return Double(range.random) / 100
     }
 
     /// Obtain a random positive/negative factor number between a fraction and
