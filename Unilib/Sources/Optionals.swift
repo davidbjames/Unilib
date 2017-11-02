@@ -16,3 +16,22 @@ public protocol OptionalType {
 extension Optional : OptionalType {
     public var optional:Wrapped? { return self }
 }
+
+public extension Optional {
+    /// Cast an optional to a type or nil
+    func `as`<T>(_:T.Type) -> T? {
+        return flatMap { $0 as? T }
+    }
+
+    // NOTE: Before you're tempted to alias map/flatMap, consider that they
+    // are probably the best names at the moment.
+    // - map() is good because it maps an optional to something non-nil
+    //   (i.e. the closure must return a non-nil value).
+    // - flatMap() is not so good. It's still a mapping operation. However,
+    //   it can return nil (i.e. in case the mapping is not possible).
+    //   The prefix "flat" does not signify this, but I couldn't find
+    //   a suitable alternative. So, since map/flatMap are well known terms
+    //   of art, perhaps it's better to keep them as-is.
+    //   (I tried "wrap" or "unwrap" but neither convey "mapping".)
+    
+}
