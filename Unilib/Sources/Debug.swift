@@ -25,12 +25,14 @@ public struct ApiDebugOptions : OptionSet {
         self.rawValue = rawValue
     }
     /// Abbreviated output.
-    public static let short = ApiDebugOptions(rawValue: 1 << 0)
+    public static let compact = ApiDebugOptions(rawValue: 1 << 0)
     /// Extended output. Pretty print plus add'l vertical space for readability.
     public static let expanded = ApiDebugOptions(rawValue: 1 << 1)
     
+    public static let autolayout = ApiDebugOptions(rawValue: 1 << 2)
+    
     fileprivate var isDefaultVerbosity:Bool {
-        return !contains(.expanded) && !contains(.short)
+        return !contains(.expanded) && !contains(.compact)
     }
 }
 
@@ -72,7 +74,7 @@ public protocol ApiDebugPrintable : CustomStringConvertible {
 extension ApiDebugPrintable {
     public func output(indent:Int? = nil) {
         // This should be the ONLY print statement related to debugging.
-        print(options.contains(.short) ? shortOutput : pretty(indent:indent))
+        print(options.contains(.compact) ? shortOutput : pretty(indent:indent))
     }
 }
 
