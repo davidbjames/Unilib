@@ -9,16 +9,33 @@
 import Foundation
 
 public extension String {
+    
+    /// Return nil if string is empty
+    var value:String? {
+        return isEmpty ? nil : self
+    }
+    var dotPrefix:String? {
+        return components(separatedBy: ".").first
+    }
+    var dotSuffix:String? {
+        return components(separatedBy: ".").last
+    }
+
     /// Does the string have length (!empty)
     var hasText:Bool {
-        get {
-            return !isEmpty
-        }
+        // This method name uses the word "text" for callsite
+        // clarity. If using strings for things other than
+        // text, make separate methods with appropriate names.
+        return !isEmpty
     }
     
+    // TODO ✅ Other similar trim() functions
+    // trim(to:), trim(_:) (trims string from both sides)
+    // leftTrim/rightTrim, etc
+    
     func trim(from:String) -> String {
-        if let lowerBound = range(of: from)?.lowerBound {
-            return substring(to: lowerBound)
+        if let lowerBound = self.range(of: from)?.lowerBound {
+            return String(self[..<lowerBound])
         } else {
             return self
         }
