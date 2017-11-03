@@ -8,6 +8,19 @@
 
 import Foundation
 
+public extension SetAlgebra {
+    
+    public func replacing(_ lhs:Element, with rhs:Element) -> Self {
+        var set = self
+        set.replace(lhs, with: rhs)
+        return set
+    }
+    
+    public mutating func replace(_ lhs:Element, with rhs:Element) {
+        guard remove(lhs) != nil else { return }
+        insert(rhs)
+    }
+}
 
 public extension OptionSet where RawValue : FixedWidthInteger {
     
