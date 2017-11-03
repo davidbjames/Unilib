@@ -224,6 +224,13 @@ public extension Array where Iterator.Element: Hashable {
         return Array(set)
     }
 
+    /// Append an element if it does not already exist in the array
+    /// and return a new array.
+    /// Example: [a,b,c].union(a) --> [a,b,c]
+    func union(_ element:Element) -> Array<Element> {
+        return Array(Set(self).union([element]))
+    }
+    
     /// Append an array of elements if they do not already exist in the array
     /// and return a new array.
     /// Example: [a,b,c].union([a,d]) --> [a,b,c,d]
@@ -285,6 +292,13 @@ public extension Array where Iterator.Element: Hashable {
     mutating func formSubtraction(_ elements:[Element]) {
         self = subtract(elements)
     }
+    
+    /// Return array with left-hand-side element replaced
+    /// by another element, IF lhs element exists.
+    /// [a,b,c].replacing(b, with:d) --> [a,d,c]
+    func replacing(_ lElement:Element, with rElement:Element) -> Array<Element> {
+        return Array(Set(self).replacing(lElement, with: rElement))
+    }
 }
 
 
@@ -320,6 +334,15 @@ public extension Array where Element : Equatable {
         return newArray
     }
     
+    /// Append an element if it does not already exist in the array
+    /// and return a new array.
+    /// Example: [a,b,c].union(a) --> [a,b,c,d]
+    func union(_ element:Element) -> Array<Element> {
+        var newArray = self
+        newArray.formUnion([element])
+        return newArray
+    }
+
     /// Append an array of elements if they do not already exist in the array
     /// and return a new array.
     /// Example: [a,b,c].union([a,d]) --> [a,b,c,d]
@@ -420,6 +443,19 @@ public extension Array where Element : Equatable {
         self.removeAll()
         self.append(contentsOf: result)
     }
+    
+    /// Return array with left-hand-side element replaced
+    /// by another element, IF lhs element exists.
+    /// [a,b,c].replacing(b, with:d) --> [a,d,c]
+    func replacing(_ lElement:Element, with rElement:Element) -> Array<Element> {
+        guard let index = self.index(of: lElement) else {
+            return self
+        }
+        var result = self
+        result[index] = rElement
+        return result
+    }
+
 }
 
 

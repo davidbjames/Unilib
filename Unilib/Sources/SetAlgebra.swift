@@ -10,12 +10,15 @@ import Foundation
 
 public extension SetAlgebra {
     
+    /// Replace an item (if it exists in the set) with another item
+    /// and return the new set.
     public func replacing(_ lhs:Element, with rhs:Element) -> Self {
         var set = self
         set.replace(lhs, with: rhs)
         return set
     }
     
+    /// Replace an item (if it exists in the set) with another item.
     public mutating func replace(_ lhs:Element, with rhs:Element) {
         guard remove(lhs) != nil else { return }
         insert(rhs)
