@@ -7,6 +7,7 @@
 //
 /*
  Commented out until Rx* dependencies have updated to Swift 4
+ Moved to Expand for now. (see comment there)
  
 import Foundation
 import RxSwift

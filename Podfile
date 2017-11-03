@@ -1,4 +1,4 @@
-platform :ios, '11.0'
+platform :ios, '11.1'
 
 target 'Unilib' do
   use_frameworks!
