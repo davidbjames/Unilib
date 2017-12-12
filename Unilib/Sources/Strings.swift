@@ -14,11 +14,25 @@ public extension String {
     var value:String? {
         return isEmpty ? nil : self
     }
+    /// Return prefix of dot separated string
     var dotPrefix:String? {
         return components(separatedBy: ".").first
     }
+    /// Return prefix segments of dot separate string
+    func dotPrefix(segments:Int = 1) -> String? {
+        return components(separatedBy: ".")
+            .prefix(segments).nonEmpty?
+            .joined(separator: ".")
+    }
+    /// Return suffix of dot separate string
     var dotSuffix:String? {
         return components(separatedBy: ".").last
+    }
+    /// Return suffix segments of dot separate string
+    func dotSuffix(segments:Int = 1) -> String? {
+        return components(separatedBy: ".")
+            .suffix(segments).nonEmpty?
+            .joined(separator: ".")
     }
 
     /// Does the string have length (!empty)
