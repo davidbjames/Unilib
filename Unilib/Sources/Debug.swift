@@ -197,8 +197,10 @@ public struct ApiDebug {
 
         public let options:ApiDebugOptions
         
-        fileprivate var message:String
-        fileprivate let icon:String
+        private var message:String
+        private let icon:String
+        private var prefix:String?
+        private var suffix:String?
         
         init(options:ApiDebugOptions, message:String, icon:String? = nil) {
             self.options = options
@@ -206,7 +208,15 @@ public struct ApiDebug {
             self.icon = icon ?? "⚙️"
         }
         public var description: String {
-            return message
+            var before = ""
+            var after = ""
+            if let prefix = prefix {
+                before = "\(prefix) "
+            }
+            if let suffix = suffix {
+                after = " \(suffix)"
+            }
+            return before + message + after
         }
         
         public var shortOutput: String {
@@ -215,16 +225,34 @@ public struct ApiDebug {
         
         public func pretty(indent:Int?) -> String {
             var output = repeatElement(" " , count: (indent ?? 0) * 4).joined()
+            if let prefix = prefix {
+                output += "\(prefix) "
+            }
             output += "\(icon) "
-            output += description
+            output += message
+            if let suffix = suffix {
+                output += " \(suffix)"
+            }
             if options.contains(.expanded) {
                 output += "\n"
             }
             return output
         }
         
-        public mutating func append(_ newMessage:String) {
-            self.message += newMessage
+        public mutating func prepend(_ string:String) {
+            if let prefix = prefix {
+                self.prefix = "\(string) " + prefix
+            } else {
+                self.prefix = string
+            }
+        }
+
+        public mutating func append(_ string:String) {
+            if let suffix = suffix {
+                self.suffix = suffix + " \(string)"
+            } else {
+                self.suffix = string
+            }
         }
     }
     
