@@ -299,6 +299,20 @@ public extension Array where Iterator.Element: Hashable {
     func replacing(_ lElement:Element, with rElement:Element) -> Array<Element> {
         return Array(Set(self).replacing(lElement, with: rElement))
     }
+    
+    // Comparing:
+    
+    /// Does the current array intersect another array.
+    /// Example: [a,b,c].intersects([c,d]) --> true
+    func intersects(_ elements:[Element]) -> Bool {
+        return Set(self).intersects(Set(elements))
+    }
+
+    /// Is the current array a subset of another array
+    func isSubset(of elements:[Element]) -> Bool {
+        return Set(self).isSubset(of: Set(elements))
+    }
+    // add other compares as needed. See SetAlgebra comparison operators.
 }
 
 
