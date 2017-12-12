@@ -25,6 +25,14 @@ public extension SetAlgebra {
     }
 }
 
+public extension Set {
+    
+    /// Does the current set intersect another?
+    func intersects(_ elements:Set<Element>) -> Bool {
+        return intersection(elements).count > 0
+    }
+}
+
 public extension OptionSet where RawValue : FixedWidthInteger {
     
     // Care of Martin R on Stack Overflow
