@@ -35,3 +35,12 @@ public extension Optional {
     //   (I tried "wrap" or "unwrap" but neither convey "mapping".)
     
 }
+
+public extension Optional where Wrapped: Sequence {
+    public var unwrap:[Wrapped.Element] {
+        switch self {
+        case let wrapped? : return Array(wrapped)
+        case nil :          return []
+        }
+    }
+}
