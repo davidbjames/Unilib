@@ -24,3 +24,22 @@ public extension Sequence {
         try forEach(body)
     }
 }
+
+// Some ideas that should be materialized for working with
+// optional sequences..
+
+//public func += (lhs:Sequence, rhs:Sequence?) -> Sequence {
+//
+//}
+
+//public extension Optional where Wrapped == Array<Element> {
+//    var unwrap:Wrapped {
+//        switch self {
+//        case .none :
+//            return []
+//        case .some(let wrapped) :
+//            return wrapped
+//        }
+//    }
+//}
+
