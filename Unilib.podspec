@@ -29,4 +29,6 @@ Pod::Spec.new do |s|
   #s.dependency "RxCocoa"
   #s.dependency "RxSwiftExt"
 
+  s.dependency "STRegex"
+
 end
