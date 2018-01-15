@@ -44,3 +44,14 @@ public extension Optional where Wrapped: Sequence {
         }
     }
 }
+
+/// Given an optional boolean, support comparison against
+/// a non-optional boolean, where no value == false.
+public func == (lhs:Optional<Bool>, rhs:Bool) -> Bool {
+    switch lhs {
+    case .some(let value) :
+        return value == rhs
+    case .none :
+        return false
+    }
+}
