@@ -23,6 +23,15 @@ public extension Sequence {
     func each(_ body: (Element) throws -> Void) rethrows {
         try forEach(body)
     }
+    
+}
+
+public extension Sequence where Element : Hashable {
+    
+    func contains(_ elements: [Element]) -> Bool {
+        return Set(elements).isSubset(of:Set(self))
+    }
+
 }
 
 // Some ideas that should be materialized for working with
