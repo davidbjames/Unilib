@@ -196,6 +196,7 @@ struct MyHashable : Hashable {
 }
 */
 
+
 /// Set-like functionality on Array with Hashable elements
 /// These have the advantage of using Set logic which performs
 /// an order of magnitude better than Array/contains logic 
@@ -286,6 +287,14 @@ public extension Array where Iterator.Element: Hashable {
         return Array(Set(self).subtracting(elements))
     }
     
+    /// Return array with provided element "subtracted"
+    /// from original array.
+    /// [a,a,b,c].subtract([b,c,d]) --> [a]
+    /// also: [a,a,b,c].subtract([a,b,c,d]) --> []
+    func subtract(_ element:Element) -> Array<Element> {
+        return subtract([element])
+    }
+    
     /// Mutate array subtracting provided array from the original array.
     /// [a,a,b,c].formSubtraction([b,c,d]) --> [a]
     /// also: [a,a,b,c].formSubtraction([a,b,c,d]) --> []
@@ -309,10 +318,23 @@ public extension Array where Iterator.Element: Hashable {
     }
 
     /// Is the current array a subset of another array
+    /// Example: [a,b].isSubset(of:[a,b,c]) --> true
+    /// Also: [a,b].isSubset(of:[a,b]) --> true
     func isSubset(of elements:[Element]) -> Bool {
         return Set(self).isSubset(of: Set(elements))
     }
+    
+    /// Is the current array a superset of another array
+    /// Example: [a,b,c].isSuperset(of:[a,b]) --> true
+    /// See also: contains() which does the same thing.
+    func isSuperset(of elements:[Element]) -> Bool {
+        return Set(self).isSuperset(of: Set(elements))
+    }
+    
     // add other compares as needed. See SetAlgebra comparison operators.
+    
+    // TODO ✅ Move things to Sequence where Hashable
+    // if possible. contains() is already there.
 }
 
 
@@ -444,6 +466,14 @@ public extension Array where Element : Equatable {
         return newArray
     }
     
+    /// Return array with provided element "subtracted"
+    /// from original array.
+    /// [a,a,b,c].subtract([b,c,d]) --> [a]
+    /// also: [a,a,b,c].subtract([a,b,c,d]) --> []
+    func subtract(_ element:Element) -> Array<Element> {
+        return subtract([element])
+    }
+
     /// Mutate array subtracting provided array from the original array.
     /// [a,a,b,c].formDifference([b,c,d]) --> [a,a]
     /// also: [a,a,b,c].formDifference([a,b,c,d]) --> []
