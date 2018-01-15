@@ -10,6 +10,31 @@ import Foundation
 
 // REVIEW 🔬 Make Angle and random stuff generic T:FloatingPoint
 // .. if it makes sense and doesn't cause complexity in client code.
+// ALTERNATIVELY, Normalize this API on Foundation Measurement API
+// which already handles Angle. See also:
+// https://lists.swift.org/pipermail/swift-evolution/Week-of-Mon-20180108/042856.html
+// To keep things in perspective about Measurement API, it is really
+// geared for measurements in the physical world (area in sq. meters,
+// temperature, acceleration, etc) vs. measurements within the digital realm.
+
+// Metron
+// https://github.com/toineheuvelmans/Metron
+// - Perform any type of geometric measurement, including "hit testing"
+//   all CG types relative to abstract geometric types.
+//   (point on line, point in circle, etc)
+// - Create derived paths (via CGPath) for almost all geometric functions,
+//   paralleling UI geometry with math geometry (e.g. hit testing a visible area)
+// - Some normalized CG API
+// - Concept of edges, corners and "opposables" of these
+// - Rotation of opposable types (e.g. turn topRight to bottomRight, etc)
+// - Shape protocol which gives many basic accessors (min/max, w/h, center, area, bounding)
+// - Clipping (clip to min/max) (float in rect, point in rect, size in size)
+// - Euclidean Distance
+// - Angle type
+// - Lines (continuous), Line segment (typical), including comparison/hit testing
+// - Square, Circle, Triangle, Polygon (relative to rect, hit testing)
+// - CoordinateSystem (takes into account OSX origin)
+
 
 /// Simple struct representing an angle between 0º and 360º +/-
 /// As this is ExpressibleByFloatLiteral, anywhere that takes
