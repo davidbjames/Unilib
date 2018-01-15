@@ -31,6 +31,10 @@ public struct ApiDebugOptions : OptionSet {
     
     public static let autolayout = ApiDebugOptions(rawValue: 1 << 2)
     
+    public static let tips = ApiDebugOptions(rawValue: 1 << 3)
+    
+    public static let labels = ApiDebugOptions(rawValue: 1 << 4)
+    
     fileprivate var isDefaultVerbosity:Bool {
         return !contains(.expanded) && !contains(.compact)
     }
@@ -108,20 +112,33 @@ public struct ApiDebug {
         #endif
     }
     
-    public func notice(_ message:String) -> ApiDebug.Log {
-        return Log(options:self.options, message: message, type:.notice)
+    // "hasTip" is a flag to say that a particular notice/warning/error
+    // has a helpful tip available indicating the user can add .tips
+    // to debug options to view it. Assumes tip() is called directly
+    // after the notice/warning/error.
+
+    public func notice(_ message:String, hasTip:Bool = false) -> ApiDebug.Log {
+        let _message = message + (hasTip && !options.contains(.tips) ? " TIP AVAILABLE." : "")
+        return Log(options:self.options, message: _message, type:.notice)
     }
     
-    public func warning(_ message:String) -> ApiDebug.Log {
-        return Log(options:self.options, message: message, type:.warning)
+    public func warning(_ message:String, hasTip:Bool = false) -> ApiDebug.Log {
+        let _message = message + (hasTip && !options.contains(.tips) ? " TIP AVAILABLE." : "")
+        return Log(options:self.options, message: _message, type:.warning)
     }
     
-    public func error(_ message:String) -> ApiDebug.Log {
-        return Log(options:self.options, message: message, type:.error)
+    public func error(_ message:String, hasTip:Bool = false) -> ApiDebug.Log {
+        let _message = message + (hasTip && !options.contains(.tips) ? " TIP AVAILABLE." : "")
+        return Log(options:self.options, message: _message, type:.error)
     }
     
     public func message(_ message:String, icon:String? = nil) -> ApiDebug.Basic {
         return Basic(options:self.options, message: message, icon:icon)
+    }
+    
+    public func tip(_ tip:String) -> ApiDebug.Log? {
+        guard options.contains(.tips) else { return nil }
+        return Log(options:self.options, message:tip, type:.tip)
     }
     
     /// Output a result. This is the same as message() but adds a bit of
@@ -150,7 +167,7 @@ public struct ApiDebug {
         let type:LogType
         
         enum LogType : CustomStringConvertible {
-            case notice, warning, error
+            case notice, warning, error, tip
             var description: String {
                 switch self {
                 case .notice :
@@ -159,6 +176,8 @@ public struct ApiDebug {
                     return "WARNING"
                 case .error :
                     return "ERROR"
+                case .tip :
+                    return "TIP"
                 }
             }
             var icon:String {
@@ -168,7 +187,9 @@ public struct ApiDebug {
                 case .warning :
                     return "⚠️"
                 case .error :
-                    return "🔥🔥🔥"
+                    return "🛑"
+                case .tip :
+                    return "💡"
                 }
             }
         }
