@@ -86,7 +86,27 @@ public extension Array where Element : Equatable {
         }
         return nil
     }
+    
+    /// Are all elements in this Equatable array equal in value
+    func allEqual() -> Bool {
+        // Via SO - Martin R (link below)
+        guard let firstElem = first else {
+            // empty so equal
+            return true
+        }
+        return !dropFirst().contains { $0 != firstElem }
+    }
 }
+
+// This is NOT faster than the Equatable version ^^
+// because Set(array) must traverse the entire array
+// whereas contains stops once it finds a match.
+// See https://stackoverflow.com/questions/29588158/check-if-all-elements-of-an-array-have-the-same-value-in-swift#29588187
+//public extension Array where Element : Hashable {
+//    func allEqual() -> Bool {
+//        return !Set(self).isEmpty
+//    }
+//}
 
 // MARK:- Boolean logic
 
