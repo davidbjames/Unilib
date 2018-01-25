@@ -226,6 +226,7 @@ struct MyHashable : Hashable {
 /// an order of magnitude better than Array/contains logic 
 /// because of working with hashable elements.
 /// Peformance on these is O(1)
+/// BEWARE: Order is lost because Set is used.
 public extension Array where Iterator.Element: Hashable {
     
     func removingDuplicates() -> [Iterator.Element] {
@@ -364,12 +365,13 @@ public extension Array where Iterator.Element: Hashable {
 
 /// Set-like functionality on Arrays Equatable elements.
 /// Performance on these is O(n)
+/// NOTE: Order is maintained for these operations.
 public extension Array where Element : Equatable {
     
-    func removingDuplicates() -> Array<Iterator.Element> {
+    func removingEquatableDuplicates() -> Array<Iterator.Element> {
         var newArray = [Element]()
         for element in self {
-            newArray.formUnion(element)
+            newArray.formUnion(equatable:element)
         }
         return newArray
     }
@@ -377,14 +379,14 @@ public extension Array where Element : Equatable {
     /// Insert an element if it does not already exist in the array
     /// and return a new array.
     /// Example: [a,b,c].union(a) --> [a,b,c]
-    func insert(_ element:Element) -> Array<Element> {
+    func insert(equatable element:Element) -> Array<Element> {
         var newArray = self
-        newArray.formUnion(element)
+        newArray.formUnion(equatable:element)
         return newArray
     }
     
     /// Insert or replace an element regardless.
-    func update(with element:Element) -> Array<Element> {
+    func update(equatable element:Element) -> Array<Element> {
         var newArray = self
         if let index = newArray.index(of: element) {
             newArray[index] = element
@@ -397,24 +399,24 @@ public extension Array where Element : Equatable {
     /// Append an element if it does not already exist in the array
     /// and return a new array.
     /// Example: [a,b,c].union(a) --> [a,b,c,d]
-    func union(_ element:Element) -> Array<Element> {
+    func union(equatable element:Element) -> Array<Element> {
         var newArray = self
-        newArray.formUnion([element])
+        newArray.formUnion(equatable:[element])
         return newArray
     }
 
     /// Append an array of elements if they do not already exist in the array
     /// and return a new array.
     /// Example: [a,b,c].union([a,d]) --> [a,b,c,d]
-    func union(_ elements:[Element]) -> Array<Element> {
+    func union(equatable elements:[Element]) -> Array<Element> {
         var newArray = self
-        newArray.formUnion(elements)
+        newArray.formUnion(equatable:elements)
         return newArray
     }
     
     /// Append an element if it does not already exist in the array
     /// Example: [a,b,c].formUnion(a) --> [a,b,c]
-    mutating func formUnion(_ element:Element) {
+    mutating func formUnion(equatable element:Element) {
         if doesNotContain(element) {
             append(element)
         }
@@ -422,23 +424,23 @@ public extension Array where Element : Equatable {
     
     /// Append an array of elements if they do not already exist in the array
     /// Example: [a,b,c].formUnion([a,d]) --> [a,b,c,d]
-    mutating func formUnion(_ elements:[Element]) {
+    mutating func formUnion(equatable elements:[Element]) {
         for element in elements {
-            formUnion(element)
+            formUnion(equatable:element)
         }
     }
     
     /// Return array including elements shared in self and provided array.
     /// Example: [a,b,c].intersect([b,c,d]) --> [b,c]
-    func intersection(_ elements:[Element]) -> Array<Element> {
+    func intersection(equatable elements:[Element]) -> Array<Element> {
         var newArray = self
-        newArray.formIntersection(elements)
+        newArray.formIntersection(equatable:elements)
         return newArray
     }
     
     /// Mutate array to only include elements shared in self and provided array.
     /// Example: [a,b,b,c].formIntersection([b,c,d]) --> [b,b,c]
-    mutating func formIntersection(_ rElements:[Element]) {
+    mutating func formIntersection(equatable rElements:[Element]) {
         var result = Array<Element>()
         for lElement in self {
             if rElements.contains(lElement) { // && result.doesNotContain(lElement)
@@ -453,9 +455,9 @@ public extension Array where Element : Equatable {
     /// in self and provided array.
     /// a.k.a. exclusiveOr / symmetricDifference
     /// Example: [a,b,c,a].difference([b,b,c,d]) --> [a,d]
-    func difference(_ elements:[Element]) -> Array<Element> {
+    func difference(equatable elements:[Element]) -> Array<Element> {
         var newArray = self
-        newArray.formDifference(elements)
+        newArray.formDifference(equatable:elements)
         return newArray
     }
     
@@ -465,7 +467,7 @@ public extension Array where Element : Equatable {
     /// As far as ordering is concerned, elements on the left side
     /// come out first and elements on the right side come out last.
     /// Example: [a,b,c,a].formDifference([b,b,c,d]) --> [a,a,d]
-    mutating func formDifference(_ rElements:[Element]) {
+    mutating func formDifference(equatable rElements:[Element]) {
         var result = Array<Element>()
         
         for lElement in self {
@@ -484,9 +486,9 @@ public extension Array where Element : Equatable {
     
     /// Return array with elements in provided array "subtracted"
     /// from original array.
-    func subtract(_ elements:[Element]) -> Array<Element> {
+    func subtract(equatable elements:[Element]) -> Array<Element> {
         var newArray = self
-        newArray.formSubtraction(elements)
+        newArray.formSubtraction(equatable:elements)
         return newArray
     }
     
@@ -494,14 +496,14 @@ public extension Array where Element : Equatable {
     /// from original array.
     /// [a,a,b,c].subtract([b,c,d]) --> [a]
     /// also: [a,a,b,c].subtract([a,b,c,d]) --> []
-    func subtract(_ element:Element) -> Array<Element> {
-        return subtract([element])
+    func subtract(equatable element:Element) -> Array<Element> {
+        return subtract(equatable:[element])
     }
 
     /// Mutate array subtracting provided array from the original array.
     /// [a,a,b,c].formDifference([b,c,d]) --> [a,a]
     /// also: [a,a,b,c].formDifference([a,b,c,d]) --> []
-    mutating func formSubtraction(_ rElements:[Element]) {
+    mutating func formSubtraction(equatable rElements:[Element]) {
         var result = [Element]()
         for lElement in self {
             if rElements.doesNotContain(lElement) {
@@ -515,7 +517,7 @@ public extension Array where Element : Equatable {
     /// Return array with left-hand-side element replaced
     /// by another element, IF lhs element exists.
     /// [a,b,c].replacing(b, with:d) --> [a,d,c]
-    func replacing(_ lElement:Element, with rElement:Element) -> Array<Element> {
+    func replacing(equatable lElement:Element, with rElement:Element) -> Array<Element> {
         guard let index = self.index(of: lElement) else {
             return self
         }
