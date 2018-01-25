@@ -135,6 +135,10 @@ public extension Collection {
         return self.filter(test).count == 0
     }
     
+    var hasValues:Bool {
+        return !isEmpty
+    }
+    
 }
 
 // MARK:- Optionals
