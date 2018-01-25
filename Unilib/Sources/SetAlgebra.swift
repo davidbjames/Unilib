@@ -23,6 +23,10 @@ public extension SetAlgebra {
         guard remove(lhs) != nil else { return }
         insert(rhs)
     }
+    
+    public var hasValues:Bool {
+        return !isEmpty
+    }
 }
 
 public extension Set {
