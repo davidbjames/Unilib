@@ -8,6 +8,15 @@
 
 import UIKit
 
+/// Is the current build using DEBUG configuration.
+public func isDebugBuild() -> Bool {
+    #if DEBUG
+        return true
+    #else
+        return false
+    #endif
+}
+
 // "ApiDebug" is a development-only debug tool that provides
 // user-friendly console output intended to "reveal" the operations of
 // any API/library that uses it. (RxSwift.debug does something similar.)
