@@ -220,6 +220,8 @@ struct MyHashable : Hashable {
 }
 */
 
+// When developing these, keep an eye on this lib: https://github.com/devxoul/Immutable/tree/master/Sources/Immutable
+
 
 /// Set-like functionality on Array with Hashable elements
 /// These have the advantage of using Set logic which performs
