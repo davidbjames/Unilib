@@ -10,9 +10,9 @@ import Foundation
 
 public extension Sequence {
     /// Cast a sequence's elements to a type, returning a non-optional
-    /// sequence with n to 0 elements depending if the cast succeeds.
+    /// sequence with n or 0 elements depending if the cast succeeds.
     func `as`<T>(_:T.Type) -> [T] {
-        return flatMap { $0 as? T }
+        return compactMap { $0 as? T }
     }
     /// Cast a sequence to a sequence containing a type, or nil.
     func with<T>(_:T.Type) -> [T]? {
