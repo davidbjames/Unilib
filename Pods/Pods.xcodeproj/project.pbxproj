@@ -21,18 +21,18 @@
 		0B0AEEF605EBF6174667FAFFF9DB182D /* Pods-Unilib-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Unilib-umbrella.h"; sourceTree = "<group>"; };
 		0FF9115B7D9284A5AFDBABB95F24DDB1 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BAD24601690251293A8A89AEFD8527E /* Pods-UnilibTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-UnilibTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		273BF3BC0AAB332AF89C988B1A7D13F1 /* Pods-Unilib.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Unilib.modulemap"; sourceTree = "<group>"; };
-		310D927EF8075A616EA4F9D04B1AF913 /* Pods-UnilibTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-UnilibTests.modulemap"; sourceTree = "<group>"; };
+		273BF3BC0AAB332AF89C988B1A7D13F1 /* Pods-Unilib.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Unilib.modulemap"; sourceTree = "<group>"; };
+		310D927EF8075A616EA4F9D04B1AF913 /* Pods-UnilibTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-UnilibTests.modulemap"; sourceTree = "<group>"; };
 		31B8D91A0C908F4E317CDAC25B67625F /* Pods-Unilib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Unilib.release.xcconfig"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		7664A5CA2CC7336A251DFB932F3C69E2 /* Pods-UnilibTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-UnilibTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7A253EC6B262066D8E09B44223C17A1A /* Pods-UnilibTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-UnilibTests-dummy.m"; sourceTree = "<group>"; };
 		840008A60A22098998770B1CB6F2A4C2 /* Pods-UnilibTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-UnilibTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9BF4D3FC227640808478FFCA6EE46ABD /* Pods-Unilib-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Unilib-acknowledgements.markdown"; sourceTree = "<group>"; };
-		AFC5F43AD36417459A8148991CF07E20 /* Pods_Unilib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Unilib.framework; path = "Pods-Unilib.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFC5F43AD36417459A8148991CF07E20 /* Pods_Unilib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unilib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C020F0EF9CED72F606FB4241B58AB240 /* Pods-UnilibTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-UnilibTests.release.xcconfig"; sourceTree = "<group>"; };
-		C8DC364789E8AF42F9198D0AD2486EB7 /* Pods_UnilibTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_UnilibTests.framework; path = "Pods-UnilibTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8DC364789E8AF42F9198D0AD2486EB7 /* Pods_UnilibTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnilibTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA8D291526BEAA3473A4F4F294D82A2B /* Pods-UnilibTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-UnilibTests-resources.sh"; sourceTree = "<group>"; };
 		DF4AA6B76B6B1AECAB54AB446098F7E7 /* Pods-Unilib-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Unilib-dummy.m"; sourceTree = "<group>"; };
 		EE5DD97276596F136DBBAA2FAE76BB9E /* Pods-UnilibTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-UnilibTests-frameworks.sh"; sourceTree = "<group>"; };
@@ -203,7 +203,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0940;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -257,6 +257,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -264,6 +265,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -409,6 +411,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -416,6 +419,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

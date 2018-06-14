@@ -145,9 +145,9 @@
 			children = (
 				E7D954841DA2ACC900F86827 /* Strings.swift */,
 				E7D9548F1DA2BEFA00F86827 /* Arrays.swift */,
+				E79FA6B51FAB8D9000495E44 /* Sequence.swift */,
 				E7C0487F1DA56C16001CBC52 /* Ranges.swift */,
 				E7CD306E1ED440CC002AE776 /* SetAlgebra.swift */,
-				E79FA6B51FAB8D9000495E44 /* Sequence.swift */,
 				E79FA6B71FAB8DD000495E44 /* FloatingPoint.swift */,
 				E79FA6B91FAB8E2900495E44 /* NSObject.swift */,
 			);

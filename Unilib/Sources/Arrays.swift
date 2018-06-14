@@ -65,6 +65,79 @@ public extension Array  {
             return true
         }
     }
+    
+    /// Return array of array of pairs.
+    /// e.g. [[1,2],[3,4],[5,6],[7]]
+    /// Includes last item if there is an odd
+    /// number of items. See also "strict" variant
+    /// which excludes last odd item.
+    func pairs() -> [[Element]] {
+        return _pairs(overlap:false, includeLastOdd:true)
+    }
+    
+    /// Return array of array of pairs.
+    /// e.g. [[1,2],[3,4],[5,6]]
+    /// "Strict" because this will not include last item
+    /// if there is an odd number of items.
+    /// See also "pairs" or "overlapping" variant.
+    func strictPairs() -> [[Element]] {
+        return _pairs(overlap:false, includeLastOdd:false)
+    }
+    
+    /// Return array of array of overlapping pairs, e.g. [[1,2],[2,3],[3,4]]
+    /// Will include all items even if there is an odd number of items.
+    func overlappingPairs() -> [[Element]] {
+        return _pairs(overlap:true)
+    }
+    
+    /// Traverse items in pairs using closure,
+    /// e.g. 1/2, 3/4 etc
+    /// "Strict" because this will not include last item
+    /// if there is an odd number of items.
+    /// See also "overlapping" variant.
+    func visitStrictPairs(_ visitor:(Element,Element)->Void) {
+        return _visitPairs(overlap:false, visitor)
+    }
+
+    /// Traverse items in overlapping pairs using closure,
+    /// e.g. 1/2, 2/3, 3/4 etc
+    /// Will include all items even if an odd number of items.
+    func visitOverlappingPairs(_ visitor:(Element,Element)->Void) {
+        return _visitPairs(overlap:true, visitor)
+    }
+    
+    private func _pairs(overlap:Bool = false, includeLastOdd:Bool = false) -> [[Element]] {
+        var result = [[Element]]()
+        for i in stride(from: 0, to: count-1, by: overlap ? 1 : 2) {
+            let first = self[i]
+            if let second = self[safe:i+1] {
+                result.append([first,second])
+            }
+        }
+        if includeLastOdd && isOdd, let lastItem = last {
+            result.append([lastItem])
+        }
+        return result
+    }
+    
+    private func _visitPairs(overlap:Bool = false, _ visitor:(Element,Element)->Void) {
+        // visiting pairs never includes last odd item as it
+        // makes the visitor more complex (optional second element).
+        // Use the array-only versions if you really want to include the last odd item.
+        for pair in _pairs(overlap:overlap, includeLastOdd:false) {
+            visitor(pair[0],pair[1])
+        }
+    }
+
+    /// Return an array of chunks of the current array
+    /// divided by "size".
+    func chunks(of size:Int) -> [[Element]] {
+        return stride(from:0, to:self.count, by:size)
+            .map {
+                let tmp = dropFirst($0).prefix(size)
+                return Array(tmp)
+        }
+    }
 }
 
 // MARK:- Find
@@ -139,6 +212,13 @@ public extension Collection {
         return !isEmpty
     }
     
+    var isEven:Bool {
+        return count % 2 == 0
+    }
+    
+    var isOdd:Bool {
+        return count % 2 != 0
+    }
 }
 
 // MARK:- Optionals
@@ -527,7 +607,6 @@ public extension Array where Element : Equatable {
         result[index] = rElement
         return result
     }
-
 }
 
 
