@@ -66,28 +66,62 @@ public extension Array  {
         }
     }
     
-    /// Return array of array of pairs.
-    /// e.g. [[1,2],[3,4],[5,6],[7]]
-    /// Includes last item if there is an odd
-    /// number of items. See also "strict" variant
-    /// which excludes last odd item.
-    func pairs() -> [[Element]] {
-        return _pairs(overlap:false, includeLastOdd:true)
+    func randomIndex() -> Int? {
+        guard count > 0 else { return nil }
+        guard count > 1 else { return 0 }
+        return (0...(count-1)).random
     }
     
-    /// Return array of array of pairs.
-    /// e.g. [[1,2],[3,4],[5,6]]
+    // Pairs
+    
+    /// Return array of pairs.
+    /// e.g. [(1,2),(3,4),(5,6),(7,nil)]
+    /// Includes last item if there is an odd number of items
+    /// (this is why "second" of the tuple is optional).
+    /// See also "strictPairs" variant which excludes last odd item
+    /// (and does not use optional second item).
+    func pairs() -> [(first:Element,second:Element?)] {
+        let pairs = _pairs(overlap:false, includeLastOdd:true)
+        guard pairs.hasValues else { return [(Element,Element?)]() }
+        // convert to tuples
+        return pairs.map { ($0[0], $0[safe:1]) }
+    }
+    
+    // Following pair methods require arrays of *at least 2 items*
+    // otherwise they return empty results.
+
+    /// Return array of pairs.
+    /// e.g. [(1,2),(3,4),(5,6)]
     /// "Strict" because this will not include last item
     /// if there is an odd number of items.
-    /// See also "pairs" or "overlapping" variant.
-    func strictPairs() -> [[Element]] {
-        return _pairs(overlap:false, includeLastOdd:false)
+    /// See also "pairs" or "overlappingPairs" variants.
+    func strictPairs() -> [(first:Element,second:Element)] {
+        let pairs = _pairs(overlap:false, includeLastOdd:false)
+        guard pairs.hasValues else { return [(Element,Element)]() }
+        // convert to tuples
+        return pairs.map { ($0[0], $0[1]) }
     }
     
-    /// Return array of array of overlapping pairs, e.g. [[1,2],[2,3],[3,4]]
+    /// Return array of overlapping pairs.
+    /// e.g. [(1,2),(2,3),(3,4)]
     /// Will include all items even if there is an odd number of items.
-    func overlappingPairs() -> [[Element]] {
-        return _pairs(overlap:true)
+    func overlappingPairs() -> [(first:Element,second:Element)] {
+        let pairs = _pairs(overlap:true)
+        guard pairs.hasValues else { return [(Element,Element)]() }
+        // convert to tuples
+        return pairs.map { ($0[0], $0[1]) }
+    }
+    
+    /// Return array of overlapping pairs, cycling last to first.
+    /// e.g. [(1,2),(2,3),(3,4),(4,1)]
+    /// Will include all items even if there is an odd number of items.
+    func cyclicPairs() -> [(first:Element,second:Element)] {
+        let pairs = overlappingPairs()
+        guard pairs.hasValues else { return [(Element,Element)]() }
+        guard let first = first, let last = last else {
+            return [(Element,Element)]()
+        }
+        return pairs + [(last,first)]
     }
     
     /// Traverse items in pairs using closure,
@@ -108,6 +142,7 @@ public extension Array  {
     
     private func _pairs(overlap:Bool = false, includeLastOdd:Bool = false) -> [[Element]] {
         var result = [[Element]]()
+        guard count > 0 else { return result }
         for i in stride(from: 0, to: count-1, by: overlap ? 1 : 2) {
             let first = self[i]
             if let second = self[safe:i+1] {
@@ -117,6 +152,7 @@ public extension Array  {
         if includeLastOdd && isOdd, let lastItem = last {
             result.append([lastItem])
         }
+        // If only 1, will return empty, unless includeLastOdd.
         return result
     }
     
@@ -219,6 +255,8 @@ public extension Collection {
     var isOdd:Bool {
         return count % 2 != 0
     }
+    
+    
 }
 
 // MARK:- Optionals
