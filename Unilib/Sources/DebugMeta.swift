@@ -10,25 +10,44 @@ import UIKit
 
 public extension NSObject {
     
+    /// Unique memory address
     public func memoryAddress(shortened:Bool = false) -> String {
-        let address = String(describing:Unmanaged.passUnretained(self).toOpaque())
+        let address = ObjectIdentifier(self).debugDescription
+        let startIndex:String.Index
+        // index before last parenthesis
+        let lastIndex = address.index(before:address.endIndex)
         if shortened {
-            
-            // Following kept for learning. Better way below.
-            // Remove "0x0000"
-            // let startIndex = address.index(address.startIndex, offsetBy: 6)
-            // let prefixRemoved = address.substring(from: startIndex)
-            // Capture last 4 characters
-            // let lastIndex = prefixRemoved.index(prefixRemoved.endIndex, offsetBy: -4)
-            // let addressPart = prefixRemoved.substring(from: lastIndex)
-            
-            // Capture the last 4 characters.
-            let startIndex = address.index(address.endIndex, offsetBy: -4)
-            let addressPart = address[startIndex..<address.endIndex]
-            
-            return "x\(addressPart)"
+            // Capture last 4 characters e.g. 2d10
+            startIndex = address.index(lastIndex, offsetBy: -4)
+        } else {
+            // 0x00007fe6cdc02d10
+            // Capture all characters after zeros
+            // e.g. 7fe6cdc02d10
+            startIndex = address.index(lastIndex, offsetBy:-12)
         }
-        return address
+        let part = address[startIndex..<lastIndex]
+        // prepend an "x" to distinguish the number as being related
+        // to a unique id or memory address e.g. x2d10
+        return "x\(part)"
+    }
+    
+    /// Unique object id (hash of memory address)
+    public func objectId(shortened:Bool = false) -> String {
+        let hash = String(describing: ObjectIdentifier(self).hashValue)
+        // The full hash looks like this 140522157469520
+        // where the first 9 digits tend to be grouped by some
+        // mechanism (object type, or creation time?) such that
+        // several similar (or sometimes disimilar) objects have
+        // these 9 digits as a common prefix. The last 6 digits tend
+        // to be unique within groups of objects, and the final 3 the
+        // most unique. 140522157-469-520
+        if shortened {
+            let first = hash[hash.startIndex...hash.index(after:hash.startIndex)]
+            let last = hash[hash.index(hash.endIndex, offsetBy: -3)..<hash.endIndex]
+            // Prepending the x here is for convention only.
+            return "x\(first)/\(last)"
+        }
+        return hash
     }
 }
 
