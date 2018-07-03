@@ -42,10 +42,11 @@ public extension NSObject {
         // to be unique within groups of objects, and the final 3 the
         // most unique. 140522157-469-520
         if shortened {
-            let first = hash[hash.startIndex...hash.index(after:hash.startIndex)]
+            //let first = hash[hash.startIndex...hash.index(after:hash.startIndex)]
+            // \(first)/
             let last = hash[hash.index(hash.endIndex, offsetBy: -3)..<hash.endIndex]
             // Prepending the x here is for convention only.
-            return "x\(first)/\(last)"
+            return "x\(last)"
         }
         return hash
     }
