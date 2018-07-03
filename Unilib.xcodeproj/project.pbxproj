@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		45E390337C779F1D85AAF3D9 /* Pods_Unilib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C2D5F4E8223CD7E5A55F9D /* Pods_Unilib.framework */; };
+		E7061C4320EB72C200671305 /* NonEmptyArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7061C4220EB72C200671305 /* NonEmptyArray.swift */; };
 		E71DC7FC1E03210300D99427 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71DC7FB1E03210300D99427 /* Math.swift */; };
 		E726E75A1EC6E0A600C33A4F /* MathOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E726E7591EC6E0A600C33A4F /* MathOperators.swift */; };
 		E750BD2D1DC9190E0079687B /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = E750BD2C1DC9190E0079687B /* Time.swift */; };
@@ -50,6 +51,7 @@
 		BAA78EBD7783FF0D6843BE72 /* Pods_UnilibTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnilibTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C2D5F4E8223CD7E5A55F9D /* Pods_Unilib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unilib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98B10AAD88122617017C839 /* Pods-UnilibTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnilibTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnilibTests/Pods-UnilibTests.release.xcconfig"; sourceTree = "<group>"; };
+		E7061C4220EB72C200671305 /* NonEmptyArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonEmptyArray.swift; sourceTree = "<group>"; };
 		E71DC7FB1E03210300D99427 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		E726E7591EC6E0A600C33A4F /* MathOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathOperators.swift; sourceTree = "<group>"; };
 		E750BD2C1DC9190E0079687B /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
@@ -110,6 +112,14 @@
 				D98B10AAD88122617017C839 /* Pods-UnilibTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		E7061C4120EB721D00671305 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				E7061C4220EB72C200671305 /* NonEmptyArray.swift */,
+			);
+			path = External;
 			sourceTree = "<group>";
 		};
 		E71DC7FA1E0320D500D99427 /* Misc */ = {
@@ -197,6 +207,7 @@
 		E7D954801DA2AC9100F86827 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E7061C4120EB721D00671305 /* External */,
 				E7C0487E1DA56BF8001CBC52 /* Foundation */,
 				E7D9548E1DA2AF9700F86827 /* Tasks */,
 				E7D9548D1DA2AF7A00F86827 /* Validation */,
@@ -462,6 +473,7 @@
 				E7D954901DA2BEFA00F86827 /* Arrays.swift in Sources */,
 				E7D9548C1DA2ACC900F86827 /* Validators.swift in Sources */,
 				E7D9548A1DA2ACC900F86827 /* Strings.swift in Sources */,
+				E7061C4320EB72C200671305 /* NonEmptyArray.swift in Sources */,
 				E7D9548B1DA2ACC900F86827 /* Tasks.swift in Sources */,
 				E7D954871DA2ACC900F86827 /* DefaultFilters.swift in Sources */,
 				E79FA6BA1FAB8E2900495E44 /* NSObject.swift in Sources */,
