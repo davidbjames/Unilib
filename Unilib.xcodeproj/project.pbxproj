@@ -207,13 +207,13 @@
 		E7D954801DA2AC9100F86827 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				E7061C4120EB721D00671305 /* External */,
 				E7C0487E1DA56BF8001CBC52 /* Foundation */,
 				E7D9548E1DA2AF9700F86827 /* Tasks */,
 				E7D9548D1DA2AF7A00F86827 /* Validation */,
 				E750BD2B1DC918E40079687B /* Functions */,
 				E7F9FB951EDEF669007E0EFD /* Debugging */,
 				E71DC7FA1E0320D500D99427 /* Misc */,
+				E7061C4120EB721D00671305 /* External */,
 			);
 			path = Sources;
 			sourceTree = "<group>";

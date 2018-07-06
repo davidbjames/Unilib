@@ -228,6 +228,7 @@ public extension Sequence where Element : Equatable {
 
 public extension Collection {
     
+    /// Return nil if collection is empty.
     var nonEmpty:Self? {
         return count > 0 ? self : nil
     }
