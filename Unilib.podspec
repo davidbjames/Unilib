@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
   s.name         = "Unilib"
-  s.version      = "0.1.2"
+  s.version      = "0.1.3"
   s.summary      = "Generic Swift library of protocols/components for Swift application development. (Non-UI.)"
   s.homepage     = "https://github.com/davidbjames/Unilib"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "David James" => "davidbjames1@gmail.com" }
 
-  s.platform     = :ios, "11.1"
+  s.platform     = :ios, "11.4"
   s.source       = { :git => "https://github.com/davidbjames/Unilib.git", :tag => s.version }
   s.source_files = "Unilib/Sources/**/*.{swift}"
 
@@ -29,6 +29,6 @@ Pod::Spec.new do |s|
   #s.dependency "RxCocoa"
   #s.dependency "RxSwiftExt"
 
-  s.dependency "STRegex"
+  #s.dependency "STRegex"
 
 end
