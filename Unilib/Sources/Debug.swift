@@ -76,6 +76,13 @@ public enum ApiDebugConfig {
             return nil
         }
     }
+    
+    public var options:ApiDebugOptions? {
+        if case let .onWithOptions(opts) = self {
+            return opts
+        }
+        return nil
+    }
 }
 
 public protocol ApiDebugPrintable : CustomStringConvertible {
