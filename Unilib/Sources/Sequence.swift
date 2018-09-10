@@ -31,7 +31,9 @@ public extension Sequence where Element : Hashable {
     func contains(_ elements: [Element]) -> Bool {
         return Set(elements).isSubset(of:Set(self))
     }
-
+//    func containsAtLeastOne(of elements:[Element]) -> Bool {
+//        
+//    }
 }
 
 // Some ideas that should be materialized for working with

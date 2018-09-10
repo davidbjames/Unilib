@@ -23,6 +23,20 @@ public extension Optional {
         return flatMap { $0 as? T }
     }
 
+    /// Convert this optional to an array. If there
+    /// is a wrapped element return an array of that
+    /// element, otherwise return empty array.
+    func toArray() -> [Wrapped] {
+        // TODO What if wrapped is an array with items?
+        // Would return 2D array. Should we flatten it?
+        switch self {
+        case .some(let wrapped) :
+            return [wrapped]
+        case .none :
+            return []
+        }
+    }
+    
     // NOTE: Before you're tempted to alias map/flatMap, consider that they
     // are probably the best names at the moment.
     // - map() is good because it maps an optional to something non-nil
@@ -33,6 +47,13 @@ public extension Optional {
     //   a suitable alternative. So, since map/flatMap are well known terms
     //   of art, perhaps it's better to keep them as-is.
     //   (I tried "wrap" or "unwrap" but neither convey "mapping".)
+    // - The problem is, in code, it's not always obvious that the
+    //   thing being mapped is an optional (without option clicking it)
+    //   so that, at first glance, "map/flatMap" may imply that the
+    //   variable is a collection and not an optional.
+    //   Something like unwrapAndMap would be more clear.
+    
+    //   NOTE: Swift 4+ "compactMap" (renamed to avoid confusion) applies only to collections.
     
 }
 
