@@ -211,6 +211,22 @@ public func !=<Element: Equatable>(lhs: NonEmpty<Element>, rhs: NonEmpty<Element
 // My additions
 
 extension NonEmpty {
+    
+    /// Map this NonEmpty sequence to another type.
+    public func map<T>(_ transform: (Element) throws -> T) rethrows -> NonEmpty<T> {
+        let newElements = try elements.map(transform)
+        // Force unwrap because map always returns the same number
+        return NonEmpty<T>(array:newElements)!
+    }
+    
+    /// Compact map this NonEmpty sequence to another type.
+    /// If mapping results in no values, this returns nil.
+    public func compactMap<T>(_ transform: (Element) throws -> T?) rethrows -> NonEmpty<T>? {
+        let newElements = try elements.compactMap(transform)
+        // Unlike "map" this one is not force unwrapped because compactMap
+        // may have resulted in 0 items which is not a valid "NonEmpty"
+        return NonEmpty<T>(array:newElements)
+    }
     public var asArray:Array<Element> {
         return elements
     }
