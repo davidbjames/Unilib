@@ -25,8 +25,8 @@ public func isDebugBuild() -> Bool {
 // via a "debug" operator or similar mechanism (optionally passing DebugConfig 
 // and DebugOptions).
 
-/// NOTE: "ApiDebug" is not a general purpose logging/reporting system, which
-/// could exist alongside. As such, "ApiDebug" has no reporting levels, etc.
+// NOTE: "ApiDebug" is not a general purpose logging/reporting system, which
+// could exist alongside. As such, "ApiDebug" has no reporting levels, etc.
 
 public struct ApiDebugOptions : OptionSet {
     public let rawValue:Int
@@ -37,13 +37,9 @@ public struct ApiDebugOptions : OptionSet {
     public static let compact = ApiDebugOptions(rawValue: 1 << 0)
     /// Extended output. Pretty print plus add'l vertical space for readability.
     public static let expanded = ApiDebugOptions(rawValue: 1 << 1)
-    
-    public static let autolayout = ApiDebugOptions(rawValue: 1 << 2)
-    
-    public static let tips = ApiDebugOptions(rawValue: 1 << 3)
-    
-    public static let labels = ApiDebugOptions(rawValue: 1 << 4)
-    
+
+    public static let tips = ApiDebugOptions(rawValue: 1 << 2)
+
     fileprivate var isDefaultVerbosity:Bool {
         return !contains(.expanded) && !contains(.compact)
     }
@@ -66,18 +62,6 @@ public enum ApiDebugConfig {
         #else
             return false
         #endif
-        }
-    }
-    
-    public var isAutoLayoutDebug:Bool {
-        if case .onWithOptions(let options) = self {
-            #if DEBUG
-                return options.contains(.autolayout)
-            #else
-                return false
-            #endif
-        } else {
-            return false
         }
     }
     

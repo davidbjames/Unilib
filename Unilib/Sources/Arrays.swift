@@ -140,6 +140,8 @@ public extension Array  {
         return _visitPairs(overlap:true, visitor)
     }
     
+    // REFACTOR this to use zip/dropFirst pattern if possible.
+    
     private func _pairs(overlap:Bool = false, includeLastOdd:Bool = false) -> [[Element]] {
         var result = [[Element]]()
         guard count > 0 else { return result }
