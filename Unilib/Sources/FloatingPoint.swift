@@ -21,4 +21,11 @@ public extension FloatingPoint {
     func isMultipleOf(_ multiple:Self) -> Bool {
         return self.truncatingRemainder(dividingBy: multiple) == 0
     }
+    
+    var isEven:Bool {
+        return self.truncatingRemainder(dividingBy:2) == 0
+    }
+    var isOdd:Bool {
+        return self.truncatingRemainder(dividingBy:2) != 0
+    }
 }
