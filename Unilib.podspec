@@ -7,6 +7,7 @@ Pod::Spec.new do |s|
   s.author             = { "David James" => "davidbjames1@gmail.com" }
 
   s.platform     = :ios, "11.4"
+  s.swift_version = "4.1"
   s.source       = { :git => "https://github.com/davidbjames/Unilib.git", :tag => s.version }
   s.source_files = "Unilib/Sources/**/*.{swift}"
 
