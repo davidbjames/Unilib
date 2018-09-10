@@ -156,8 +156,47 @@ public struct ApiDebug {
     public func constructor(_ wrapper:Any, _ params:[String]? = nil, _ vals:[Any?]? = nil) -> ApiDebug.Method {
         return Method(options:self.options, wrapper:wrapper, method:"init", params:params, vals:vals, delegates: false)
     }
-
+    
+    public func divider(with icon:String = "▪️", count:Int? = nil, openLine:Bool? = nil) -> ApiDebug.Divider {
+        return Divider(options:options, repeating:icon, count:count, openLine:openLine)
+    }
+    
     // Printable debug wrappers
+    
+    public struct Divider : ApiDebugPrintable {
+        public var options: ApiDebugOptions
+        private let element:String
+        private let count:Int
+        private let openLine:Bool
+        public init(options:ApiDebugOptions, repeating element:String? = nil, count:Int? = nil, openLine:Bool? = nil) {
+            self.options = options
+            self.element = element ?? "▪️"
+            self.count = count ?? 30
+            self.openLine = openLine ?? false
+        }
+        public var shortOutput: String {
+            return ""
+        }
+        
+        public func pretty(indent: Int?) -> String {
+            var output = ""
+            if openLine {
+                output += "\n"
+            }
+            // Indent
+            output += repeatElement(" " , count: (indent ?? 0) * 4).joined()
+            // Repeating element for divider
+            output += description + "\n"
+            if options.contains(.expanded) {
+                output += "\n"
+            }
+            return output
+        }
+        
+        public var description: String {
+            return repeatElement(element, count:count).joined()
+        }
+    }
     
     public struct Log : ApiDebugPrintable {
         
@@ -223,7 +262,7 @@ public struct ApiDebug {
         private var prefix:String?
         private var suffix:String?
         
-        init(options:ApiDebugOptions, message:String, icon:String? = nil) {
+        public init(options:ApiDebugOptions, message:String, icon:String? = nil) {
             self.options = options
             self.message = message
             self.icon = icon ?? "⚙️"
@@ -402,8 +441,7 @@ public struct ApiDebug {
             }
             let indentString = repeatElement(" ", count: (indent ?? 0) * 4).joined()
             output += indentString
-            output += repeatElement("▪️", count: 30).joined()
-            output += "\n"
+            output += Divider(options:options, repeating:"▪️").pretty(indent:0)
             output += indentString
             output += description
             if options.contains(.expanded) {
