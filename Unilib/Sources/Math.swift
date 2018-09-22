@@ -194,6 +194,18 @@ fileprivate struct FloatingPointHelper {
         return factor
     }
     
+    /// Obtain a random positive factor number between a fraction
+    /// a whole number (e.g. 0.5 and 1.5) by providing a positive
+    /// initial factor value (e.g. 1.5). The initial value provided
+    /// is the "target" factor which is above or below 1.0. The
+    /// return value will be within the range between that target
+    /// value and it's "mirror value on the opposite side of 1.0".
+    /// E.g. providing 1.5 will return a random value between 0.5 and 1.5.
+    static func randomOneFactor(from value:Double = 0.0) -> Double {
+        let deviation = abs(1 - value)
+        return randomFactor(from:deviation)
+    }
+    
     /// Obtain a random positive/negative deviation number from a median
     /// number with the range being 0.0...(median*2).
     static func randomMedianDeviation(from median:Double = 0.0) -> Double {
@@ -291,6 +303,16 @@ public extension Double {
         return FloatingPointHelper.randomFactor(from:self)
     }
     
+    /// Based on a floating point number, get a random factor between
+    /// that number and it's converse on the opposite side of 1.0
+    /// with the resulting value being useful to decrease/increase
+    /// some other value "by a factor of".
+    /// Example:
+    /// 1.5.randomOneFactor provides a random number between 0.5 and 1.5
+    var randomOneFactor:Double {
+        return FloatingPointHelper.randomOneFactor(from:self)
+    }
+    
     /// Based on a floating point number, get a random value between
     /// 0.0 and (number x 2). The number provided represents the
     /// "median deviation", with the lower bounds being 0.0 and
@@ -336,6 +358,10 @@ public extension CGFloat {
         return CGFloat(FloatingPointHelper.randomFactor(from:Double(self)))
     }
     
+    var randomOneFactor:CGFloat {
+        return CGFloat(FloatingPointHelper.randomOneFactor(from:Double(self)))
+    }
+
     var randomMedianDeviation:CGFloat {
         return CGFloat(FloatingPointHelper.randomMedianDeviation(from: Double(self)))
     }
