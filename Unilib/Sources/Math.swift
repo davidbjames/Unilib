@@ -39,10 +39,11 @@ import Foundation
 /// Simple struct representing an angle between 0º and 360º +/-
 /// As this is ExpressibleByFloatLiteral, anywhere that takes
 /// an Angle may also take a Double in it's place.
-public struct Angle : ExpressibleByFloatLiteral {
+public struct Angle : ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
     
     public typealias FloatLiteralType = Double
-    
+    public typealias IntegerLiteralType = Int
+
     public private(set) var degrees:Double
 
     /// Angle in radians
@@ -70,26 +71,35 @@ public struct Angle : ExpressibleByFloatLiteral {
         self.degrees = value
     }
 
-    public init(_ degrees:Double) {
-        self.degrees = degrees
+    public init(integerLiteral value: Int) {
+        self.degrees = Double(value)
+    }
+
+    public init?(_ degrees:Double?) {
+        guard let _degrees = degrees else { return nil }
+        self.degrees = _degrees
+    }
+    
+    public init?(_ degrees:CGFloat?) {
+        self.init(degrees.flatMap { Double($0) })
     }
     
     // Creating new angles from simple arithmetic operators
     
     public static func + (lhs:Angle, rhs:Double) -> Angle {
-        return Angle(lhs.degrees + rhs)
+        return Angle(floatLiteral:lhs.degrees + rhs)
     }
     
     public static func - (lhs:Angle, rhs:Double) -> Angle {
-        return Angle(lhs.degrees - rhs)
+        return Angle(floatLiteral:lhs.degrees - rhs)
     }
 
     public static func / (lhs:Angle, rhs:Double) -> Angle {
-        return Angle(lhs.degrees / rhs)
+        return Angle(floatLiteral:lhs.degrees / rhs)
     }
 
     public static func * (lhs:Angle, rhs:Double) -> Angle {
-        return Angle(lhs.degrees * rhs)
+        return Angle(floatLiteral:lhs.degrees * rhs)
     }
 
 }
