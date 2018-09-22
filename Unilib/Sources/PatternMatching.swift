@@ -8,7 +8,9 @@
 
 import Foundation
 
-
+/*
+ Not being used. Commented for now until it becomes absolutely necessary -- for copyright reasons.
+ 
 /// Wrapper to perform pattern matching via closure.
 /// Author: Olivier Halligon
 public struct Matcher<T> {
@@ -83,4 +85,4 @@ public func contains<S: Sequence>(_ items: [S.Element]) -> Matcher<S> where S.El
     }
 }
 
-
+*/
