@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		45E390337C779F1D85AAF3D9 /* Pods_Unilib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C2D5F4E8223CD7E5A55F9D /* Pods_Unilib.framework */; };
 		E7061C4320EB72C200671305 /* NonEmptyArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7061C4220EB72C200671305 /* NonEmptyArray.swift */; };
 		E71DC7FC1E03210300D99427 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71DC7FB1E03210300D99427 /* Math.swift */; };
 		E726E75A1EC6E0A600C33A4F /* MathOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E726E7591EC6E0A600C33A4F /* MathOperators.swift */; };
@@ -32,7 +31,6 @@
 		E7F9FB941EDEBCB8007E0EFD /* Optionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F9FB931EDEBCB8007E0EFD /* Optionals.swift */; };
 		E7F9FB971EDEF67F007E0EFD /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F9FB961EDEF67F007E0EFD /* Debug.swift */; };
 		E7F9FB991EDEF728007E0EFD /* DebugMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F9FB981EDEF728007E0EFD /* DebugMeta.swift */; };
-		FEC6BA7AE688D9B91833D00B /* Pods_UnilibTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA78EBD7783FF0D6843BE72 /* Pods_UnilibTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,11 +44,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		371F42D0238E4D6E3976B33E /* Pods-Unilib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unilib.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Unilib/Pods-Unilib.debug.xcconfig"; sourceTree = "<group>"; };
-		695641F1C5937008621E8B66 /* Pods-Unilib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unilib.release.xcconfig"; path = "Pods/Target Support Files/Pods-Unilib/Pods-Unilib.release.xcconfig"; sourceTree = "<group>"; };
-		BAA78EBD7783FF0D6843BE72 /* Pods_UnilibTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnilibTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5C2D5F4E8223CD7E5A55F9D /* Pods_Unilib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unilib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D98B10AAD88122617017C839 /* Pods-UnilibTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnilibTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnilibTests/Pods-UnilibTests.release.xcconfig"; sourceTree = "<group>"; };
 		E7061C4220EB72C200671305 /* NonEmptyArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonEmptyArray.swift; sourceTree = "<group>"; };
 		E71DC7FB1E03210300D99427 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		E726E7591EC6E0A600C33A4F /* MathOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathOperators.swift; sourceTree = "<group>"; };
@@ -79,7 +72,6 @@
 		E7F9FB931EDEBCB8007E0EFD /* Optionals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optionals.swift; sourceTree = "<group>"; };
 		E7F9FB961EDEF67F007E0EFD /* Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		E7F9FB981EDEF728007E0EFD /* DebugMeta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugMeta.swift; sourceTree = "<group>"; };
-		EFBB21F86E72FFE52A04E405 /* Pods-UnilibTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnilibTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnilibTests/Pods-UnilibTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +79,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45E390337C779F1D85AAF3D9 /* Pods_Unilib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,24 +87,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7D954701DA2A59400F86827 /* Unilib.framework in Frameworks */,
-				FEC6BA7AE688D9B91833D00B /* Pods_UnilibTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6F320D8D15D91651BAE36797 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				371F42D0238E4D6E3976B33E /* Pods-Unilib.debug.xcconfig */,
-				695641F1C5937008621E8B66 /* Pods-Unilib.release.xcconfig */,
-				EFBB21F86E72FFE52A04E405 /* Pods-UnilibTests.debug.xcconfig */,
-				D98B10AAD88122617017C839 /* Pods-UnilibTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		E7061C4120EB721D00671305 /* External */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,7 +149,6 @@
 				E7D954681DA2A59400F86827 /* Unilib */,
 				E7D954731DA2A59400F86827 /* UnilibTests */,
 				E7D954671DA2A59400F86827 /* Products */,
-				6F320D8D15D91651BAE36797 /* Pods */,
 				F3B28CE0187537655EB7302A /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -249,8 +227,6 @@
 		F3B28CE0187537655EB7302A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C5C2D5F4E8223CD7E5A55F9D /* Pods_Unilib.framework */,
-				BAA78EBD7783FF0D6843BE72 /* Pods_UnilibTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -273,12 +249,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E7D9547A1DA2A59400F86827 /* Build configuration list for PBXNativeTarget "Unilib" */;
 			buildPhases = (
-				1B87D8D788DA703089D1B688 /* [CP] Check Pods Manifest.lock */,
 				E7D954611DA2A59400F86827 /* Sources */,
 				E7D954621DA2A59400F86827 /* Frameworks */,
 				E7D954631DA2A59400F86827 /* Headers */,
 				E7D954641DA2A59400F86827 /* Resources */,
-				618ABC9320B76E14D7950491 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -293,12 +267,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E7D9547D1DA2A59400F86827 /* Build configuration list for PBXNativeTarget "UnilibTests" */;
 			buildPhases = (
-				F443CD18734FA11496B94162 /* [CP] Check Pods Manifest.lock */,
 				E7D9546B1DA2A59400F86827 /* Sources */,
 				E7D9546C1DA2A59400F86827 /* Frameworks */,
 				E7D9546D1DA2A59400F86827 /* Resources */,
-				9AE240F04F84AAFA1F2425D6 /* [CP] Embed Pods Frameworks */,
-				74CFCB4F45EF20F03F12F80C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -329,13 +300,13 @@
 					E7D9546E1DA2A59400F86827 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 3M7BTN6626;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = E7D954601DA2A59400F86827 /* Build configuration list for PBXProject "Unilib" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -368,90 +339,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		1B87D8D788DA703089D1B688 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Unilib-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		618ABC9320B76E14D7950491 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unilib/Pods-Unilib-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		74CFCB4F45EF20F03F12F80C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UnilibTests/Pods-UnilibTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9AE240F04F84AAFA1F2425D6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UnilibTests/Pods-UnilibTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F443CD18734FA11496B94162 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-UnilibTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E7D954611DA2A59400F86827 /* Sources */ = {
@@ -611,7 +498,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -622,7 +510,6 @@
 		};
 		E7D9547B1DA2A59400F86827 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 371F42D0238E4D6E3976B33E /* Pods-Unilib.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -634,19 +521,22 @@
 				INFOPLIST_FILE = Unilib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidbjames.Unilib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
 		E7D9547C1DA2A59400F86827 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 695641F1C5937008621E8B66 /* Pods-Unilib.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -659,42 +549,50 @@
 				INFOPLIST_FILE = Unilib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidbjames.Unilib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
 		E7D9547E1DA2A59400F86827 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EFBB21F86E72FFE52A04E405 /* Pods-UnilibTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 3M7BTN6626;
 				INFOPLIST_FILE = UnilibTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidbjames.UnilibTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
 		E7D9547F1DA2A59400F86827 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D98B10AAD88122617017C839 /* Pods-UnilibTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 3M7BTN6626;
 				INFOPLIST_FILE = UnilibTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidbjames.UnilibTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

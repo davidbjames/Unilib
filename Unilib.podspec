@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
   s.name         = "Unilib"
-  s.version      = "0.1.3"
+  s.version      = "0.1.4"
   s.summary      = "Generic Swift library of protocols/components for Swift application development. (Non-UI.)"
   s.homepage     = "https://github.com/davidbjames/Unilib"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "David James" => "davidbjames1@gmail.com" }
 
-  s.platform     = :ios, "11.4"
-  s.swift_version = "4.1"
+  s.platform     = :ios, "12.0"
+  s.swift_version = "4.2"
   s.source       = { :git => "https://github.com/davidbjames/Unilib.git", :tag => s.version }
   s.source_files = "Unilib/Sources/**/*.{swift}"
 
@@ -25,11 +25,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
 
-  # Removed Rx. Move to Unilib+Rx. Or add as necessary.
-  #s.dependency "RxSwift"
-  #s.dependency "RxCocoa"
-  #s.dependency "RxSwiftExt"
-
-  #s.dependency "STRegex"
+  # Try NOT to add external dependencies to this pod.
+  #s.dependency ""
 
 end
