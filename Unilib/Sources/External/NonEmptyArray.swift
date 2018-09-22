@@ -227,7 +227,7 @@ extension NonEmpty {
         // may have resulted in 0 items which is not a valid "NonEmpty"
         return NonEmpty<T>(array:newElements)
     }
-    public var asArray:Array<Element> {
+    public var toArray:Array<Element> {
         return elements
     }
 }
