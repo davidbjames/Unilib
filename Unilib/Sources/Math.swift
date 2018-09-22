@@ -276,7 +276,7 @@ public extension Double {
     
     /// Equivalent in radians
     var radians:Double {
-        return Angle(self).radians
+        return Angle(floatLiteral:self).radians
     }
     
     /// Based on a floating point number, get a random value up
@@ -347,7 +347,7 @@ public extension Double {
 public extension CGFloat {
 
     var radians:CGFloat {
-        return CGFloat(Angle(Double(self)).radians)
+        return CGFloat(Angle(floatLiteral:Double(self)).radians)
     }
     
     var randomDecimal:CGFloat {
