@@ -51,3 +51,16 @@ public extension CGFloat {
         return rounded(places:2).isMultipleOf(1.57)
     }
 }
+
+public extension Int {
+    func isMultipleOf(_ multiple:Double) -> Bool {
+        return Double(self).isMultipleOf(multiple)
+    }
+    
+    var isEven:Bool {
+        return Double(self).isEven
+    }
+    var isOdd:Bool {
+        return Double(self).isOdd
+    }
+}
