@@ -28,9 +28,9 @@ public func isDebugBuild() -> Bool {
 // NOTE: "ApiDebug" is not a general purpose logging/reporting system, which
 // could exist alongside. As such, "ApiDebug" has no reporting levels, etc.
 
-public struct ApiDebugOptions : OptionSet {
-    public let rawValue:Int
-    public init(rawValue:Int) {
+public/**/ struct ApiDebugOptions : OptionSet {
+    public/**/ let rawValue:Int
+    public/**/ init(rawValue:Int) {
         self.rawValue = rawValue
     }
     /// Abbreviated output.
@@ -100,11 +100,11 @@ extension ApiDebugPrintable {
 
 /// Wrapper for outputting structured API debug information to the console.
 /// NOT a general logging system.
-public struct ApiDebug {
+public/**/ struct ApiDebug {
     
     public let options:ApiDebugOptions
     
-    public init?(_ options:ApiDebugOptions? = nil) {
+    public/**/ init?(_ options:ApiDebugOptions? = nil) {
         #if DEBUG
             self.options = options ?? []
         #else
