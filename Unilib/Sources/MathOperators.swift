@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 // Float / Int basic math interactivity.
 // Prevents compiler errors when performing binary operations on them.

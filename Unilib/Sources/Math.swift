@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 // REVIEW 🔬 Make Angle and random stuff generic T:FloatingPoint
 // .. if it makes sense and doesn't cause complexity in client code.
