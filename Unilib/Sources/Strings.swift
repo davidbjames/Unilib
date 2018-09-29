@@ -54,4 +54,11 @@ public extension String {
             return self
         }
     }
+    
+    /// Get the index of a character in a string.
+    func indexDistance(of character: Character) -> Int? {
+        guard let index = index(of: character) else { return nil }
+        return distance(from: startIndex, to: index)
+    }
+
 }
