@@ -17,8 +17,6 @@ public extension FloatingPoint {
         return (self * divisor).rounded() / divisor
     }
     
-    // TODO: remove this with Swift 4.2 isMultiple(of:)
-    // and then have isEven use it, and isOdd negate isEven.
     // BIGGER question with much of Unilib being public
     // is do we want users of ViewQuery (for pertinent example)
     // to have all of Unilib's interface showing up?
@@ -28,6 +26,12 @@ public extension FloatingPoint {
     // own dependencies if they want. Ultimately, Unilib
     // should be incorporated in ViewQuery, or at least
     // the parts that are being used.
+    // Question however is this: If I use ViewQuery in a project
+    // and I also want the functionality of Unilib it won't be available.
+    // Will I need to maintain it in two separate places?
+    
+    // TODO: Replace this with Swift 5.0 isMultiple(of:)
+    // and update isEven, isOdd to use them.
     
     /// Is the current number a multiple of another.
     func isMultipleOf(_ multiple:Self) -> Bool {
