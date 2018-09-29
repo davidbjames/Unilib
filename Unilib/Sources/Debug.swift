@@ -46,7 +46,7 @@ public/**/ struct ApiDebugOptions : OptionSet {
 }
 
 /// Whether debugging is off, on or is on with options.
-public enum ApiDebugConfig {
+public/**/ enum ApiDebugConfig {
     
     case off
     case on

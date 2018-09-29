@@ -40,10 +40,10 @@ import CoreGraphics
 /// Simple struct representing an angle between 0º and 360º +/-
 /// As this is ExpressibleByFloatLiteral, anywhere that takes
 /// an Angle may also take a Double in it's place.
-public struct Angle : ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
+public/**/ struct Angle : ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
     
-    public typealias FloatLiteralType = Double
-    public typealias IntegerLiteralType = Int
+    public/**/ typealias FloatLiteralType = Double
+    public/**/ typealias IntegerLiteralType = Int
 
     public private(set) var degrees:Double
 
@@ -68,11 +68,11 @@ public struct Angle : ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
         return self * 4
     }
     
-    public init(floatLiteral value: Angle.FloatLiteralType) {
+    public/**/ init(floatLiteral value: Angle.FloatLiteralType) {
         self.degrees = value
     }
 
-    public init(integerLiteral value: Int) {
+    public/**/ init(integerLiteral value: Int) {
         self.degrees = Double(value)
     }
 
