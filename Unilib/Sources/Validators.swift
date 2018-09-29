@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MOVE out of Unilib unless ViewQuery becomes related to form input and validation.
+
 /**
  Validator / CompositeValidator / ValidatorFactory
  

@@ -69,7 +69,7 @@ public extension Array  {
     func randomIndex() -> Int? {
         guard count > 0 else { return nil }
         guard count > 1 else { return 0 }
-        return (0...(count-1)).random
+        return Int.random(in:0..<count)
     }
     
     // Pairs
@@ -188,6 +188,7 @@ public extension Array where Element : Equatable {
     ///
     /// - Example: let foo = myArray.find{ $0.name = "foo"}.element
     /// - SeeAlso: Sequence.first(:where) which just returns the element.
+    @available(*,deprecated, message: "Not efficient.")
     func find(_ includeElement: (Iterator.Element) -> Bool) -> (element:Iterator.Element, index:Int, prevIndex:Int?, nextIndex:Int?)? {
         
         if let element = self.filter(includeElement).first {
@@ -200,7 +201,6 @@ public extension Array where Element : Equatable {
     
     /// Are all elements in this Equatable array equal in value
     func allEqual() -> Bool {
-        // Via SO - Martin R (link below)
         guard let firstElem = first else {
             // empty so equal
             return true
@@ -212,7 +212,6 @@ public extension Array where Element : Equatable {
 // This is NOT faster than the Equatable version ^^
 // because Set(array) must traverse the entire array
 // whereas contains stops once it finds a match.
-// See https://stackoverflow.com/questions/29588158/check-if-all-elements-of-an-array-have-the-same-value-in-swift#29588187
 //public extension Array where Element : Hashable {
 //    func allEqual() -> Bool {
 //        return !Set(self).isEmpty

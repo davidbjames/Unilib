@@ -14,10 +14,18 @@ public extension Sequence {
     func `as`<T>(_:T.Type) -> [T] {
         return compactMap { $0 as? T }
     }
+    
     /// Cast a sequence to a sequence containing a type, or nil.
+    // Commenting this out for now until needed.
+    // at which point name it less obscurely.
+    // Difference with "as" above is this is a true cast attempt
+    // on the entire array of Ts, whereas "as" iterates each
+    // item and attempts the cast individually.
+    /*
     func with<T>(_:T.Type) -> [T]? {
         return self as? [T]
     }
+    */
     
     /// Alias to forEach, because it's prettier. Don't bug me. ;)
     func each(_ body: (Element) throws -> Void) rethrows {

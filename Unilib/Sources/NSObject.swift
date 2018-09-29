@@ -8,13 +8,6 @@
 
 import Foundation
 
-// THOUGHT 🕵🏻 Is there a way to simulate protocol conformance where it is
-// otherwise impractical (i.e. where message dispatch is required).
-// This appears to be necessary with protocols that have associated types
-// or self requirements specifically where it is not practical to use these
-// protocols via generic constraints. Ideally, you should be able to
-// support syntax like: (item as? PatsProtocol)?.doSomething()
-
 public extension NSObject {
     /// Perform a selector safely by making sure the current
     /// object can respond to the selector
