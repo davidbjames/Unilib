@@ -7,9 +7,10 @@ public struct Memo<T> {
   // MARK: Lifecycle
 
   /// Constructs a `Memo` which lazily evaluates the argument.
-  init(_ unevaluated:  @escaping () -> T) {
-    self.init(unevaluated: unevaluated)
-  }
+// Commented out for Swift 5 migration. was causing init ambiguity.
+//  init(_ unevaluated:  @escaping () -> T) {
+//    self.init(unevaluated: unevaluated)
+//  }
 
   /// Constructs a `Memo` which lazily evaluates the passed function.
   init(unevaluated: @escaping () -> T) {

@@ -192,7 +192,7 @@ public extension Array where Element : Equatable {
     func find(_ includeElement: (Iterator.Element) -> Bool) -> (element:Iterator.Element, index:Int, prevIndex:Int?, nextIndex:Int?)? {
         
         if let element = self.filter(includeElement).first {
-            if let index = self.index(of: element) {
+            if let index = self.firstIndex(of: element) {
                 return (element, index, previousIndex(from: index), nextIndex(from: index))
             }
         }
@@ -510,7 +510,7 @@ public extension Array where Element : Equatable {
     /// Insert or replace an element regardless.
     func update(equatable element:Element) -> Array<Element> {
         var newArray = self
-        if let index = newArray.index(of: element) {
+        if let index = newArray.firstIndex(of: element) {
             newArray[index] = element
         } else {
             newArray.append(element)
@@ -640,7 +640,7 @@ public extension Array where Element : Equatable {
     /// by another element, IF lhs element exists.
     /// [a,b,c].replacing(b, with:d) --> [a,d,c]
     func replacing(equatable lElement:Element, with rElement:Element) -> Array<Element> {
-        guard let index = self.index(of: lElement) else {
+        guard let index = self.firstIndex(of: lElement) else {
             return self
         }
         var result = self

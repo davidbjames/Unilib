@@ -11,7 +11,7 @@ import UIKit
 public extension NSObject {
     
     /// Unique memory address
-    public func memoryAddress(shortened:Bool = false) -> String {
+    func memoryAddress(shortened:Bool = false) -> String {
         let address = ObjectIdentifier(self).debugDescription
         let startIndex:String.Index
         // index before last parenthesis
@@ -25,14 +25,14 @@ public extension NSObject {
             // e.g. 7fe6cdc02d10
             startIndex = address.index(lastIndex, offsetBy:-12)
         }
-        let part = address[startIndex..<lastIndex]
+        let part = String(address[startIndex..<lastIndex]).uppercased()
         // prepend an "x" to distinguish the number as being related
         // to a unique id or memory address e.g. x2d10
         return "x\(part)"
     }
     
     /// Unique object id (hash of memory address)
-    public func objectId(shortened:Bool = false) -> String {
+    func objectId(shortened:Bool = false) -> String {
         let hash = String(describing: ObjectIdentifier(self).hashValue)
         // The full hash looks like this 140522157469520
         // where the first 9 digits tend to be grouped by some

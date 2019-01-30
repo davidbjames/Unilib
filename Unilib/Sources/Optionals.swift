@@ -58,7 +58,7 @@ public extension Optional {
 }
 
 public extension Optional where Wrapped: Sequence {
-    public var unwrap:[Wrapped.Element] {
+    var unwrap:[Wrapped.Element] {
         switch self {
         case let wrapped? : return Array(wrapped)
         case nil :          return []
