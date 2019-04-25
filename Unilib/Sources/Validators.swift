@@ -8,7 +8,7 @@
 
 import Foundation
 
-// MOVE out of Unilib unless ViewQuery becomes related to form input and validation.
+// MOVE out of Unilib unless C3 becomes related to form input and validation.
 
 /**
  Validator / CompositeValidator / ValidatorFactory

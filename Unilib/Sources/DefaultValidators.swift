@@ -8,7 +8,7 @@
 
 import Foundation
 
-// MOVE out of Unilib unless ViewQuery becomes related to form input and validation.
+// MOVE out of Unilib unless C3 becomes related to form input and validation.
 
 /// Validator that makes sure a string is not empty
 public struct NotEmptyStringValidator : ValidatorFactory  {

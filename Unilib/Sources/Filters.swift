@@ -8,7 +8,7 @@
 
 import Foundation
 
-// MOVE out of Unilib unless ViewQuery becomes related to form input and validation.
+// MOVE out of Unilib unless C3 becomes related to form input and validation.
 
 /// Filterer. Returns it's own type (filtered).
 public typealias Filter<T> = (T) -> (T)

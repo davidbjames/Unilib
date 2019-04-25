@@ -1,6 +1,6 @@
 //
-//  UIView+Helpers.swift
-//  ViewQuery
+//  DebugMeta.swift
+//  Unilib
 //
 //  Created by David James on 1/24/17.
 //  Copyright © 2017 David B James. All rights reserved.

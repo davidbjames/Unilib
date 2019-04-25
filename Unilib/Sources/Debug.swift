@@ -1,6 +1,6 @@
 //
 //  Debug.swift
-//  ViewQuery
+//  Unilib
 //
 //  Created by David James on 1/20/17.
 //  Copyright © 2017 David B James. All rights reserved.
@@ -244,7 +244,7 @@ public/**/ struct ApiDebug {
         }
         
         public var shortOutput: String {
-            return "ViewQuery Log:    \(description)"
+            return "C3 Log:    \(description)"
         }
         
         public func pretty(indent:Int?) -> String {
@@ -286,7 +286,7 @@ public/**/ struct ApiDebug {
         }
         
         public var shortOutput: String {
-            return "ViewQuery Debug:  \(description)"
+            return "C3 Debug:  \(description)"
         }
         
         public func pretty(indent:Int?) -> String {
@@ -333,7 +333,7 @@ public/**/ struct ApiDebug {
         }
         
         public var shortOutput: String {
-            return "ViewQuery Result: \(description)"
+            return "C3 Result: \(description)"
         }
 
         public func pretty(indent:Int?) -> String {
@@ -436,7 +436,7 @@ public/**/ struct ApiDebug {
         }
         
         public var shortOutput: String {
-            return "ViewQuery Method: \(description)"
+            return "C3 Method: \(description)"
         }
 
         public func pretty(indent:Int?) -> String  {

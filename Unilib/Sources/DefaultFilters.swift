@@ -6,7 +6,7 @@
 //  Copyright © 2016 David B James. All rights reserved.
 //
 
-// MOVE out of Unilib unless ViewQuery becomes related to form input and validation.
+// MOVE out of Unilib unless C3 becomes related to form input and validation.
 
 import Foundation
 
