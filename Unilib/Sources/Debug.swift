@@ -112,6 +112,10 @@ public/**/ struct ApiDebug {
         #endif
     }
     
+    public/**/ func output(_ value:String, icon:String? = nil) {
+        message(value, icon:icon).output()
+    }
+    
     // "hasTip" is a flag to say that a particular notice/warning/error
     // has a helpful tip available indicating the user can add .tips
     // to debug options to view it. Assumes tip() is called directly
