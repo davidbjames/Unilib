@@ -27,13 +27,19 @@ public extension SetAlgebra {
     var hasValues:Bool {
         return !isEmpty
     }
+
+    /// Does the current set intersect another set?
+    /// e.g. [.a,.b].intersects([.b,.c]) // true
+    func intersects(_ other:Self) -> Bool {
+        return !isDisjoint(with:other)
+    }
 }
 
 public extension Set {
     
     /// Does the current set intersect another?
     func intersects(_ elements:Set<Element>) -> Bool {
-        return intersection(elements).count > 0
+        return !isDisjoint(with:elements)
     }
 }
 

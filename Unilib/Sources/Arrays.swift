@@ -82,7 +82,7 @@ public extension Array  {
     /// (and does not use optional second item).
     func pairs() -> [(first:Element,second:Element?)] {
         let pairs = _pairs(overlap:false, includeLastOdd:true)
-        guard pairs.hasValues else { return [(Element,Element?)]() }
+        guard pairs.hasElements else { return [(Element,Element?)]() }
         // convert to tuples
         return pairs.map { ($0[0], $0[safe:1]) }
     }
@@ -97,7 +97,7 @@ public extension Array  {
     /// See also "pairs" or "overlappingPairs" variants.
     func strictPairs() -> [(first:Element,second:Element)] {
         let pairs = _pairs(overlap:false, includeLastOdd:false)
-        guard pairs.hasValues else { return [(Element,Element)]() }
+        guard pairs.hasElements else { return [(Element,Element)]() }
         // convert to tuples
         return pairs.map { ($0[0], $0[1]) }
     }
@@ -107,7 +107,7 @@ public extension Array  {
     /// Will include all items even if there is an odd number of items.
     func overlappingPairs() -> [(first:Element,second:Element)] {
         let pairs = _pairs(overlap:true)
-        guard pairs.hasValues else { return [(Element,Element)]() }
+        guard pairs.hasElements else { return [(Element,Element)]() }
         // convert to tuples
         return pairs.map { ($0[0], $0[1]) }
     }
@@ -117,7 +117,7 @@ public extension Array  {
     /// Will include all items even if there is an odd number of items.
     func cyclicPairs() -> [(first:Element,second:Element)] {
         let pairs = overlappingPairs()
-        guard pairs.hasValues else { return [(Element,Element)]() }
+        guard pairs.hasElements else { return [(Element,Element)]() }
         guard let first = first, let last = last else {
             return [(Element,Element)]()
         }
@@ -174,6 +174,15 @@ public extension Array  {
             .map {
                 let tmp = dropFirst($0).prefix(size)
                 return Array(tmp)
+        }
+    }
+    
+    /// Act on array only if a provided condition is true.
+    func `if`(_ condition:Bool, _ closure:([Element])->[Element]) -> [Element] {
+        if condition {
+            return closure(self)
+        } else {
+            return self
         }
     }
 }
@@ -246,7 +255,7 @@ public extension Collection {
         return self.filter(test).count == 0
     }
     
-    var hasValues:Bool {
+    var hasElements:Bool {
         return !isEmpty
     }
     
@@ -352,6 +361,7 @@ struct MyHashable : Hashable {
 public extension Array where Iterator.Element: Hashable {
     
     func removingDuplicates() -> [Iterator.Element] {
+        guard !isEmpty else { return [] }
         var seen: Set<Iterator.Element> = []
         return filter { seen.insert($0).inserted }
     }

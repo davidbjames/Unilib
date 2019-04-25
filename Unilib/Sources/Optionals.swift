@@ -18,6 +18,15 @@ extension Optional : OptionalType {
 }
 
 public extension Optional {
+    
+    /// Does this optional have a value?
+    var exists:Bool {
+        switch self {
+        case .some : return true
+        case .none : return false
+        }
+    }
+    
     /// Cast an optional to a type or nil
     func `as`<T>(_:T.Type) -> T? {
         return flatMap { $0 as? T }
@@ -68,3 +77,44 @@ public extension Optional where Wrapped: Sequence {
 
 // == and != on Optional already exist for comparing
 // optionals or optionals and non-optionals
+
+
+// Move the following to it's own file (must make file system changes via Unilib project)
+
+precedencegroup AppendStringPrecedence {
+    higherThan   : AdditionPrecedence
+    associativity: left
+}
+
+infix operator ..? : AppendStringPrecedence
+
+public extension Optional  {
+    /// Append string based on an optional value
+    /// as returned from closure.
+    /// If the value exists, an extra space will
+    /// be inserted, otherwise this returns an empty string.
+    private func appendString(_ closure:(Wrapped)->String) -> String {
+        switch self {
+        case let wrapped? : return " " + closure(wrapped)
+        case nil : return ""
+        }
+    }
+    /// Append string based on an optional value
+    /// as returned from closure.
+    /// If the value exists, an extra space will
+    /// be inserted, otherwise this returns an empty string.
+    static func ..?(lhs:Wrapped?, rhs:(Wrapped) -> String) -> String {
+        return lhs.appendString(rhs)
+    }
+    
+    // Why do this? ^^
+    // Goal: myString = firstBit + secondOptionalBit?.something
+    // Long way:
+    // var myString = firstBit
+    // if let secondBit = secondOptionalBit {
+    //     myString += " " + secondBit.something
+    // }
+    // Short way:
+    // let myString = firstBit + secondOptionalBit ..? { $0.something }
+    // .. which is very close to the pseudo code above
+}

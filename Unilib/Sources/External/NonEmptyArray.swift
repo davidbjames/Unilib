@@ -54,6 +54,10 @@ public struct NonEmpty<Element> {
         self.elements = elements
     }
     
+    public init(first:Element, second:Element) {
+        self.elements = [first, second]
+    }
+    
     public init?<S: Sequence>(_ sequence: S) where S.Iterator.Element == Element {
         self.init(array: Array<Element>(sequence))
     }
@@ -74,6 +78,17 @@ public struct NonEmpty<Element> {
         return elements.last!
     }
     
+    public var lhs:Element {
+        return first
+    }
+
+    public var rhs:Element {
+        guard count == 2 else {
+            preconditionFailure("Attempt to use \"rhs\" on NonEmpty array with other than 2 items fails. Make sure to initialize with \"init(first:second:)\".")
+        }
+        return last
+    }
+
     public var isEmpty: Bool {
         return false
     }

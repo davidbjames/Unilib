@@ -157,8 +157,8 @@ public/**/ struct ApiDebug {
         return Method(options:self.options, wrapper:wrapper, method:"init", params:params, vals:vals, delegates: false)
     }
     
-    public func divider(with icon:String = "▪️", count:Int? = nil, openLine:Bool? = nil) -> ApiDebug.Divider {
-        return Divider(options:options, repeating:icon, count:count, openLine:openLine)
+    public func divider(with icon:String = "· ", count:Int? = nil, openLine:Bool? = nil, closeLine:Bool? = nil) -> ApiDebug.Divider {
+        return Divider(options:options, repeating:icon, count:count, openLine:openLine, closeLine:closeLine)
     }
     
     // Printable debug wrappers
@@ -168,11 +168,13 @@ public/**/ struct ApiDebug {
         private let element:String
         private let count:Int
         private let openLine:Bool
-        public init(options:ApiDebugOptions, repeating element:String? = nil, count:Int? = nil, openLine:Bool? = nil) {
+        private let closeLine:Bool
+        public init(options:ApiDebugOptions, repeating element:String? = nil, count:Int? = nil, openLine:Bool? = nil, closeLine:Bool? = nil) {
             self.options = options
-            self.element = element ?? "▪️"
+            self.element = element ?? "· "
             self.count = count ?? 30
             self.openLine = openLine ?? false
+            self.closeLine = closeLine ?? true
         }
         public var shortOutput: String {
             return ""
@@ -186,7 +188,7 @@ public/**/ struct ApiDebug {
             // Indent
             output += repeatElement(" " , count: (indent ?? 0) * 4).joined()
             // Repeating element for divider
-            output += description + "\n"
+            output += description + (closeLine ? "\n" : "")
             if options.contains(.expanded) {
                 output += "\n"
             }
@@ -441,7 +443,7 @@ public/**/ struct ApiDebug {
             }
             let indentString = repeatElement(" ", count: (indent ?? 0) * 4).joined()
             output += indentString
-            output += Divider(options:options, repeating:"▪️").pretty(indent:0)
+            output += Divider(options:options, repeating:"· ").pretty(indent:0)
             output += indentString
             output += description
             if options.contains(.expanded) {

@@ -62,3 +62,23 @@ public extension String {
     }
 
 }
+
+public extension Array where Element == String {
+    
+    /// Return all strings with dot prefix segments
+    var dotPrefixAll:String {
+        return "[" + compactMap { $0.dotPrefix }.joined(separator:",") + "]"
+    }
+    /// Return all strings with dot prefix segments
+    func dotPrefixAll(segments:Int = 1) -> String {
+        return "[" + compactMap { $0.dotPrefix(segments:segments) }.joined(separator:",") + "]"
+    }
+    /// Return all strings with dot suffix segments
+    var dotSuffixAll:String {
+        return "[" + compactMap { $0.dotSuffix }.joined(separator:",") + "]"
+    }
+    /// Return all strings with dot suffix segments
+    func dotSuffixAll(segments:Int = 1) -> String {
+        return "[" + compactMap { $0.dotSuffix(segments:segments) }.joined(separator:",") + "]"
+    }
+}

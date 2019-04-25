@@ -81,3 +81,20 @@ func - (lhs:CGFloat, rhs:Int) -> CGFloat {
 func - (lhs:Double, rhs:Int) -> Double {
     return lhs - Double(rhs)
 }
+
+
+// Maybe move this to OtherOperators file
+
+infix operator ^^
+
+/// The missing XOR operator.
+/// True if one is true but NOT the other.
+public func ^^(lhs:Bool, rhs:Bool) -> Bool {
+    return lhs != rhs
+}
+/*
+false ^^ false // false
+true  ^^ true  // false
+false ^^ true  // true
+true  ^^ false // true
+*/

@@ -9,6 +9,75 @@
 import Foundation
 import CoreGraphics
 
+// MARK:- Clamp
+
+/// Clamp a float value to ensure it is between
+/// a minimum and maximum bounds (inclusive).
+public func clamp(_ value:CGFloat, min:CGFloat?, max:CGFloat?) -> CGFloat {
+    switch (min, max) {
+    case let (min?, max?) :
+        return clampMin(clampMax(value, max:max), min:min)
+    case (let min?, nil) :
+        return clampMin(value, min:min)
+    case (nil, let max?) :
+        return clampMax(value, max:max)
+    case (nil, nil) :
+        return value
+    }
+}
+
+/// Clamp a float value to ensure it is greater than
+/// or equal to a minimum value.
+public func clampMin(_ value:CGFloat, min:CGFloat) -> CGFloat {
+    return value >= min ? value : min
+}
+
+/// Clamp a float value to ensure it is less than
+/// or equal to a maximum value.
+public func clampMax(_ value:CGFloat, max:CGFloat) -> CGFloat {
+    return value <= max ? value : max
+}
+
+/// Clamp a float value to ensure it is within a range (inclusive).
+public func clamp(_ value:CGFloat, to range:ClosedRange<CGFloat>) -> CGFloat {
+    return clamp(value, min:range.lowerBound, max:range.upperBound)
+}
+
+/// Clamp a potentially inconsistent float value to a nearby multiple
+/// rounding the multiple up or down per standard rounding.
+public func clamp(_ input:CGFloat, toMultipleOf multiple:CGFloat) -> CGFloat {
+    let fudged = input + (multiple / 2)
+    let times = floor(fudged / multiple)
+    return times * multiple
+    
+    // Tests:
+    // Input:
+    // [-132.5,  -90.0, -60.0, -0.0, 0.5, -0.6, 64.9,  65.0,  90.0, 129.2, 130.4, 130.6, 259.4, 262.7, 263.0]
+    // .. with multiple of 130 ..
+    // Output:
+    // [-130.0, -130.0,   0.0,  0.0, 0.0,  0.0,  0.0, 130.0, 130.0, 130.0, 130.0, 130.0, 260.0, 260.0, 260.0]
+
+}
+
+public extension CGFloat {
+    /// Clamp a float value to ensure it is between
+    /// a minimum and maximum bounds (inclusive).
+    func clamped(min:CGFloat, max:CGFloat) -> CGFloat {
+        return clamp(self, min:min, max:max)
+    }
+    /// Clamp a float value to ensure it is within a range (inclusive).
+    func clamped(to range:ClosedRange<CGFloat>) -> CGFloat {
+        return clamp(self, to:range)
+    }
+    /// Clamp a potentially inconsistent float value to a nearby multiple
+    /// rounding the multiple up or down per standard rounding.
+    func clamped(toMultipleOf multiple:CGFloat) -> CGFloat {
+        return clamp(self, toMultipleOf:multiple)
+    }
+}
+
+
+// MARK:- Angle
 
 /// Simple struct representing an angle between 0º and 360º +/-
 /// As this is ExpressibleByFloatLiteral, anywhere that takes
