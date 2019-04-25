@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Unilib"
-  s.version      = "0.1.4"
+  s.version      = "0.1.5"
   s.summary      = "Generic Swift library of protocols/components for Swift application development. (Non-UI.)"
   s.homepage     = "https://github.com/davidbjames/Unilib"
   s.license      = { :type => "MIT", :file => "LICENSE" }
