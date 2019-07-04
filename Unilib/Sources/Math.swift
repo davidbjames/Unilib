@@ -77,6 +77,20 @@ public extension CGFloat {
 }
 
 
+/// Given a constant value that lies within an input range
+/// produce a new value mapped to it's relative position
+/// in an output range.
+public func map<F:BinaryFloatingPoint>(_ constant:F, from inputRange:ClosedRange<F>, to outputRange:ClosedRange<F>) -> F {
+    // Linear transform (mapping):
+    // MappedActual = (Actual-Min)/(Max-Min) * (MappedMax-MappedMin) + MappedMin
+    // Example: compute offset based on device height
+    // let offset = (height-minHeight)/(maxHeight-minHeight) * (maxOffset-minOffset) + minOffset.
+    // or, map(1024, from:768...1024, to:30...50)
+    // 50 = (1024-768)/(1024-768) * (50-30) + 30
+    return (constant - inputRange.lowerBound) / (inputRange.upperBound - inputRange.lowerBound) * (outputRange.upperBound - outputRange.lowerBound) + outputRange.lowerBound
+}
+
+
 // MARK:- Angle
 
 /// Simple struct representing an angle between 0º and 360º +/-
