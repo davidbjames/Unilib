@@ -25,11 +25,17 @@ class Arrays_Tests: XCTestCase {
     struct MyHashable : Hashable {
         let i:Int
         let j:Int
-        var hashValue: Int {
-            return i.hashValue ^ (j.hashValue &* 987654433)
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(i)
+            hasher.combine(j)
+        }
+        // hash value no longer used
+        // hash combiner ^^ does it for you.
+//        var hashValue: Int {
+//            return i.hashValue ^ (j.hashValue &* 987654433)
             // 1800% slower due to collisions.
             // return i.hashValue ^ j.hashValue
-        }
+//        }
         public static func == (lhs:MyHashable, rhs:MyHashable) -> Bool {
             guard lhs.hashValue == rhs.hashValue else { return false }
             return lhs.i == rhs.i && lhs.j == rhs.j
