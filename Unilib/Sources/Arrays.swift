@@ -12,6 +12,8 @@ import Foundation
 
 public extension Array  {
     
+    // TODO: Review/remove index methods as needed.
+    
     /// The last index of the array if it exists
     var lastIndex:Int? {
         return count > 0 ? count - 1 : nil

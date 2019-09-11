@@ -12,19 +12,11 @@ public extension NSObject {
     
     /// Unique memory address
     func memoryAddress(shortened:Bool = false) -> String {
-        let address = ObjectIdentifier(self).debugDescription
-        let startIndex:String.Index
-        // index before last parenthesis
-        let lastIndex = address.index(before:address.endIndex)
-        if shortened {
-            // Capture last 4 characters e.g. 2d10
-            startIndex = address.index(lastIndex, offsetBy: -4)
-        } else {
-            // 0x00007fe6cdc02d10
-            // Capture all characters after zeros
-            // e.g. 7fe6cdc02d10
-            startIndex = address.index(lastIndex, offsetBy:-12)
-        }
+        let address = Unmanaged.passUnretained(self).toOpaque().debugDescription
+        guard shortened else { return address }
+        // Capture last 4 characters e.g. 2d10
+        let startIndex = address.index(address.endIndex, offsetBy: -4)
+        let lastIndex = address.endIndex
         let part = String(address[startIndex..<lastIndex]).uppercased()
         // prepend an "x" to distinguish the number as being related
         // to a unique id or memory address e.g. x2d10
