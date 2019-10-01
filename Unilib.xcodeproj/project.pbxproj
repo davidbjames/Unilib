@@ -20,6 +20,7 @@
 		E725555B215FD74C0095C6F9 /* Unilib-LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = E725555A215FD74C0095C6F9 /* Unilib-LICENSE.md */; };
 		E726E75A1EC6E0A600C33A4F /* MathOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E726E7591EC6E0A600C33A4F /* MathOperators.swift */; };
 		E750BD2D1DC9190E0079687B /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = E750BD2C1DC9190E0079687B /* Time.swift */; };
+		E76245B52343535700C07667 /* PropertyWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76245B42343535700C07667 /* PropertyWrappers.swift */; };
 		E789AB3A1EDAF82900CF5A90 /* Arrays_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E789AB391EDAF82900CF5A90 /* Arrays_Tests.swift */; };
 		E79FA6B61FAB8D9000495E44 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79FA6B51FAB8D9000495E44 /* Sequence.swift */; };
 		E79FA6B81FAB8DD000495E44 /* FloatingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79FA6B71FAB8DD000495E44 /* FloatingPoint.swift */; };
@@ -64,6 +65,7 @@
 		E725555A215FD74C0095C6F9 /* Unilib-LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Unilib-LICENSE.md"; sourceTree = "<group>"; };
 		E726E7591EC6E0A600C33A4F /* MathOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathOperators.swift; sourceTree = "<group>"; };
 		E750BD2C1DC9190E0079687B /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		E76245B42343535700C07667 /* PropertyWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyWrappers.swift; sourceTree = "<group>"; };
 		E789AB391EDAF82900CF5A90 /* Arrays_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arrays_Tests.swift; sourceTree = "<group>"; };
 		E79FA6B51FAB8D9000495E44 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		E79FA6B71FAB8DD000495E44 /* FloatingPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPoint.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				E71DC7FB1E03210300D99427 /* Math.swift */,
 				E726E7591EC6E0A600C33A4F /* MathOperators.swift */,
 				E7F9FB931EDEBCB8007E0EFD /* Optionals.swift */,
+				E76245B42343535700C07667 /* PropertyWrappers.swift */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				E7D954901DA2BEFA00F86827 /* Arrays.swift in Sources */,
 				E7D9548C1DA2ACC900F86827 /* Validators.swift in Sources */,
 				E71749042271B4350046973B /* Regex.swift in Sources */,
+				E76245B52343535700C07667 /* PropertyWrappers.swift in Sources */,
 				E7D9548A1DA2ACC900F86827 /* Strings.swift in Sources */,
 				E7061C4320EB72C200671305 /* NonEmptyArray.swift in Sources */,
 				E71748FE2271B4350046973B /* String+ReplaceMatching.swift in Sources */,
