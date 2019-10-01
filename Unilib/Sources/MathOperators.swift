@@ -46,42 +46,9 @@ func / (lhs:Double, rhs:Int) -> Double {
     return lhs / Double(rhs)
 }
 
-
-
-func + (lhs:Int, rhs:CGFloat) -> CGFloat {
-    return CGFloat(lhs) + rhs
-}
-
-func + (lhs:Int, rhs:Double) -> Double {
-    return Double(lhs) + rhs
-}
-
-func + (lhs:CGFloat, rhs:Int) -> CGFloat {
-    return lhs + CGFloat(rhs)
-}
-
-func + (lhs:Double, rhs:Int) -> Double {
-    return lhs + Double(rhs)
-}
-
-
-
-func - (lhs:Int, rhs:CGFloat) -> CGFloat {
-    return CGFloat(lhs) - rhs
-}
-
-func - (lhs:Int, rhs:Double) -> Double {
-    return Double(lhs) - rhs
-}
-
-func - (lhs:CGFloat, rhs:Int) -> CGFloat {
-    return lhs - CGFloat(rhs)
-}
-
-func - (lhs:Double, rhs:Int) -> Double {
-    return lhs - Double(rhs)
-}
-
+// DEV NOTE: Avoid overloading + or - to avoid
+// unexpected precedence ordering problems.
+// (recall https://cl.ly/8137b850f04c)
 
 // Maybe move this to OtherOperators file
 
