@@ -27,6 +27,42 @@ public struct MinZero {
         }
     }
     public init(wrappedValue:Int) {
+        // NOTE: This specific initializer is necessary in case
+        // you must create this property with an initial value.
+        // Example: @MinZero var test = 3
+        // On the other hand, to create this property with any
+        // other value you must create another initializer for
+        // that value. Example: @Min(min:2) var test.
+        // To combine both a custom initial value and the initial
+        // value of the wrapped value, you must create yet another
+        // initializer that does both, with wrappedValue first:
+        // init(wrappedValue:Int, min:Int) and call it like
+        // @Min(min:2) var test = 5
+        // which synthesizes to: Min(wrappedValue:5, min:2).
         number = wrappedValue
+    }
+}
+
+/// Property that cycles through integers
+/// resetting to 0 when max is reached.
+/// Example: @Cycled(max:2) var counter:Int
+@propertyWrapper
+public struct Cycled {
+    private let max:Int
+    private var number = 0
+    public var wrappedValue:Int {
+        get { return number }
+        set {
+            let newNumber = number + newValue
+            if newNumber > max {
+                number = 0
+            } else {
+                number = newNumber
+            }
+        }
+    }
+    public init(max:Int) {
+        self.max = max
+        self.number = 0
     }
 }
