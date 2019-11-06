@@ -66,3 +66,27 @@ public struct Cycled {
         self.number = 0
     }
 }
+
+/// Property that stores a closure, initially running
+/// that closure and storing the return value as
+/// the projected value of that type. This supports
+/// both immediate use of the returned "projected" value
+/// (via "$foo" syntax) and the ability to rerun the closure
+/// (via "foo()") and use that value, while retaining
+/// the original value intact (i.e. the $projected value).
+@propertyWrapper
+public struct Refreshable<T> {
+    private var closure:()->T
+    public var projectedValue:T
+    public var wrappedValue:()->T {
+        get { return closure }
+        set {
+            self.closure = newValue
+            projectedValue = self.closure()
+        }
+    }
+    public init(wrappedValue closure:@escaping ()->T) {
+        self.closure = closure
+        self.projectedValue = closure()
+    }
+}
