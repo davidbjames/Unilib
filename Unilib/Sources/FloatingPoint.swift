@@ -18,6 +18,20 @@ public extension FloatingPoint {
         return (self * divisor).rounded() / divisor
     }
     
+    /// Take a floating point number and floor it (round down)
+    /// to specified number of places.
+    func floor(places:Int) -> Self {
+        let divisor = Self(Int(pow(10.0, Double(places))))
+        return Foundation.floor(self * divisor) / divisor
+    }
+    
+    /// Take a floating point number and ceiling it (round up)
+    /// to specified number of places.
+    func ceil(places:Int) -> Self {
+        let divisor = Self(Int(pow(10.0, Double(places))))
+        return Foundation.ceil(self * divisor) / divisor
+    }
+    
     // TEST the following API for viability.
     // It is intended to complement the Int.isMultiple() API
     // but for floating point numbers. There is some use

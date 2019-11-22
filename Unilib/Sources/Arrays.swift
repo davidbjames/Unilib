@@ -661,3 +661,16 @@ public extension Array where Element : Equatable {
     }
 }
 
+public extension Array where Element : AnyObject {
+    /// Repeat elements that are unique instances.
+    /// This initializer uses an autoclosure allowing
+    /// to instantiate with parameters (Foo(bar:true)
+    /// vs only Foo.init), but still have unique
+    /// instances created.
+    init(repeating element:@autoclosure ()->Element, count:Int) {
+        self = []
+        for _ in 0..<count {
+            append(element())
+        }
+    }
+}

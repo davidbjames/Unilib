@@ -61,6 +61,19 @@ public extension String {
         return distance(from: startIndex, to: index)
     }
 
+    /// The "incorrect" way of getting a character
+    /// out of a string by integer index.
+    /// The Swift team's reasoning for not supporting
+    /// this relates to localizable content and
+    /// the diversity of how strings can be iterated.
+    /// However, there are strict cases where it makes
+    /// sense to have a quick and easy accessor by Int
+    /// so here it is.
+    /// e.g. Quadrant columnLetters "abcd..."
+    func character(at _index:Int) -> Character? {
+        let i = index(startIndex, offsetBy:_index)
+        return self[safe:i]
+    }
 }
 
 public extension Array where Element == String {
