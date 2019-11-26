@@ -26,6 +26,7 @@
 		E79FA6B81FAB8DD000495E44 /* FloatingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79FA6B71FAB8DD000495E44 /* FloatingPoint.swift */; };
 		E79FA6BA1FAB8E2900495E44 /* NSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79FA6B91FAB8E2900495E44 /* NSObject.swift */; };
 		E7C048801DA56C16001CBC52 /* Ranges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C0487F1DA56C16001CBC52 /* Ranges.swift */; };
+		E7C6DAD9238D18D900C81993 /* Boolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C6DAD8238D18D900C81993 /* Boolean.swift */; };
 		E7CD306F1ED440CC002AE776 /* SetAlgebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CD306E1ED440CC002AE776 /* SetAlgebra.swift */; };
 		E7D954701DA2A59400F86827 /* Unilib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D954661DA2A59400F86827 /* Unilib.framework */; };
 		E7D954751DA2A59400F86827 /* UnilibTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D954741DA2A59400F86827 /* UnilibTests.swift */; };
@@ -71,6 +72,7 @@
 		E79FA6B71FAB8DD000495E44 /* FloatingPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPoint.swift; sourceTree = "<group>"; };
 		E79FA6B91FAB8E2900495E44 /* NSObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSObject.swift; sourceTree = "<group>"; };
 		E7C0487F1DA56C16001CBC52 /* Ranges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ranges.swift; sourceTree = "<group>"; };
+		E7C6DAD8238D18D900C81993 /* Boolean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boolean.swift; sourceTree = "<group>"; };
 		E7CD306E1ED440CC002AE776 /* SetAlgebra.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetAlgebra.swift; sourceTree = "<group>"; };
 		E7D954661DA2A59400F86827 /* Unilib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Unilib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7D954691DA2A59400F86827 /* Unilib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Unilib.h; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 		E7C0487E1DA56BF8001CBC52 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				E7C6DAD8238D18D900C81993 /* Boolean.swift */,
 				E7D954841DA2ACC900F86827 /* Strings.swift */,
 				E7D9548F1DA2BEFA00F86827 /* Arrays.swift */,
 				E79FA6B51FAB8D9000495E44 /* Sequence.swift */,
@@ -385,6 +388,7 @@
 				E79FA6B61FAB8D9000495E44 /* Sequence.swift in Sources */,
 				E7D954881DA2ACC900F86827 /* DefaultValidators.swift in Sources */,
 				E7F9FB991EDEF728007E0EFD /* DebugMeta.swift in Sources */,
+				E7C6DAD9238D18D900C81993 /* Boolean.swift in Sources */,
 				E7CD306F1ED440CC002AE776 /* SetAlgebra.swift in Sources */,
 				E71748FD2271B4350046973B /* Foundation+Ranges.swift in Sources */,
 				E71749032271B4350046973B /* Options.swift in Sources */,
