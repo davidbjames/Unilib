@@ -80,14 +80,30 @@ public extension CGFloat {
 /// Given a constant value that lies within an input range
 /// produce a new value mapped to it's relative position
 /// in an output range.
-public func map<F:BinaryFloatingPoint>(_ constant:F, from inputRange:ClosedRange<F>, to outputRange:ClosedRange<F>) -> F {
+/// Optionally, invert the output mapping (i.e. so that
+/// low input values map to high output values and vice versa).
+public func map<F:BinaryFloatingPoint>(_ constant:F, from inputRange:ClosedRange<F>, to outputRange:ClosedRange<F>, inverted:Bool = false) -> F {
     // Linear transform (mapping):
     // MappedActual = (Actual-Min)/(Max-Min) * (MappedMax-MappedMin) + MappedMin
     // Example: compute offset based on device height
     // let offset = (height-minHeight)/(maxHeight-minHeight) * (maxOffset-minOffset) + minOffset.
     // or, map(1024, from:768...1024, to:30...50)
-    // 50 = (1024-768)/(1024-768) * (50-30) + 30
-    return (constant - inputRange.lowerBound) / (inputRange.upperBound - inputRange.lowerBound) * (outputRange.upperBound - outputRange.lowerBound) + outputRange.lowerBound
+    // Given a larger device (1024 iPad 12.5):
+    //      50   = (1024-768)/(1024-768) * (50-30) + 30
+    // or medium size device (834 - iPad 10.5)
+    //      35.2 = ( 834-768)/(1024-768) * (50-30) + 30
+    // or smaller device (768 iPad 9.7):
+    //      30   = ( 768-768)/(1024-768) * (50-30) + 30
+    // inverted output range (iPad 12.5 to 9.7 respectively):
+    //      30   = (1024-768)/(1024-768) * (30-50) + 50
+    //      44.8 = ( 834-768)/(1024-768) * (30-50) + 50
+    //      50   = ( 834-768)/(1024-768) * (30-50) + 50
+    let inputMapping = (constant - inputRange.lowerBound) / (inputRange.upperBound - inputRange.lowerBound)
+    if inverted {
+        return inputMapping * (outputRange.lowerBound - outputRange.upperBound) + outputRange.upperBound
+    } else {
+        return inputMapping * (outputRange.upperBound - outputRange.lowerBound) + outputRange.lowerBound
+    }
 }
 
 

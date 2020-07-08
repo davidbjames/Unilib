@@ -78,6 +78,20 @@ public extension Optional where Wrapped: Sequence {
 // == and != on Optional already exist for comparing
 // optionals or optionals and non-optionals
 
+public extension Optional where Wrapped == Bool {
+    var isDefault:Bool {
+        self == nil
+    }
+    var isDefaultOrTrue:Bool {
+        isDefault || isTrue
+    }
+    var isTrue:Bool {
+        self == true
+    }
+    var isFalse:Bool {
+        self == false
+    }
+}
 
 // Move the following to it's own file (must make file system changes via Unilib project)
 

@@ -10,6 +10,14 @@ import UIKit
 
 /// Is the current build using DEBUG configuration.
 public func isDebugBuild() -> Bool {
+    if Bundle.main.bundleIdentifier == "com.davidbjames.C3-Demo" {
+        // C3 Demo app is always considered a debug build
+        // for purposes of demonstrating visual debug features,
+        // regardless whether it uses "Debug" or "Release" config.
+        // ⚠️ NOTE: IF making C3 Demo app also on macOS, you need to
+        // also check for the derived bundle id that Xcode provides.
+        return true
+    }
     #if DEBUG
         return true
     #else
@@ -57,11 +65,7 @@ public/**/ enum ApiDebugConfig {
         case .off :
             return false
         case .on, .onWithOptions :
-        #if DEBUG
-            return true
-        #else
-            return false
-        #endif
+            return isDebugBuild()
         }
     }
     
@@ -105,11 +109,8 @@ public/**/ struct ApiDebug {
     public let options:ApiDebugOptions
     
     public/**/ init?(_ options:ApiDebugOptions? = nil) {
-        #if DEBUG
-            self.options = options ?? []
-        #else
-            return nil
-        #endif
+        guard isDebugBuild() else { return nil }
+        self.options = options ?? []
     }
     
     public/**/ func output(_ value:String, icon:String? = nil) {
