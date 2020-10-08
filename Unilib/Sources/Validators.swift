@@ -59,15 +59,15 @@ public enum ValidationResult : Equatable {
     /// If 1 of the results is "validating", return that state.
     /// Else return "success".
     public static func reduce(_ results:[ValidationResult]) -> ValidationResult {
-        if let error = results.find({ (result:ValidationResult) -> Bool in
+        if let error = results.first(where:{ (result:ValidationResult) -> Bool in
             if case .error(_) = result { return true }
             else { return false }
         }) {
-            return error.element
+            return error
         }
         
-        if let validating = results.find({ $0 == .validating }) {
-            return validating.element
+        if let validating = results.first(where:{ $0 == .validating }) {
+            return validating
         }
         return .success
     }

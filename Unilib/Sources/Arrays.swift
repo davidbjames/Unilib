@@ -194,22 +194,6 @@ public extension Array  {
 /// Search/replace
 public extension Array where Element : Equatable {
     
-    /// Find the first element that satisfies predicate.
-    /// Returns a tuple with element, index and previous/next if they exist.
-    ///
-    /// - Example: let foo = myArray.find{ $0.name = "foo"}.element
-    /// - SeeAlso: Sequence.first(:where) which just returns the element.
-    @available(*,deprecated, message: "Not efficient.")
-    func find(_ includeElement: (Iterator.Element) -> Bool) -> (element:Iterator.Element, index:Int, prevIndex:Int?, nextIndex:Int?)? {
-        
-        if let element = self.filter(includeElement).first {
-            if let index = self.firstIndex(of: element) {
-                return (element, index, previousIndex(from: index), nextIndex(from: index))
-            }
-        }
-        return nil
-    }
-    
     /// Are all elements in this Equatable array equal in value
     func allEqual() -> Bool {
         guard let firstElem = first else {
@@ -362,12 +346,6 @@ struct MyHashable : Hashable {
 /// BEWARE: Order is lost because Set is used.
 public extension Array where Iterator.Element: Hashable {
     
-    func removingDuplicates() -> [Iterator.Element] {
-        guard !isEmpty else { return [] }
-        var seen: Set<Iterator.Element> = []
-        return filter { seen.insert($0).inserted }
-    }
-    
     /// Insert an element if it does not already exist in the array
     /// and return a new array.
     /// Example: [a,b,c].union(a) --> [a,b,c]
@@ -494,6 +472,16 @@ public extension Array where Iterator.Element: Hashable {
     
     // TODO ✅ Move things to Sequence where Hashable
     // if possible. contains() is already there.
+    
+    /// Remove duplicates on this array using
+    /// an efficient Hashable method.
+    /// Order is retained.
+    func removingDuplicates() -> [Iterator.Element] {
+        guard !isEmpty else { return [] }
+        var seen: Set<Iterator.Element> = []
+        return filter { seen.insert($0).inserted }
+    }
+    
 }
 
 
@@ -501,14 +489,6 @@ public extension Array where Iterator.Element: Hashable {
 /// Performance on these is O(n)
 /// NOTE: Order is maintained for these operations.
 public extension Array where Element : Equatable {
-    
-    func removingEquatableDuplicates() -> Array<Iterator.Element> {
-        var newArray = [Element]()
-        for element in self {
-            newArray.formUnion(equatable:element)
-        }
-        return newArray
-    }
     
     /// Insert an element if it does not already exist in the array
     /// and return a new array.
@@ -659,6 +639,19 @@ public extension Array where Element : Equatable {
         result[index] = rElement
         return result
     }
+    
+    /// Remove duplicates on this array using
+    /// an Equatable strategy which is not as
+    /// efficient as the Hashable method "removeDuplicates()".
+    /// Order is retained.
+    func removingEquatableDuplicates() -> Array<Iterator.Element> {
+        var newArray = [Element]()
+        for element in self {
+            newArray.formUnion(equatable:element)
+        }
+        return newArray
+    }
+    
 }
 
 public extension Array where Element : AnyObject {

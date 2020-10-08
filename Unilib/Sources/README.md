@@ -23,3 +23,15 @@ Changes
 2. Filesystem changes will generally happen in Unilib (the original project).
 
 When syncronizing, if there are conflicts, generally default to the side the change happened on. Remember that both sides are under Git version control so it's easy fix problems if they occur (assuming the working directories are clean before the synchronization is performed). 
+
+Actions
+-------
+
+Sync libraries using Chronosync 
+
+Run the following script
+```
+cd ~/Code/Scripts
+sh ./SyncUnilib.sh
+```
+Commit changes

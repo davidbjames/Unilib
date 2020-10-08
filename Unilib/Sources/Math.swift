@@ -148,12 +148,12 @@ public/**/ struct Angle : ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral
         self.degrees = Double(value)
     }
 
-    public init?(_ degrees:Double?) {
+    public/**/ init?(_ degrees:Double?) {
         guard let _degrees = degrees else { return nil }
         self.degrees = _degrees
     }
     
-    public init?(_ degrees:CGFloat?) {
+    public/**/ init?(_ degrees:CGFloat?) {
         self.init(degrees.flatMap { Double($0) })
     }
     
