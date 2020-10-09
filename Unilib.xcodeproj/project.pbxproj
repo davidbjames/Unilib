@@ -86,7 +86,6 @@
 		E7D954841DA2ACC900F86827 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		E7D954861DA2ACC900F86827 /* Validators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validators.swift; sourceTree = "<group>"; };
 		E7D9548F1DA2BEFA00F86827 /* Arrays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arrays.swift; sourceTree = "<group>"; };
-		E7F3E65B1ED70316000E941B /* Unilib.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Unilib.playground; sourceTree = "<group>"; };
 		E7F9FB931EDEBCB8007E0EFD /* Optionals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optionals.swift; sourceTree = "<group>"; };
 		E7F9FB961EDEF67F007E0EFD /* Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		E7F9FB981EDEF728007E0EFD /* DebugMeta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugMeta.swift; sourceTree = "<group>"; };
@@ -202,7 +201,6 @@
 			children = (
 				E7D954801DA2AC9100F86827 /* Sources */,
 				E789AB3B1EDAF83B00CF5A90 /* Resources */,
-				E7F3E65B1ED70316000E941B /* Unilib.playground */,
 			);
 			path = Unilib;
 			sourceTree = "<group>";
