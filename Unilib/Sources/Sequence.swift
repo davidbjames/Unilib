@@ -14,6 +14,10 @@ public extension Sequence {
     func `as`<T>(_:T.Type) -> [T] {
         return compactMap { $0 as? T }
     }
+    /// Get the first element of specific type.
+    func first<T>(_:T.Type) -> T? {
+        first { $0 is T } as? T
+    }
     
     /// Cast a sequence to a sequence containing a type, or nil.
     // Commenting this out for now until needed.
