@@ -2,7 +2,7 @@
 //  Ranges.swift
 //  Unilib
 //
-//  Copyright © 2016-2020 David James. All rights reserved.
+//  Copyright © 2016-2021 David James. All rights reserved.
 //
 
 import Foundation
