@@ -3,7 +3,7 @@
 //  Unilib
 //
 //  Created by David James on 5/23/17.
-//  Copyright © 2017 David B James. All rights reserved.
+//  Copyright © 2017-2020 David B James. All rights reserved.
 //
 
 import Foundation

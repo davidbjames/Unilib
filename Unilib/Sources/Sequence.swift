@@ -3,7 +3,7 @@
 //  Unilib
 //
 //  Created by David James on 02/11/2017.
-//  Copyright © 2017 David B James. All rights reserved.
+//  Copyright © 2017-2020 David B James. All rights reserved.
 //
 
 import Foundation
@@ -13,10 +13,6 @@ public extension Sequence {
     /// sequence with n or 0 elements depending if the cast succeeds.
     func `as`<T>(_:T.Type) -> [T] {
         return compactMap { $0 as? T }
-    }
-    /// Get the first element of specific type.
-    func first<T>(_:T.Type) -> T? {
-        first { $0 is T } as? T
     }
     
     /// Cast a sequence to a sequence containing a type, or nil.

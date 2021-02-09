@@ -3,7 +3,7 @@
 //  Unilib
 //
 //  Created by David James on 7/14/16.
-//  Copyright © 2016 David B James. All rights reserved.
+//  Copyright © 2016-2020 David B James. All rights reserved.
 //
 
 import Foundation
@@ -261,6 +261,7 @@ public extension Collection {
 public extension Collection {
     
     /// Returns the element at the specified index if it is within bounds, otherwise nil.
+    /// Complexity O(n) where n is the length of the array.
     subscript (safe index: Index) -> Iterator.Element? {
         return indices.contains(index) ? self[index] : nil
     }

@@ -3,7 +3,7 @@
 //  Unilib
 //
 //  Created by David James on 1/20/17.
-//  Copyright © 2017 David B James. All rights reserved.
+//  Copyright © 2017-2020 David B James. All rights reserved.
 //
 
 import UIKit
@@ -48,7 +48,10 @@ public/**/ struct ApiDebugOptions : OptionSet {
     public static let expanded = ApiDebugOptions(rawValue: 1 << 1)
 
     public static let tips = ApiDebugOptions(rawValue: 1 << 2)
-
+    
+    // (NOTE: If coming from C3 please note there are extended
+    // *public* options. See C3/InternalDebug.swift)
+    
     fileprivate var isDefaultVerbosity:Bool {
         return !contains(.expanded) && !contains(.compact)
     }
@@ -58,14 +61,13 @@ public/**/ struct ApiDebugOptions : OptionSet {
 public/**/ enum ApiDebugConfig {
     
     case off
-    case on
-    case onWithOptions(ApiDebugOptions)
+    case on(ApiDebugOptions)
     
     public var isDebug:Bool {
         switch self {
         case .off :
             return false
-        case .on, .onWithOptions :
+        case .on :
             return isDebugBuild()
         }
     }
@@ -73,9 +75,7 @@ public/**/ enum ApiDebugConfig {
     /// Factory to get a debug instance
     public var debug:ApiDebug? {
         switch self {
-        case .on :
-            return ApiDebug()
-        case .onWithOptions(let options) :
+        case .on(let options) :
             return ApiDebug(options)
         case .off :
             return nil
@@ -83,7 +83,7 @@ public/**/ enum ApiDebugConfig {
     }
     
     public var options:ApiDebugOptions? {
-        if case let .onWithOptions(opts) = self {
+        if case let .on(opts) = self {
             return opts
         }
         return nil

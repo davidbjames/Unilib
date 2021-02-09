@@ -3,7 +3,7 @@
 //  NonEmptyArray
 //
 //  Created by Soroush Khanlou on 10/15/16.
-//  Copyright © 2016 Soroush Khanlou. All rights reserved.
+//  Copyright © 2016-2020 Soroush Khanlou. All rights reserved.
 //
 
 /*
