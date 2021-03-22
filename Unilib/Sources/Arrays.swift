@@ -84,7 +84,7 @@ public extension Array  {
     /// (and does not use optional second item).
     func pairs() -> [(first:Element,second:Element?)] {
         let pairs = _pairs(overlap:false, includeLastOdd:true)
-        guard pairs.hasElements else { return [(Element,Element?)]() }
+        guard pairs.hasItems else { return [(Element,Element?)]() }
         // convert to tuples
         return pairs.map { ($0[0], $0[safe:1]) }
     }
@@ -99,7 +99,7 @@ public extension Array  {
     /// See also "pairs" or "overlappingPairs" variants.
     func strictPairs() -> [(first:Element,second:Element)] {
         let pairs = _pairs(overlap:false, includeLastOdd:false)
-        guard pairs.hasElements else { return [(Element,Element)]() }
+        guard pairs.hasItems else { return [(Element,Element)]() }
         // convert to tuples
         return pairs.map { ($0[0], $0[1]) }
     }
@@ -109,7 +109,7 @@ public extension Array  {
     /// Will include all items even if there is an odd number of items.
     func overlappingPairs() -> [(first:Element,second:Element)] {
         let pairs = _pairs(overlap:true)
-        guard pairs.hasElements else { return [(Element,Element)]() }
+        guard pairs.hasItems else { return [(Element,Element)]() }
         // convert to tuples
         return pairs.map { ($0[0], $0[1]) }
     }
@@ -119,7 +119,7 @@ public extension Array  {
     /// Will include all items even if there is an odd number of items.
     func cyclicPairs() -> [(first:Element,second:Element)] {
         let pairs = overlappingPairs()
-        guard pairs.hasElements else { return [(Element,Element)]() }
+        guard pairs.hasItems else { return [(Element,Element)]() }
         guard let first = first, let last = last else {
             return [(Element,Element)]()
         }
@@ -228,6 +228,23 @@ public extension Collection {
     var nonEmpty:Self? {
         return count > 0 ? self : nil
     }
+    
+    /// Return nil if collection is empty
+    /// or does not have at least specified
+    /// `min` number of items, and optionally
+    /// up to a `max` number of items.
+    func nonEmpty(min:Int = 1, max:Int? = nil) -> Self? {
+        guard min > 0 else {
+            preconditionFailure("Incorrect use of \(#function). Minimum must be greater than 0.")
+        }
+        if let max = max, count >= min && count <= max {
+            return self
+        } else if count >= min {
+            return self
+        } else {
+            return nil
+        }
+    }
 
     func has(_ test:(Iterator.Element)->Bool) -> Bool {
         return self.filter(test).count > 0
@@ -241,7 +258,7 @@ public extension Collection {
         return self.filter(test).count == 0
     }
     
-    var hasElements:Bool {
+    var hasItems:Bool {
         return !isEmpty
     }
     

@@ -48,7 +48,11 @@ func / (lhs:Double, rhs:Int) -> Double {
 
 // DEV NOTE: Avoid overloading + or - to avoid
 // unexpected precedence ordering problems.
-// (recall https://cl.ly/8137b850f04c)
+// (Recall shared color library that was using Ints
+// instead of floats in certain contexts (without
+// explicit ordering) that caused colors to break:
+// https://a.cl.ly/6qu0nQmB as reported here
+// https://github.com/yannickl/DynamicColor/issues/51)
 
 // Maybe move this to OtherOperators file
 
