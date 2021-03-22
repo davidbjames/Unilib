@@ -43,29 +43,134 @@ public struct MinZero {
     }
 }
 
+// MAINTENANCE: Sync the two blocks with and without SwiftUI
+
+#if canImport(SwiftUI)
+import SwiftUI
+
 /// Property that cycles through integers
-/// resetting to 0 when max is reached.
-/// Example: @Cycled(max:2) var counter:Int
+/// resetting to 0 when `max` is reached.
+///
+/// Alternatively, pass `min` to reset to
+/// a number other than 0 and/or decrement
+/// the number instead of incrementing.
+/// You may also pass an initial starting
+/// number from where to begin in the cycle.
+///
+///     @Cycled(min:1, max:5) var counter:Int = 2
+///     ..
+///     counter = 1 // increment
+///     counter = -1 // decrement
 @propertyWrapper
-public struct Cycled {
+public struct Cycled : DynamicProperty {
+    private let min:Int
     private let max:Int
-    private var number = 0
+    @State private var number:Int = 0
     public var wrappedValue:Int {
         get { return number }
-        set {
+        nonmutating set {
+            guard newValue != 0 else { return }
             let newNumber = number + newValue
-            if newNumber > max {
-                number = 0
-            } else {
-                number = newNumber
+            if newValue < 0 { // decrementing
+                if newNumber < min {
+                    number = max
+                } else {
+                    number = newNumber
+                }
+            } else { // incrementing
+                if newNumber > max {
+                    number = min
+                } else {
+                    number = newNumber
+                }
             }
         }
     }
-    public init(max:Int) {
+    public var projectedValue:Binding<Int> {
+        Binding(
+            get: { wrappedValue },
+            set: { wrappedValue = $0 }
+        )
+    }
+    public init(min:Int = 0, max:Int) {
+        guard min < max else {
+            preconditionFailure("Attempt to initialize @Cycled property wrapper with min value that is greater than or equal to max value.")
+        }
+        self.min = min
         self.max = max
-        self.number = 0
+        self._number = State(wrappedValue:min)
+    }
+    public init(wrappedValue startingAt:Int, min:Int = 0, max:Int) {
+        guard min < max else {
+            preconditionFailure("Attempt to initialize @Cycled property wrapper with min value that is greater than or equal to max value.")
+        }
+        self.min = min
+        self.max = max
+        self._number = State(wrappedValue:startingAt)
+    }
+    // Couldn't get this to work.. would just hit Int +=
+    // Wanted syntax like: counter += 1
+//    public static func +=(cycled:inout Self, value:Int) {
+//        cycled.wrappedValue = value
+//    }
+}
+#else
+/// Property that cycles through integers
+/// resetting to 0 when `max` is reached.
+///
+/// Alternatively, pass `min` to reset to
+/// a number other than 0 and/or decrement
+/// the number instead of incrementing.
+/// You may also pass an initial starting
+/// number from where to begin in the cycle.
+///
+///     @Cycled(min:1, max:5) var counter:Int = 2
+///     ..
+///     counter = 1 // increment
+///     counter = -1 // decrement
+@propertyWrapper
+public struct Cycled {
+    private let min:Int
+    private let max:Int
+    private var number:Int
+    public var wrappedValue:Int {
+        get { return number }
+        nonmutating set {
+            guard newValue != 0 else { return }
+            let newNumber = number + newValue
+            if newValue < 0 { // decrementing
+                if newNumber < min {
+                    number = max
+                } else {
+                    number = newNumber
+                }
+            } else { // incrementing
+                if newNumber > max {
+                    number = min
+                } else {
+                    number = newNumber
+                }
+            }
+        }
+    }
+    public init(min:Int = 0, max:Int) {
+        guard min < max else {
+            preconditionFailure("Attempt to initialize @Cycled property wrapper with min value that is greater than or equal to max value.")
+        }
+        self.min = min
+        self.max = max
+        self.number = min
+    }
+    public init(wrappedValue:Int, min:Int = 0, max:Int) {
+        guard min < max else {
+            preconditionFailure("Attempt to initialize @Cycled property wrapper with min value that is greater than or equal to max value.")
+        }
+        self.min = min
+        self.max = max
+        self.number = wrappedValue
     }
 }
+#endif
 
 /// Property that stores a closure, initially running
 /// that closure and storing the return value as the
