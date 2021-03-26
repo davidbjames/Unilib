@@ -43,6 +43,12 @@ public struct MinZero {
     }
 }
 
+// DEV NOTE: @Cycled may only be used in a SwiftUI context
+// because SwiftUI manages its state (with updates) within a View.
+// To get the same functionality (but without updates) use @CycledRaw.
+// This has been tested on a UIViewController.
+// @Cycled does not work there, @CycledRaw does (but without updates).
+
 // MAINTENANCE: Sync the two blocks with and without SwiftUI
 
 #if canImport(SwiftUI)
@@ -61,17 +67,23 @@ import SwiftUI
 ///     ..
 ///     counter = 1 // increment
 ///     counter = -1 // decrement
+/// Optionally, make the cycling `reversible`
+/// in either direction, so instead of starting
+/// again, it reverses when it reaches min/max.
 @propertyWrapper
 public struct Cycled : DynamicProperty {
     private let min:Int
     private let max:Int
+    private let reversible:Bool
     @State private var number:Int = 0
+    @State private var shouldReverse:Bool = false
     public var wrappedValue:Int {
         get { return number }
         nonmutating set {
             guard newValue != 0 else { return }
-            let newNumber = number + newValue
-            if newValue < 0 { // decrementing
+            let value = shouldReverse ? -newValue : newValue
+            let newNumber = number + value
+            if value < 0 { // decrementing
                 if newNumber < min {
                     number = max
                 } else {
@@ -83,6 +95,9 @@ public struct Cycled : DynamicProperty {
                 } else {
                     number = newNumber
                 }
+            }
+            if reversible && (number == min || number == max) {
+                shouldReverse.toggle()
             }
         }
     }
@@ -92,21 +107,32 @@ public struct Cycled : DynamicProperty {
             set: { wrappedValue = $0 }
         )
     }
-    public init(min:Int = 0, max:Int) {
+    public init(min:Int = 0, max:Int, reversible:Bool = false) {
         guard min < max else {
             preconditionFailure("Attempt to initialize @Cycled property wrapper with min value that is greater than or equal to max value.")
         }
         self.min = min
         self.max = max
+        self.reversible = reversible
         self._number = State(wrappedValue:min)
     }
-    public init(wrappedValue startingAt:Int, min:Int = 0, max:Int) {
+    public init(wrappedValue startingAt:Int, min:Int = 0, max:Int, reversible:Bool = false) {
         guard min < max else {
             preconditionFailure("Attempt to initialize @Cycled property wrapper with min value that is greater than or equal to max value.")
         }
+        guard startingAt >= min && startingAt <= max else {
+            preconditionFailure("Attempt to initialize @Cycled property wrapper with initial start value (\(startingAt)) that is not within min (\(min)) and max (\(max)) values inclusive.")
+        }
         self.min = min
         self.max = max
+        self.reversible = reversible
         self._number = State(wrappedValue:startingAt)
+    }
+    public var atMin:Bool {
+        wrappedValue == min
+    }
+    public var atMax:Bool {
+        wrappedValue == max
     }
     // Couldn't get this to work.. would just hit Int +=
     // Wanted syntax like: counter += 1
@@ -114,7 +140,8 @@ public struct Cycled : DynamicProperty {
 //        cycled.wrappedValue = value
 //    }
 }
-#else
+#endif
+
 /// Property that cycles through integers
 /// resetting to 0 when `max` is reached.
 ///
@@ -124,20 +151,27 @@ public struct Cycled : DynamicProperty {
 /// You may also pass an initial starting
 /// number from where to begin in the cycle.
 ///
-///     @Cycled(min:1, max:5) var counter:Int = 2
+///     @CycledRaw(min:1, max:5) var counter:Int = 2
 ///     ..
 ///     counter = 1 // increment
 ///     counter = -1 // decrement
+/// Optionally, make the cycling `reversible`
+/// in either direction, so instead of starting
+/// again, it reverses when it reaches min/max.
+/// See also @Cycled if this is used in SwiftUI.
 @propertyWrapper
-public struct Cycled {
+public struct CycledRaw {
     private let min:Int
     private let max:Int
+    private let reversible:Bool
+    private var shouldReverse:Bool = false
     private var number:Int
     public var wrappedValue:Int {
         get { return number }
-        nonmutating set {
+        set {
             guard newValue != 0 else { return }
-            let newNumber = number + newValue
+            let value = shouldReverse ? -newValue : newValue
+            let newNumber = number + value
             if newValue < 0 { // decrementing
                 if newNumber < min {
                     number = max
@@ -151,26 +185,39 @@ public struct Cycled {
                     number = newNumber
                 }
             }
+            if reversible && (number == min || number == max) {
+                shouldReverse.toggle()
+            }
         }
     }
-    public init(min:Int = 0, max:Int) {
+    public init(min:Int = 0, max:Int, reversible:Bool = false) {
         guard min < max else {
             preconditionFailure("Attempt to initialize @Cycled property wrapper with min value that is greater than or equal to max value.")
         }
         self.min = min
         self.max = max
+        self.reversible = reversible
         self.number = min
     }
-    public init(wrappedValue:Int, min:Int = 0, max:Int) {
+    public init(wrappedValue startingAt:Int, min:Int = 0, max:Int, reversible:Bool = false) {
         guard min < max else {
             preconditionFailure("Attempt to initialize @Cycled property wrapper with min value that is greater than or equal to max value.")
         }
+        guard startingAt >= min && startingAt <= max else {
+            preconditionFailure("Attempt to initialize @Cycled property wrapper with initial start value (\(startingAt)) that is not within min (\(min)) and max (\(max)) values inclusive.")
+        }
         self.min = min
         self.max = max
-        self.number = wrappedValue
+        self.reversible = reversible
+        self.number = startingAt
+    }
+    public var atMin:Bool {
+        wrappedValue == min
+    }
+    public var atMax:Bool {
+        wrappedValue == max
     }
 }
-#endif
 
 /// Property that stores a closure, initially running
 /// that closure and storing the return value as the
