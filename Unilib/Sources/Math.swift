@@ -122,6 +122,46 @@ public func map<F:BinaryFloatingPoint>(_ constant:F, from inputRange:Range<F>, t
     }
 }
 
+public extension Array where Element:BinaryFloatingPoint {
+    /// Increment this array of floats by one or specified value,
+    /// optionally specifying which indices to increment.
+    func increment(_ value:Element? = nil, indices:Set<Int>? = nil) -> Self {
+        _incrementer(operator:.add, incrementValue:value, customIndices:indices)
+    }
+    /// Decrement this array of floats by one or specified value,
+    /// optionally specifying which indices to change.
+    func decrement(_ value:Element? = nil, indices:Set<Int>? = nil) -> Self {
+        _incrementer(operator:.subtract, incrementValue:value, customIndices:indices)
+    }
+    /// Multiple this array of floats by two or specified value,
+    /// optionally specifying which indices to change.
+    func multiply(_ value:Element? = nil, indices:Set<Int>? = nil) -> Self {
+        _incrementer(operator:.multiply, incrementValue:value, customIndices:indices)
+    }
+    /// Divide this array of floats by two or specified value,
+    /// optionally specifying which indices to change.
+    func divide(_ value:Element? = nil, indices:Set<Int>? = nil) -> Self {
+        _incrementer(operator:.divide, incrementValue:value, customIndices:indices)
+    }
+    private enum IncrementerOperator {
+        case add, subtract, multiply, divide
+    }
+    private func _incrementer(operator:IncrementerOperator, incrementValue:Element?, customIndices:Set<Int>?) -> Self {
+        indices.map { index -> Element in
+            let current = self[index]
+            if let indices = customIndices, !indices.contains(index) {
+                return current
+            }
+            switch `operator` {
+            case .add : return current + (incrementValue ?? 1.0)
+            case .subtract : return current - (incrementValue ?? 1.0)
+            case .multiply : return current * (incrementValue ?? 2.0)
+            case .divide : return current / (incrementValue ?? 2.0)
+            }
+        }
+    }
+}
+
 // MARK:- Angle
 
 /// Simple struct representing an angle between 0º and 360º +/-
