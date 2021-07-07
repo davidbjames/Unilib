@@ -179,10 +179,20 @@ public extension Array  {
         }
     }
     
-    /// Act on array only if a provided condition is true.
-    func `if`(_ condition:Bool, _ closure:([Element])->[Element]) -> [Element] {
+    /// Act on array only if a provided condition is true
+    /// optionally providing an else block.
+    ///
+    ///     [0, 1, 2, 3]
+    ///         .if(toggle) {
+    ///             $0 + [4, 5, 6]
+    ///         } else: {
+    ///             $0 + [7, 8, 9]
+    ///         }
+    func `if`(_ condition:Bool, then:([Element])->[Element], else:(([Element])->[Element])? = nil) -> [Element] {
         if condition {
-            return closure(self)
+            return then(self)
+        } else if let otherwise = `else` {
+            return otherwise(self)
         } else {
             return self
         }
