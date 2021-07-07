@@ -14,6 +14,9 @@ public extension FloatingPoint {
     /// Take a floating point number and round it to the
     /// specified number of places, using "school-book rounding".
     func rounded(places:Int) -> Self {
+        guard places > 0 else {
+            return rounded()
+        }
         let divisor = Self(Int(pow(10.0, Double(places))))
         return (self * divisor).rounded() / divisor
     }
@@ -21,6 +24,9 @@ public extension FloatingPoint {
     /// Take a floating point number and floor it (round down)
     /// to specified number of places.
     func floor(places:Int) -> Self {
+        guard places > 0 else {
+            return Foundation.floor(self)
+        }
         let divisor = Self(Int(pow(10.0, Double(places))))
         return Foundation.floor(self * divisor) / divisor
     }
@@ -28,6 +34,9 @@ public extension FloatingPoint {
     /// Take a floating point number and ceiling it (round up)
     /// to specified number of places.
     func ceil(places:Int) -> Self {
+        guard places > 0 else {
+            return Foundation.ceil(self)
+        }
         let divisor = Self(Int(pow(10.0, Double(places))))
         return Foundation.ceil(self * divisor) / divisor
     }
