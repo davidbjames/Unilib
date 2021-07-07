@@ -49,8 +49,10 @@ public/**/ struct ApiDebugOptions : OptionSet {
 
     public static let tips = ApiDebugOptions(rawValue: 1 << 2)
     
+    public static let consoleOnly = ApiDebugOptions(rawValue: 1 << 3)
+    
     // (NOTE: If coming from C3 please note there are extended
-    // *public* options. See C3/InternalDebug.swift)
+    // *public* options which start at bit shift 10. See C3/InternalDebug.swift)
     
     fileprivate var isDefaultVerbosity:Bool {
         return !contains(.expanded) && !contains(.compact)
@@ -70,6 +72,17 @@ public/**/ enum ApiDebugConfig {
         case .on :
             return isDebugBuild()
         }
+    }
+    
+    public var includesVisualDebug:Bool {
+        isDebug && !isConsoleOnlyDebug
+    }
+    
+    public var isConsoleOnlyDebug:Bool {
+        if case let .on(options) = self {
+            return options.contains(.consoleOnly)
+        }
+        return false 
     }
     
     /// Factory to get a debug instance
