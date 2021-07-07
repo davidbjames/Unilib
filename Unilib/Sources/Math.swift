@@ -122,6 +122,44 @@ public func map<F:BinaryFloatingPoint>(_ constant:F, from inputRange:Range<F>, t
     }
 }
 
+/// Get the distance between two points, squared.
+///
+/// Use this method if all you need is to make a
+/// comparison, but for actual distance use
+/// `distance()` which is apparently less performant.
+public func distanceSquared<F:BinaryFloatingPoint>(from point1:CGPoint, to point2:CGPoint) -> F {
+    let xDistance = point2.x - point1.x
+    let yDistance = point2.y - point1.y
+    return F(pow(xDistance, 2)) + F(pow(yDistance, 2))
+}
+
+/// Get the absolute distance between two points.
+///
+/// Be wary of using this in critical/iterative code
+/// because it must determine square root which is
+/// apparently not-so-performant.
+/// See also `distanceSquared()` if all you need is
+/// to compare distances.
+public func distance<F:BinaryFloatingPoint>(from point1:CGPoint, to point2:CGPoint) -> F {
+    let xDistance = point2.x - point1.x
+    let yDistance = point2.y - point1.y
+    let distanceSquared = F(pow(xDistance, 2)) + F(pow(yDistance, 2))
+    return distanceSquared.squareRoot()
+    // (this could be replaced with hypotf(xDistance, yDistance)
+    // if tests reveal any performance difference)
+    // See C3.PointConvertible.delta() which uses hypotf()
+}
+
+/// Get the absolute distance between two corners of
+/// a rectangle, given the rectangle's width and height.
+///
+/// Be wary of using this in critical/iterative code
+/// because it must determine square root which is
+/// apparently not-so-performant.
+public func diagonalDistance<F:BinaryFloatingPoint>(width:F, height:F) -> F {
+    return F(pow(CGFloat(width), 2) + pow(CGFloat(height), 2)).squareRoot()
+}
+
 public extension Array where Element:BinaryFloatingPoint {
     /// Increment this array of floats by one or specified value,
     /// optionally specifying which indices to increment.
