@@ -34,6 +34,19 @@ public extension Sequence {
     
 }
 
+public enum SequenceError : Error {
+    case strictZip
+}
+/// Creates a sequence of pairs built out of two underlying sequences
+/// and throws an error if the two sequences are not equal length
+public func strictZip<S1, S2>(_ collection1:S1, _ collection2:S2) throws -> Zip2Sequence<S1, S2> where S1:Collection, S2:Collection {
+    guard collection1.count == collection2.count else {
+        throw SequenceError.strictZip
+    }
+    return zip(collection1, collection2)
+}
+
+
 public extension Sequence where Element : Hashable {
     
     func contains(_ elements: [Element]) -> Bool {
