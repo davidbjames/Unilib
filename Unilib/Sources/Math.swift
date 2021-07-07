@@ -106,6 +106,21 @@ public func map<F:BinaryFloatingPoint>(_ constant:F, from inputRange:ClosedRange
     }
 }
 
+// Versions of map() for closed ranges (...) ^^, and half-open ranges (..<) vv
+
+/// Given a constant value that lies within an input range
+/// produce a new value mapped to it's relative position
+/// in an output range.
+/// Optionally, invert the output mapping (i.e. so that
+/// low input values map to high output values and vice versa).
+public func map<F:BinaryFloatingPoint>(_ constant:F, from inputRange:Range<F>, to outputRange:Range<F>, inverted:Bool = false) -> F {
+    let inputMapping = (constant - inputRange.lowerBound) / (inputRange.upperBound - inputRange.lowerBound)
+    if inverted {
+        return inputMapping * (outputRange.lowerBound - outputRange.upperBound) + outputRange.upperBound
+    } else {
+        return inputMapping * (outputRange.upperBound - outputRange.lowerBound) + outputRange.lowerBound
+    }
+}
 
 // MARK:- Angle
 
