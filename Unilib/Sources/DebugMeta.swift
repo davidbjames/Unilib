@@ -12,17 +12,17 @@ public extension NSObject {
     
     /// Unique memory address
     func memoryAddress(shortened:Bool = false) -> String {
-        return Unilib.memoryAddress(of:self, shortened:shortened)
+        getMemoryAddress(of:self, shortened:shortened)
     }
     
     /// Unique object id (hash of memory address)
     func objectId(shortened:Bool = false) -> String {
-        return Unilib.objectId(of:self, shortened:shortened)
+        getObjectId(of:self, shortened:shortened)
     }
 }
 
 /// Unique memory address
-public func memoryAddress<I:AnyObject>(of instance:I, shortened:Bool = false) -> String {
+public func getMemoryAddress<I:AnyObject>(of instance:I, shortened:Bool = false) -> String {
     let address = Unmanaged<I>.passUnretained(instance).toOpaque().debugDescription
     guard shortened else { return address }
     // Capture last 4 characters e.g. 2d10
@@ -35,7 +35,7 @@ public func memoryAddress<I:AnyObject>(of instance:I, shortened:Bool = false) ->
 }
 
 /// Unique object id (hash of memory address)
-public func objectId<I:AnyObject>(of instance:I, shortened:Bool = false) -> String {
+public func getObjectId<I:AnyObject>(of instance:I, shortened:Bool = false) -> String {
     let hash = String(describing: ObjectIdentifier(instance).hashValue)
     // The full hash looks like this 140522157469520
     // where the first 9 digits tend to be grouped by some
