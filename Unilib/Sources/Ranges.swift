@@ -62,7 +62,15 @@ extension Array : RangeExpression where Element:RangeExpression {
         contains(where:{ $0.contains(element) })
     }
     public/**/ func relative<C>(to collection: C) -> Range<Element.Bound> where C : Collection, Self.Element.Bound == C.Index {
-        preconditionFailure("Not implemented.")
+        guard
+            let start = startIndex as? Element.Bound,
+            let end = endIndex as? Element.Bound
+        else {
+            preconditionFailure("Not implemented for Element types other than Int.")
+        }
+        // Since we know an array's indices are always a half-open range
+        // just return that range.
+        return start..<end
     }
 }
 
