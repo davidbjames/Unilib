@@ -76,7 +76,7 @@ public extension String {
     }
 }
 
-public extension Array where Element == String {
+public extension Collection where Element == String {
     
     /// Return all strings with dot prefix segments
     var dotPrefixAll:String {

@@ -6,7 +6,6 @@
 //  Copyright © 2017-2021 David B James. All rights reserved.
 //
 
-import UIKit
 
 /// Is the current build using DEBUG configuration.
 public func isDebugBuild() -> Bool {
@@ -79,7 +78,7 @@ public/**/ enum ApiDebugConfig {
     }
     
     public var isConsoleOnlyDebug:Bool {
-        if case let .on(options) = self {
+        if case let .on(options) = self, isDebugBuild() {
             return options.contains(.consoleOnly)
         }
         return false 

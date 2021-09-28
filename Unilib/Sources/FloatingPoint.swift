@@ -116,9 +116,9 @@ public extension CGFloat {
 
 public extension Int {
     var isEven:Bool {
-        return isMultiple(of:2)
+        self % 2 == 0
     }
     var isOdd:Bool {
-        return !isMultiple(of:2)
+        self % 2 == 1
     }
 }
