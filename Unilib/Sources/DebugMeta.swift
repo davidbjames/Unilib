@@ -41,8 +41,8 @@ public func getObjectId<I:AnyObject>(of instance:I, shortened:Bool = false) -> S
     // mechanism (object type, or creation time?) such that
     // several similar (or sometimes disimilar) objects have
     // these 9 digits as a common prefix. The last 6 digits tend
-    // to be unique within groups of objects, and the final 3 the
-    // most unique. 140522157-469-520
+    // to be unique across groups of objects, and the final 3
+    // unique across items. 140522157-469-520
     if shortened {
         //let first = hash[hash.startIndex...hash.index(after:hash.startIndex)]
         // \(first)/

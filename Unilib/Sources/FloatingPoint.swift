@@ -99,6 +99,9 @@ public extension FloatingPoint {
 
 public extension CGFloat {
     static let rightAngle:CGFloat = 1.570796327
+    /// Is the float value equivalent to a right angle
+    /// radian angle, which is equivalent to 0º, 90º,
+    /// 180º or 270º.
     var isRightAngleRadians:Bool {
         // The following level of precision was chosen for practical
         // purposes related to how visible the difference actually
@@ -106,6 +109,12 @@ public extension CGFloat {
         return isMultiple(of:1.57, withPrecision:2)
         // equivalent of:
         // return rounded(places:2).truncatingRemainder(dividingBy:1.57) == 0
+    }
+    /// Is the float value equivalent to a perpendicular
+    /// radian angle, which is either 1.57 or -1.57 or,
+    /// in degrees, 90º or 270º.
+    var isPerpendicularRadians:Bool {
+        return abs(rounded(places:2)) == 1.57
     }
     /// Reasonable value at which a scale transform is considered
     /// "non-visible". Having a non-zero value is important in
