@@ -197,6 +197,33 @@ public extension Array  {
             return self
         }
     }
+    func move(index oldIndex: Index, to newIndex: Index) -> Self {
+        var array = self
+        if abs(newIndex - oldIndex) == 1 {
+            array.swapAt(oldIndex, newIndex)
+            return array
+        }
+        array.insert(array.remove(at: oldIndex), at: newIndex)
+        return array
+    }
+}
+
+public extension Array where Element:Equatable {
+    func move(_ element1:Element, before element2:Element) -> Self {
+        guard
+            let index1 = firstIndex(of:element1),
+            let index2 = firstIndex(of:element2)
+        else { return self }
+        return move(index:index1, to:index(before:index2))
+    }
+    func move(_ element1:Element, after element2:Element) -> Self {
+        guard
+            let index1 = firstIndex(of:element1),
+            let index2 = firstIndex(of:element2)
+        else { return self }
+        return move(index:index1, to:index2)
+    }
+
 }
 
 // MARK:- Find
