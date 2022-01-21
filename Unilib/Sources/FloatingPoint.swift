@@ -21,6 +21,13 @@ public extension FloatingPoint {
         return (self * divisor).rounded() / divisor
     }
     
+    /// Take a floating point number and round it to the
+    /// provided integer multiple.
+    func rounded(multiple:Int) -> Self {
+        guard multiple > .zero else { return self }
+        return (self / Self(multiple)).rounded() * Self(multiple)
+    }
+    
     /// Take a floating point number and floor it (round down)
     /// to specified number of places.
     func floor(places:Int) -> Self {
@@ -121,6 +128,10 @@ public extension CGFloat {
     /// case a scale transform is used in conjunction with animation.
     /// (i.e. animating an absolute "0.0" scale does not work)
     static let nonVisibleScale:CGFloat = 0.0001
+    /// Alpha value that is non-visible but still existant.
+    static let nonVisibleAlpha:CGFloat = 0.0001
+    /// Alpha value that is nearly non-visible but still allows user interaction.
+    static let userInteractableNonVisibleAlpha:CGFloat = 0.02
 }
 
 public extension Int {
