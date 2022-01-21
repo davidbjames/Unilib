@@ -25,7 +25,7 @@ public func delay(_ delay:TimeInterval? = 0.1, _ closure:@escaping ()->()) {
     }
 }
 
-// MARK:- Benchmarking
+// MARK: - Benchmarking
 
 // DEV NOTE: Benchmarking is not useful with tiny durations
 // as it returns non-representable numbers.

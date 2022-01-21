@@ -8,12 +8,63 @@
 
 import Foundation
 
+/// Generic array wrapper that can hold its
+/// reference-based items either weakly or strongly.
+protocol CaptureArray : Collection {
+    associatedtype T:AnyObject
+    associatedtype Wrapper
+    var contents:[Wrapper] { get }
+    var validItems:[T] { get }
+    init(_ contents:[T]?)
+    subscript(safe index:Array<Wrapper>.Index) -> T? { get }
+    var strongify:StrongArray<T> { get }
+    var weakify:WeakArray<T> { get }
+}
+
+extension CaptureArray {
+    /// Ensure this capture array is a strong array.
+    var strongify:StrongArray<T> {
+        cast(StrongArray<T>.self)
+    }
+    /// Ensure this capture array is a weak array.
+    var weakify:WeakArray<T> {
+        cast(WeakArray<T>.self)
+    }
+    private func cast<C:CaptureArray>(_:C.Type) -> C where C.T == T {
+        C(validItems)
+    }
+    /// Support `for..in` statements, iterating only
+    /// those items which are still allocated.
+    func makeIterator() -> Array<T>.Iterator {
+        validItems.makeIterator()
+    }
+    // Indices remain according to original item order,
+    // which is what you would expect at the call-site.
+    // It's up to the developer to consider how that
+    // might affect index-based access.
+    var startIndex:Array<Wrapper>.Index {
+        contents.startIndex
+    }
+    var endIndex:Array<Wrapper>.Index {
+        contents.endIndex
+    }
+    func index(after i:Array<Wrapper>.Index) -> Array<Wrapper>.Index {
+        contents.index(after:i)
+    }
+}
+
+// DEV NOTE: This uses structs for WeakBox/WeakArray.
+// There is no advantage to using classes and would
+// only complicate the call-site. Since WeakBox holds
+// the references weakly (no retain count increment)
+// making copies of these structs wouldn't change this fact.
+
 /// Box to hold a reference type weakly so
 /// that storage doesn't prevent the item
 /// from deallocating properly.
-public struct WeakBox<T:AnyObject> {
-    public weak var value:T?
-    public init(_ value:T) {
+struct WeakBox<T:AnyObject> {
+    weak var value:T?
+    init(_ value:T) {
         self.value = value
     }
 }
@@ -22,34 +73,30 @@ public struct WeakBox<T:AnyObject> {
 /// to be used when passing arrays into long-lived
 /// closures so that those items are not strongly
 /// held and may deallocate properly.
-public struct WeakArray<T:AnyObject> {
+struct WeakArray<T:AnyObject> : CaptureArray {
     
-    private var contents:[WeakBox<T>]
+    var contents:[WeakBox<T>]
     
-    public init(_ contents:[T]) {
-        self.contents = contents.map { WeakBox($0) }
+    init(_ contents:[T]?) {
+        if let contents = contents {
+            self.contents = contents.map { WeakBox($0) }
+        } else {
+            self.contents = []
+        }
     }
     
     /// Get the valid, still allocated, items.
-    public var validItems:[T] {
+    var validItems:[T] {
         contents.compactMap { $0.value }
     }
     /// Cleanup empty boxes where the stored item has been deallocated
-    public mutating func flush() {
+    mutating func flush() {
         contents = contents.filter { $0.value.exists }
     }
     /// Get element at index if it exists and is
     /// still allocated, else nil.
-    public subscript(safe index:Index) -> T? {
+    subscript(safe index:Array<WeakBox<T>>.Index) -> T? {
         indices.contains(index) ? contents[index].value : nil
-    }
-}
-
-extension WeakArray : Collection {
-    /// Support `for..in` statements, iterating only
-    /// those items which are still allocated.
-    func makeIterator() -> Array<T>.Iterator {
-        validItems.makeIterator()
     }
     /// Get element at index.
     ///
@@ -58,22 +105,38 @@ extension WeakArray : Collection {
     /// boxed item has been deallocated.
     ///
     /// See also `subscript(safe:)`.
-    subscript(position:Index) -> T {
+    subscript(position:Array<WeakBox<T>>.Index) -> T {
         contents[position].value!
     }
-    // Indices remain according to original item order,
-    // which is what you would expect at the call-site.
-    // It's up to the developer to consider how that
-    // might affect index-based access.
-    typealias Index = Array<T>.Index
-    var startIndex:Index {
-        contents.startIndex
-    }
-    var endIndex:Index {
-        contents.endIndex
-    }
-    func index(after i:Index) -> Index {
-        contents.index(after:i)
+    func `as`<I:AnyObject>(_:I.Type) -> WeakArray<I> {
+        WeakArray<I>(validItems.compactMap { $0 as? I })
     }
 }
 
+/// Array of reference-type items held strongly.
+/// This is meant to be used generically or
+/// in-concert with WeakArray.
+/// On its own it adds nothing to an Array.
+struct StrongArray<T:AnyObject> : CaptureArray {
+    var contents:[T]
+    var validItems:[T] {
+        contents
+    }
+    init(_ contents:[T]?) {
+        self.contents = contents ?? []
+    }
+    /// Get element at index if it exists and is
+    /// still allocated, else nil.
+    subscript(safe index:Array<T>.Index) -> T? {
+        indices.contains(index) ? contents[index] : nil
+    }
+    /// Get element at index.
+    ///
+    /// See also `subscript(safe:)`.
+    subscript(position:Array<T>.Index) -> T {
+        contents[position]
+    }
+    func `as`<I:AnyObject>(_:I.Type) -> StrongArray<I> {
+        StrongArray<I>(validItems.compactMap { $0 as? I })
+    }
+}
