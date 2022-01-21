@@ -9,7 +9,7 @@
 import Foundation
 import CoreGraphics
 
-// MARK:- Clamp
+// MARK: - Clamp
 
 /// Clamp a float value to ensure it is between
 /// a minimum and maximum bounds (inclusive).
@@ -126,25 +126,22 @@ public func map<F:BinaryFloatingPoint>(_ constant:F, from inputRange:Range<F>, t
 ///
 /// Use this method if all you need is to make a
 /// comparison, but for actual distance use
-/// `distance()` which is apparently less performant.
+/// `distance()` which may be less performant.
 public func distanceSquared<F:BinaryFloatingPoint>(from point1:CGPoint, to point2:CGPoint) -> F {
-    let xDistance = point2.x - point1.x
-    let yDistance = point2.y - point1.y
-    return F(pow(xDistance, 2)) + F(pow(yDistance, 2))
+    let x = point2.x - point1.x
+    let y = point2.y - point1.y
+    return (F(x*x) + F(y*y))
 }
 
 /// Get the absolute distance between two points.
 ///
-/// Be wary of using this in critical/iterative code
-/// because it must determine square root which is
-/// apparently not-so-performant.
-/// See also `distanceSquared()` if all you need is
-/// to compare distances.
+/// This uses square root which may cause performance
+/// issues. See also `distanceSquared()` if all you
+/// need is to compare distances.
 public func distance<F:BinaryFloatingPoint>(from point1:CGPoint, to point2:CGPoint) -> F {
-    let xDistance = point2.x - point1.x
-    let yDistance = point2.y - point1.y
-    let distanceSquared = F(pow(xDistance, 2)) + F(pow(yDistance, 2))
-    return distanceSquared.squareRoot()
+    let x = point2.x - point1.x
+    let y = point2.y - point1.y
+    return (F(x*x) + F(y*y)).squareRoot()
     // (this could be replaced with hypotf(xDistance, yDistance)
     // if tests reveal any performance difference)
     // See C3.PointConvertible.delta() which uses hypotf()
@@ -200,7 +197,7 @@ public extension Array where Element:BinaryFloatingPoint {
     }
 }
 
-// MARK:- Angle
+// MARK: - Angle
 
 /// Simple struct representing an angle between 0º and 360º +/-
 /// As this is ExpressibleByFloatLiteral, anywhere that takes
