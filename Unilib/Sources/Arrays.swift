@@ -8,7 +8,7 @@
 
 import Foundation
 
-// MARK:- Indexes
+// MARK: - Indexes
 
 public extension Array  {
     
@@ -250,7 +250,7 @@ public extension Array where Element : Equatable {
 //    }
 //}
 
-// MARK:- Boolean logic
+// MARK: - Boolean logic
 
 public extension Sequence where Element : Equatable {
     
@@ -310,7 +310,7 @@ public extension Collection {
     
 }
 
-// MARK:- Optionals
+// MARK: - Optionals
 
 public extension Collection {
     
@@ -358,7 +358,7 @@ public extension Collection where Element : OptionalType {
     }
 }
 
-// MARK:- Set-like
+// MARK: - Set-like
 
 // Set-like functionality on arrays. Overall, if possible, use Set
 // (a Sequence) for set functionality because the performance characteristics 
