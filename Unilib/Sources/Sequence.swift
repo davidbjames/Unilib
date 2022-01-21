@@ -11,8 +11,33 @@ import Foundation
 public extension Sequence {
     /// Cast a sequence's elements to a type, returning a non-optional
     /// sequence with n or 0 elements depending if the cast succeeds.
-    func `as`<T>(_:T.Type) -> [T] {
-        return compactMap { $0 as? T }
+    ///
+    /// Optionally, pass `where` filter to further filter the generic items
+    /// (i.e. items are both type T _and_ they satisfy the filter on type T).
+    func `as`<T>(_:T.Type, where filter:((T)->Bool)? = nil) -> [T] {
+        compactMap {
+            guard let item = $0 as? T else { return nil }
+            if let filter = filter {
+                return filter(item) ? item : nil
+            }
+            return item
+        }
+    }
+    
+    /// Cast the first item that is a type, to that type, and return
+    /// if the cast succeeds.
+    ///
+    /// Optionally, pass `where` filter to further filter the generic item
+    /// (i.e. item is both type T _and_ satisfies the filter on type T).
+    func firstAs<T>(_:T.Type, where filter:((T)->Bool)? = nil) -> T? {
+        let result:Element?
+        if let filter = filter {
+            result = first { ($0 as? T).map { filter($0) } ?? false }
+        } else {
+            result = first { $0 is T }
+        }
+        guard let result = result as? T else { return nil }
+        return result
     }
     
     /// Cast a sequence to a sequence containing a type, or nil.
@@ -26,12 +51,6 @@ public extension Sequence {
         return self as? [T]
     }
     */
-    
-    /// Alias to forEach, because it's prettier. Don't bug me. ;)
-    func each(_ body: (Element) throws -> Void) rethrows {
-        try forEach(body)
-    }
-    
 }
 
 public enum SequenceError : Error {
