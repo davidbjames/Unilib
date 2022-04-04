@@ -275,9 +275,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E7D9547A1DA2A59400F86827 /* Build configuration list for PBXNativeTarget "Unilib" */;
 			buildPhases = (
+				E7D954631DA2A59400F86827 /* Headers */,
 				E7D954611DA2A59400F86827 /* Sources */,
 				E7D954621DA2A59400F86827 /* Frameworks */,
-				E7D954631DA2A59400F86827 /* Headers */,
 				E7D954641DA2A59400F86827 /* Resources */,
 			);
 			buildRules = (
