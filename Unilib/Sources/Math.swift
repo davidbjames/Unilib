@@ -212,7 +212,7 @@ public/**/ struct Angle : ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral
     /// Angle in radians
     /// Useful for core graphics/animations rotations
     public var radians:Double {
-        return degrees * Double.pi / 180
+        return degrees.radians
     }
     
     /// Half the current rotation angle
@@ -431,9 +431,14 @@ fileprivate struct FloatingPointHelper {
 
 public extension Double {
     
-    /// Equivalent in radians
+    /// Convert this float (assumed to be "degrees") to radians.
     var radians:Double {
-        return Angle(floatLiteral:self).radians
+        return self * (Double.pi / 180.0)
+    }
+    
+    /// Convert this float (assumed to be "radians") to degrees.
+    var degrees:Double {
+        return self * (180.0 / Double.pi)
     }
     
     /// Based on a floating point number, get a random value up
@@ -502,30 +507,78 @@ public extension Double {
 }
 
 public extension CGFloat {
-
+    
+    /// Convert this float (assumed to be "degrees") to radians.
     var radians:CGFloat {
-        return CGFloat(Angle(floatLiteral:Double(self)).radians)
+        return self * (Double.pi / 180.0)
     }
     
+    /// Convert this float (assumed to be "radians") to degrees.
+    var degrees:CGFloat {
+        return self * (180.0 / Double.pi)
+    }
+    
+    /// Based on a floating point number, get a random value up
+    /// to that number. The number provided represents the outer
+    /// bounds, positive or negative.
+    /// Example:
+    /// -1.0.randomDecimal provides a random number betwen -1.0 and 0.0
+    /// See private static method for more info.
     var randomDecimal:CGFloat {
-        return CGFloat(FloatingPointHelper.randomDecimal(withBounds: Double(self)))
+        return FloatingPointHelper.randomDecimal(withBounds: self)
     }
-
+    
+    /// Based on a floating point number, get a random factor between
+    /// (1 - number) and (1 + number), with the resulting value being useful
+    /// to decrease/increase some other value "by a factor of".
+    /// Supports negative numbers.
+    /// Example:
+    /// 0.1.randomFactor provides a random number between 0.9 and 1.1
+    ///   let size = 100.0
+    ///   let scaled = size * 0.1.randomFactor
+    ///   scaled // between 90 and 110
+    /// See private static method for more info.
     var randomFactor:CGFloat {
-        return CGFloat(FloatingPointHelper.randomFactor(from:Double(self)))
+        return FloatingPointHelper.randomFactor(from:self)
     }
     
+    /// Based on a floating point number, get a random factor between
+    /// that number and it's converse on the opposite side of 1.0
+    /// with the resulting value being useful to decrease/increase
+    /// some other value "by a factor of".
+    /// Example:
+    /// 1.5.randomOneFactor provides a random number between 0.5 and 1.5
     var randomOneFactor:CGFloat {
-        return CGFloat(FloatingPointHelper.randomOneFactor(from:Double(self)))
-    }
-
-    var randomMedianDeviation:CGFloat {
-        return CGFloat(FloatingPointHelper.randomMedianDeviation(from: Double(self)))
+        return FloatingPointHelper.randomOneFactor(from:self)
     }
     
+    /// Based on a floating point number, get a random value between
+    /// 0.0 and (number x 2). The number provided represents the
+    /// "median deviation", with the lower bounds being 0.0 and
+    /// the upper bounds being the number doubled (thus making the
+    /// number the middle value). e.g. for 1: 0 lower -- 1 median -- 2 upper.
+    /// Supports negative numbers.
+    /// Example:
+    /// 1.0.randomMedianDeviation provides a random number between 0.0 and 2.0
+    ///   let increment = 2.0
+    ///   let randomIncrement = increment + 1.0.randomMedianDeviation
+    ///   randomIncrement // between 2.0 and 4.0
+    /// See private static method for more info.
+    var randomMedianDeviation:CGFloat {
+        return FloatingPointHelper.randomMedianDeviation(from: self)
+    }
+    
+    /// Based on a floating point number, get a random value between
+    /// -number and +number. The number provided represents the
+    /// lower (negative) and upper (positive) bounds of the range.
+    /// Example:
+    /// 0.1.randomZeroDeviation provides a random number between -0.1 and 0.1
+    ///   let position = 150.0
+    ///   let randomPosition = position + 10.randomZeroDeviation
+    ///   randomPosition // between 140 and 160
+    /// See private static method for more info.
     var randomZeroDeviation:CGFloat {
-        return CGFloat(FloatingPointHelper.randomZeroDeviation(from: Double(self)))
+        return FloatingPointHelper.randomZeroDeviation(from: self)
     }
     
 }
-
