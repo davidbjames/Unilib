@@ -10,7 +10,7 @@ import Foundation
 
 /// Generic array wrapper that can hold its
 /// reference-based items either weakly or strongly.
-protocol CaptureArray : Collection {
+protocol CaptureArray : Collection, Elidable {
     associatedtype T:AnyObject
     associatedtype Wrapper
     var contents:[Wrapper] { get }

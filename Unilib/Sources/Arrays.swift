@@ -179,24 +179,7 @@ public extension Array  {
         }
     }
     
-    /// Act on array only if a provided condition is true
-    /// optionally providing an else block.
-    ///
-    ///     [0, 1, 2, 3]
-    ///         .if(toggle) {
-    ///             $0 + [4, 5, 6]
-    ///         } else: {
-    ///             $0 + [7, 8, 9]
-    ///         }
-    func `if`(_ condition:Bool, then:([Element])->[Element], else:(([Element])->[Element])? = nil) -> [Element] {
-        if condition {
-            return then(self)
-        } else if let otherwise = `else` {
-            return otherwise(self)
-        } else {
-            return self
-        }
-    }
+    /// Given an array move item from one index to another.
     func move(index oldIndex: Index, to newIndex: Index) -> Self {
         var array = self
         if abs(newIndex - oldIndex) == 1 {
@@ -209,6 +192,7 @@ public extension Array  {
 }
 
 public extension Array where Element:Equatable {
+    /// Given an array move an item to just before another item.
     func move(_ element1:Element, before element2:Element) -> Self {
         guard
             let index1 = firstIndex(of:element1),
@@ -216,6 +200,7 @@ public extension Array where Element:Equatable {
         else { return self }
         return move(index:index1, to:index(before:index2))
     }
+    /// Given an array move an item to just after another item.
     func move(_ element1:Element, after element2:Element) -> Self {
         guard
             let index1 = firstIndex(of:element1),
@@ -258,6 +243,10 @@ public extension Sequence where Element : Equatable {
         return !self.contains(element)
     }
 }
+
+// Make concrete type Array Elidable by default (if/if/then/else/guard/etc)
+
+extension Array : Elidable { }
 
 public extension Collection {
     
