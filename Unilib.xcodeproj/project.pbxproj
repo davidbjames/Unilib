@@ -25,6 +25,7 @@
 		E79FA6B61FAB8D9000495E44 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79FA6B51FAB8D9000495E44 /* Sequence.swift */; };
 		E79FA6B81FAB8DD000495E44 /* FloatingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79FA6B71FAB8DD000495E44 /* FloatingPoint.swift */; };
 		E79FA6BA1FAB8E2900495E44 /* NSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79FA6B91FAB8E2900495E44 /* NSObject.swift */; };
+		E7C2EABB285398F300CBBE63 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C2EABA285398F300CBBE63 /* Persistence.swift */; };
 		E7C6DAD9238D18D900C81993 /* Boolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C6DAD8238D18D900C81993 /* Boolean.swift */; };
 		E7CD306F1ED440CC002AE776 /* SetAlgebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CD306E1ED440CC002AE776 /* SetAlgebra.swift */; };
 		E7D954701DA2A59400F86827 /* Unilib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D954661DA2A59400F86827 /* Unilib.framework */; };
@@ -71,6 +72,7 @@
 		E79FA6B51FAB8D9000495E44 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		E79FA6B71FAB8DD000495E44 /* FloatingPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPoint.swift; sourceTree = "<group>"; };
 		E79FA6B91FAB8E2900495E44 /* NSObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSObject.swift; sourceTree = "<group>"; };
+		E7C2EABA285398F300CBBE63 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		E7C6DAD8238D18D900C81993 /* Boolean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boolean.swift; sourceTree = "<group>"; };
 		E7CD306E1ED440CC002AE776 /* SetAlgebra.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetAlgebra.swift; sourceTree = "<group>"; };
 		E7D954661DA2A59400F86827 /* Unilib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Unilib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +175,7 @@
 				E7CD306E1ED440CC002AE776 /* SetAlgebra.swift */,
 				E79FA6B71FAB8DD000495E44 /* FloatingPoint.swift */,
 				E79FA6B91FAB8E2900495E44 /* NSObject.swift */,
+				E7C2EABA285398F300CBBE63 /* Persistence.swift */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				E71749002271B4350046973B /* ThreadLocal.swift in Sources */,
 				E750BD2D1DC9190E0079687B /* Time.swift in Sources */,
 				E7F9FB941EDEBCB8007E0EFD /* Optionals.swift in Sources */,
+				E7C2EABB285398F300CBBE63 /* Persistence.swift in Sources */,
 				E79FA6B81FAB8DD000495E44 /* FloatingPoint.swift in Sources */,
 				E79FA6B61FAB8D9000495E44 /* Sequence.swift in Sources */,
 				E7D954881DA2ACC900F86827 /* DefaultValidators.swift in Sources */,
