@@ -81,7 +81,7 @@ extension Array : RangeExpression where Element:RangeExpression {
 public/**/ prefix func +<R:RangeExpression>(_ range:R) -> AnyRangeExpression<R.Bound, [R.Bound]> {
     AnyRangeExpression(range:range)
 }
-
+/*
 private func proofOfConcept() {
     // Example with the same range expression types.
     _ = [0...3, 6...9].relative(to:["something"])
@@ -103,3 +103,4 @@ private func proofOfConcept() {
     // Used for testing:
     // func takesRange<R:RangeExpression>(_ range:R) where R.Bound == Int { }
 }
+*/

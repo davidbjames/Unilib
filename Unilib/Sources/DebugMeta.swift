@@ -6,6 +6,7 @@
 //  Copyright © 2017-2021 David B James. All rights reserved.
 //
 
+import Foundation
 
 public extension NSObject {
     
